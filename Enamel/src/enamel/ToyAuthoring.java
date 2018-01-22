@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+
 public class ToyAuthoring {
 
     public static void main(String[] args) { 	  	
@@ -11,6 +12,8 @@ public class ToyAuthoring {
     	    
     	    //Create a file chooser
     	    final JFileChooser fc = new JFileChooser();
+    	    fc.getAccessibleContext().setAccessibleName("Let's choose a file!");
+    	    fc.getAccessibleContext().setAccessibleDescription("YUP CHOOSE");
     	    //In response to a button click:
     	    int returnVal = fc.showOpenDialog(null);
 
