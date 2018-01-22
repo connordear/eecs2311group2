@@ -3,6 +3,7 @@ package enamel;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
 public class ToyAuthoring {
 
     public static void main(String[] args) { 	  	
@@ -19,7 +20,6 @@ public class ToyAuthoring {
     	    fc.getAccessibleContext().setAccessibleName("File chooser dialog box");
     	    fc.getAccessibleContext().setAccessibleDescription("Please choose a scenario file from this file dialog box.");
     	    
-    	    // Open file dialog box and get chosen scenario file name
     	    int returnVal = fc.showOpenDialog(null);
 
     	    if (returnVal == JFileChooser.APPROVE_OPTION) {
