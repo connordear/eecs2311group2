@@ -1,16 +1,16 @@
 package authoringApp;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class InteractionList {
 	
-	private ArrayList<Interaction> interactionList;
+	private LinkedList<Interaction> interactionList;
 	
 	/*
 	 * Default Constructor
 	 */
 	public InteractionList() {
-		this.interactionList = new ArrayList<Interaction>();
+		this.interactionList = new LinkedList<Interaction>();
 	}
 	
 	
@@ -18,7 +18,7 @@ public class InteractionList {
 	 * Copy Constructor
 	 */
 	public InteractionList(InteractionList toCopy) {
-		this.interactionList = new ArrayList<Interaction>();
+		this.interactionList = new LinkedList<Interaction>();
 		for (Interaction i : toCopy.interactionList) {
 			this.interactionList.add(i);
 		}
@@ -27,8 +27,8 @@ public class InteractionList {
 	/*
 	 * Shallow copy of list for use in the scenario parent
 	 */
-	public ArrayList<Interaction> getList() {
-		return new ArrayList<Interaction>(this.interactionList);
+	public LinkedList<Interaction> getList() {
+		return new LinkedList<Interaction>(this.interactionList);
 	}
 	
 	/*
