@@ -112,6 +112,7 @@ public class Scenario {
 	
 	/*
 	 * A way to convert the Scenario Text file to an InteractionList object
+	 * MAYBE A BAD IDEA? THIS SHOULD GENERATE A SCENARIO OBJECT -- THIS SHOULD PROBABLY BE A CONSTRUCTOR?
 	 */
 	public InteractionList generateInteractionList(File scenarioFile) {
 		InteractionList newList = new InteractionList();
