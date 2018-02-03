@@ -7,20 +7,18 @@ class ScenarioTest {
 	public static void main(String[] args) {
 		Scenario s = new Scenario("Lesson One");
 		ReadInteraction firstRead = new ReadInteraction("Welcome");
-		firstRead.setData("Hi and welcome to the first lesson.");
-		
+		firstRead.setData("Hi and welcome to the first lesson.");		
 		ReadInteraction secondRead = new ReadInteraction("Q1");
 		secondRead.setData("Which buttons are currenlty being displayed?");
+		DisplayBrailleInteraction firstDisplay = new DisplayBrailleInteraction("11101100");
+		PauseInteraction firstPause = new PauseInteraction(1);
+		s.addInteraction(firstDisplay);
 		s.addInteraction(firstRead);
-		System.out.println(s.interactionList.getList().get(0).generateScenarioText());
 		s.addInteraction(secondRead);
+		s.addInteraction(firstPause);
 		try {
-			System.out.println("Should create a file");
 			s.generateScenarioText();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			
-			System.out.println("We had a problem");
 			e.printStackTrace();
 		}
 	}
