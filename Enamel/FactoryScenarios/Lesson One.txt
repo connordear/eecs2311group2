@@ -1,0 +1,9 @@
+Cell 1
+Button 4
+Lesson One
+
+/~disp-cell-pins:0 11101100
+Hi and welcome to the first lesson.
+Which buttons are currenlty being displayed?
+/~pause:1
+/~disp-cell-clear:0

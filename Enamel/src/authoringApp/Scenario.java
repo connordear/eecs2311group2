@@ -6,12 +6,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class Scenario {
 	
 	private static int counter = 0;
 	
-	protected InteractionList interactionList;
+	public InteractionList interactionList;
 	protected String title;
 	protected int cells;
 	protected int buttons;
@@ -103,6 +105,11 @@ public class Scenario {
 		return this.id;
 	}
 	
+	public File getFile() throws URISyntaxException {
+		URL url = this.getClass().getResource("FactoryScenarios/" + this.getTitle() + ".txt");
+		return new File(url.toURI());
+	}
+	
 	/*
 	 * Add a new Interaction to the scenario
 	 */
@@ -111,34 +118,66 @@ public class Scenario {
 	}
 	
 	/*
-	 * A way to convert the Scenario Text file to an InteractionList object
-	 * MAYBE A BAD IDEA? THIS SHOULD GENERATE A SCENARIO OBJECT -- THIS SHOULD PROBABLY BE A CONSTRUCTOR?
+	 * A way to convert the Scenario Text file to an Scenario object
 	 */
-	public InteractionList generateInteractionList(File scenarioFile) {
+	public Scenario(File scenarioTextFile) {
+		this();
 		InteractionList newList = new InteractionList();
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader(scenarioFile));
+			reader = new BufferedReader(new FileReader(scenarioTextFile));
 			String line = reader.readLine();
-			while (line != null) {
+			// We know this first line contains the number of cells
+			this.setCells(Integer.parseInt(line.substring(5)));
+			reader.readLine();
+			// 2nd line contains number of buttons
+			this.setButtons(Integer.parseInt(line.substring(5)));
+			reader.readLine();
+			// Third line contains Title
+			this.setTitle(line);
+			// now go through the rest of the lines
+			while ((line = reader.readLine()) != null) {
 				if (line.startsWith("/~")) {
 					// Then we have a command
+					// Check for Braille Interaction
+					if(line.startsWith("/~disp-cell-pins:")) {
+						newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
+						System.out.println("FOUND DISP");
+					}
+					// Check for Pause Interaction
+					if (line.startsWith("/~pause:")) {
+						newList.add(new PauseInteraction(Integer.parseInt(line.substring(8))));
+						System.out.println("FOUND PAUSE");
+					}
+					// Check for Reset Button Interaction
+					if (line.startsWith("/~reset-buttons")) {
+						newList.add(new ResetButtonInteraction());
+					}
+					// Check for Cell Clear Interaction
+					if (line.startsWith("/~disp-cell-clear")) {
+						newList.add(new CellClearInteraction(Integer.parseInt(line.substring(18))));
+					}
 				} else {
-					// We have just text.
+						System.out.println("NEW READ");
+						ReadInteraction newRead = new ReadInteraction();
+						newRead.setData(line);
+						newList.add(newRead);
+						
+				
+					
 				}
-				reader.readLine();
 			}
 			reader.close();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		return newList;
+		this.interactionList = newList;
 	}
 	/*
 	 * Generate the scenario text
 	 */
 	public void generateScenarioText() throws IOException{
-		BufferedWriter writer = new BufferedWriter(new FileWriter("FactoryScenarios/" + this.getTitle()));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("FactoryScenarios/" + this.getTitle() + ".txt"));
 		writer.write("Cell " + this.getCells() + "\n");
 		writer.write("Button " + this.getButtons() + "\n");
 		writer.write(this.getTitle() + "\n\n");

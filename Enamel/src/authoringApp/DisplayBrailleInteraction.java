@@ -9,21 +9,21 @@ public class DisplayBrailleInteraction extends Interaction {
 	private String pins;
 	private int cellNumber;
 	
-	public DisplayBrailleInteraction(String title, String pins, int cellNumber) {
+	public DisplayBrailleInteraction(String title, int cellNumber, String pins) {
 		super(title);
 		this.setPins(pins);
 		this.setCellNumber(cellNumber);
 	}
 	
-	public DisplayBrailleInteraction(String pins, int cellNumber) {
-		this("", pins, cellNumber);
+	public DisplayBrailleInteraction(int cellNumber, String pins) {
+		this("", cellNumber, pins);
 	}
 	
 	/*
 	 * Default Constructor, sets the 1st cell title to empty, the raised buttons to 00000000
 	 */
 	public DisplayBrailleInteraction() {
-		this("", "00000000", 0);
+		this("", 0, "00000000");
 	}
 	
 	/*
