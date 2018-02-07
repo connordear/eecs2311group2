@@ -16,14 +16,14 @@ public class DisplayBrailleInteraction extends Interaction {
 	}
 	
 	public DisplayBrailleInteraction(int cellNumber, String pins) {
-		this("", cellNumber, pins);
+		this("Display Braille on Cell: " + cellNumber, cellNumber, pins);
 	}
 	
 	/*
 	 * Default Constructor, sets the 1st cell title to empty, the raised buttons to 00000000
 	 */
 	public DisplayBrailleInteraction() {
-		this("", 0, "00000000");
+		this("Display Braille on Cell 0", 0, "00000000");
 	}
 	
 	/*
@@ -43,11 +43,12 @@ public class DisplayBrailleInteraction extends Interaction {
 	/*
 	 * Set the cell number (which cell will display the interaction)
 	 */
-	public void setCellNumber(int num) {
+	public boolean setCellNumber(int num) {
 		if (num < 0) {
-			throw new IllegalArgumentException();
+			return false;
 		}
 		this.cellNumber = num;
+		return true;
 	}
 	
 	public int getCellNumber() {

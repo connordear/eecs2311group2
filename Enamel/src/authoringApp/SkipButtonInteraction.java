@@ -6,9 +6,13 @@ public class SkipButtonInteraction extends Interaction {
 	public int button;
 	
 	public SkipButtonInteraction(int button, String keyword) {
-		super();
+		super("Skip Button");
 		this.setButton(button);
 		this.setKeyword(keyword);
+	}
+	
+	private SkipButtonInteraction() {
+		// empty by design
 	}
 	
 	public void setButton(int button) {

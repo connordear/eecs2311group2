@@ -5,7 +5,7 @@ public class ReadInteraction extends Interaction {
 	private String data;
 	
 	public ReadInteraction() {
-		super();
+		super("Read");
 		this.data = "";
 	}
 	

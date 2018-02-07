@@ -41,7 +41,7 @@ public class InteractionList {
 	public String toString() {
 		String res = "";
 		for(Interaction i : this.interactionList) {
-			System.out.println(i.generateScenarioText());
+			System.out.println(i.getTitle());
 		}
 		return res;
 	}

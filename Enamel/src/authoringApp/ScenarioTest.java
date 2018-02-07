@@ -14,7 +14,7 @@ class ScenarioTest {
 //		secondRead.setData("Which buttons are currenlty being displayed?");
 //		DisplayBrailleInteraction firstDisplay = new DisplayBrailleInteraction(0, "11101100");
 //		PauseInteraction firstPause = new PauseInteraction(1);
-//		ClearBrailleCellInteraction clear = new ClearBrailleCellInteraction(0);
+//		CellClearInteraction clear = new CellClearInteraction(0);
 //		s.addInteraction(firstDisplay);
 //		s.addInteraction(firstRead);
 //		s.addInteraction(secondRead);

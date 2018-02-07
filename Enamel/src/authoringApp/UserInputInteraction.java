@@ -4,7 +4,7 @@ public class UserInputInteraction extends Interaction {
 	
 	
 	public UserInputInteraction() {
-		super();
+		super("Wait for user input");
 	}
 	
 	@Override

@@ -5,17 +5,26 @@ public class CellClearInteraction extends Interaction {
 	int cellNumber;
 	
 	public CellClearInteraction(int cellNumber) {
-		super();
+		super("Clear Cell " + cellNumber);
 		this.cellNumber = cellNumber;
 	}
 	
 	public CellClearInteraction() {
-		super();
+		super("Clear Cell " + 0);
 		this.cellNumber = 0;
 	}
 	
+	
 	public int getCellNumber() {
 		return this.cellNumber;
+	}
+
+	public boolean setCellNumber(int cellNumber) {
+		if (cellNumber < 0) {
+			return false;
+		}
+		this.cellNumber = cellNumber;
+		return true;
 	}
 	
 	@Override

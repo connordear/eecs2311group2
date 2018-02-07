@@ -76,12 +76,10 @@ public class Scenario {
 						// Check for Braille Interaction
 						if(line.startsWith("/~disp-cell-pins:")) {
 							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
-							System.out.println("FOUND DISP");
 						}
 						// Check for Pause Interaction
 						else if (line.startsWith("/~pause:")) {
 							newList.add(new PauseInteraction(Integer.parseInt(line.substring(8))));
-							System.out.println("FOUND PAUSE");
 						}
 						// Check for Reset Button Interaction
 						else if (line.startsWith("/~reset-buttons:")) {
@@ -103,12 +101,10 @@ public class Scenario {
 						else if(line.startsWith("/~")){
 							newList.add(new KeywordInteraction(line.substring(2)));
 						}
-						
 					} else {
-							System.out.println("NEW READ");
 							ReadInteraction newRead = new ReadInteraction();
 							newRead.setData(line);
-							newList.add(newRead);
+							newList.add(newRead);								
 					}
 				}
 				reader.close();
@@ -230,7 +226,7 @@ public class Scenario {
 		BufferedWriter writer = new BufferedWriter(new FileWriter("FactoryScenarios/" + this.getTitle() + ".txt"));
 		writer.write("Cell " + this.getCells() + "\n");
 		writer.write("Button " + this.getButtons() + "\n");
-		writer.write(this.getTitle() + "\n\n");
+		writer.write(this.getTitle() + "\n");
 		for(Interaction i : this.interactionList.getList()) {
 			String nextLine = i.generateScenarioText();
 		    writer.append(nextLine + "\n");

@@ -5,7 +5,7 @@ public class KeywordInteraction extends Interaction {
 	public String keyword;
 	
 	public KeywordInteraction(String keyword) {
-		super();
+		super("Keyword Interaction");
 		this.keyword = keyword;
 	}
 	

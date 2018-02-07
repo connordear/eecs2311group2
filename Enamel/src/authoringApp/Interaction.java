@@ -25,6 +25,10 @@ public abstract class Interaction {
 		this.title = newTitle;
 	}
 	
+	public String getTitle() {
+		return this.title;
+	}
+	
 	public int getId() {
 		return this.id;
 	}

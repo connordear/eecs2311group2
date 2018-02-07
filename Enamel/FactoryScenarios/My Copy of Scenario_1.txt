@@ -2,7 +2,6 @@ Cell 2
 Button 2
 My Copy of Scenario_1
 
-
 /~disp-cell-pins:0 11100000
 These are pins 1, 2 and 3, the 3 pins on the left side. 
 Press button 1 to continue.
