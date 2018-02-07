@@ -3,6 +3,7 @@ package authoringApp;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class Scenario {
 	/*
 	 * Default Constructor
 	 * Sets title to Untitled_id, number of cells to one, and 4 buttons.
+	 * Need to find a way to fix the default naming
 	 */
 	public Scenario() {
 		this("Untitled_" + counter, 1, 4);
@@ -46,6 +48,79 @@ public class Scenario {
 	public Scenario(String title) {
 		this(title, 1, 4);
 	}
+	
+	/*
+	 * A way to convert the Scenario Text file to an Scenario object
+	 * @throws - IllegalArgumentException if File isn't properly formatted.
+	 */
+	public Scenario(File scenarioTextFile) throws IllegalArgumentException{
+		this();
+		InteractionList newList = new InteractionList();
+		BufferedReader reader;
+		if (Scenario.isValidScenarioFile(scenarioTextFile)) {
+			try {
+				reader = new BufferedReader(new FileReader(scenarioTextFile));
+				String line = reader.readLine();
+				// We know this first line contains the number of cells
+				this.setCells(Integer.parseInt(line.substring(5)));
+				reader.readLine();
+				// 2nd line contains number of buttons
+				this.setButtons(Integer.parseInt(line.substring(5)));
+				reader.readLine();
+				// Third line contains Title
+				this.setTitle(line);
+				// now go through the rest of the lines
+				while ((line = reader.readLine()) != null) {
+					if (line.startsWith("/~")) {
+						// Then we have a command
+						// Check for Braille Interaction
+						if(line.startsWith("/~disp-cell-pins:")) {
+							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
+							System.out.println("FOUND DISP");
+						}
+						// Check for Pause Interaction
+						else if (line.startsWith("/~pause:")) {
+							newList.add(new PauseInteraction(Integer.parseInt(line.substring(8))));
+							System.out.println("FOUND PAUSE");
+						}
+						// Check for Reset Button Interaction
+						else if (line.startsWith("/~reset-buttons:")) {
+							newList.add(new ResetButtonInteraction());
+						}
+						// Check for Cell Clear Interaction
+						else if (line.startsWith("/~disp-cell-clear:")) {
+							newList.add(new CellClearInteraction(Integer.parseInt(line.substring(18))));
+						}
+						// Check for Skip Button Interaction
+						else if (line.startsWith("/~skip-button:")) {
+							newList.add(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16)));
+						}
+						// Check for User Input Interaction
+						else if (line.startsWith("/~user-input")) {
+							newList.add(new UserInputInteraction());
+						}
+						// Finally check for keyword
+						else if(line.startsWith("/~")){
+							newList.add(new KeywordInteraction(line.substring(2)));
+						}
+						
+					} else {
+							System.out.println("NEW READ");
+							ReadInteraction newRead = new ReadInteraction();
+							newRead.setData(line);
+							newList.add(newRead);
+					}
+				}
+				reader.close();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			throw new IllegalArgumentException("Not a valid file format");
+		}
+		this.interactionList = newList;
+	}
+	
 	
 	/*
 	 * Getter for this.title
@@ -116,63 +191,38 @@ public class Scenario {
 	public void addInteraction(Interaction e) {
 		this.interactionList.add(e);
 	}
-	
-	/*
-	 * A way to convert the Scenario Text file to an Scenario object
-	 */
-	public Scenario(File scenarioTextFile) {
-		this();
-		InteractionList newList = new InteractionList();
+
+	public static boolean isValidScenarioFile(File f) {
 		BufferedReader reader;
+		boolean isValid = true;
 		try {
-			reader = new BufferedReader(new FileReader(scenarioTextFile));
+			reader = new BufferedReader(new FileReader(f));
 			String line = reader.readLine();
-			// We know this first line contains the number of cells
-			this.setCells(Integer.parseInt(line.substring(5)));
-			reader.readLine();
-			// 2nd line contains number of buttons
-			this.setButtons(Integer.parseInt(line.substring(5)));
-			reader.readLine();
-			// Third line contains Title
-			this.setTitle(line);
-			// now go through the rest of the lines
-			while ((line = reader.readLine()) != null) {
-				if (line.startsWith("/~")) {
-					// Then we have a command
-					// Check for Braille Interaction
-					if(line.startsWith("/~disp-cell-pins:")) {
-						newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
-						System.out.println("FOUND DISP");
-					}
-					// Check for Pause Interaction
-					if (line.startsWith("/~pause:")) {
-						newList.add(new PauseInteraction(Integer.parseInt(line.substring(8))));
-						System.out.println("FOUND PAUSE");
-					}
-					// Check for Reset Button Interaction
-					if (line.startsWith("/~reset-buttons")) {
-						newList.add(new ResetButtonInteraction());
-					}
-					// Check for Cell Clear Interaction
-					if (line.startsWith("/~disp-cell-clear")) {
-						newList.add(new CellClearInteraction(Integer.parseInt(line.substring(18))));
-					}
-				} else {
-						System.out.println("NEW READ");
-						ReadInteraction newRead = new ReadInteraction();
-						newRead.setData(line);
-						newList.add(newRead);
-						
-				
-					
-				}
+			// We know this first line should contain the number of cells
+			if(!line.substring(0, 4).equals("Cell")) {
+				System.out.println(line.substring(0, 4));
+				System.out.println("Problem with Cell");
+				isValid = false;
+			}
+			line = reader.readLine();
+			// 2nd line should contain number of buttons
+			if (!line.substring(0, 6).equals("Button")) {
+				System.out.println("Problem with Button");
+				isValid = false;
 			}
 			reader.close();
-		} catch(IOException e) {
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+			isValid = false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			isValid = false;
 		}
-		this.interactionList = newList;
+		return isValid;
 	}
+	
 	/*
 	 * Generate the scenario text
 	 */

@@ -5,7 +5,8 @@ import java.io.IOException;
 
 class ScenarioTest {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+//		FIRST BIT IS TO SHOW HOW TO CREATE A SCENARIO OBJECT AND THEN A SCENARIO FILE FROM THAT OBJECT
 //		Scenario s = new Scenario("Lesson One");
 //		ReadInteraction firstRead = new ReadInteraction("Welcome");
 //		firstRead.setData("Hi and welcome to the first lesson.");		
@@ -25,8 +26,11 @@ class ScenarioTest {
 //			e.printStackTrace();
 //		}
 //		s.interactionList.toString();
+//		SECOND BIT IS TO SHOW HOW TO CREATE A SCENARIO OBJECT FROM A TEXT FILE (AND MAKE A NEW FILE WITH A DIFFERENT TITLE)
 		Scenario s2 = new Scenario(new File("./FactoryScenarios/Scenario_1.txt"));
 		s2.interactionList.toString();
+		s2.setTitle("My Copy of Scenario_1");
+		s2.generateScenarioText();
 	}
 
 }
