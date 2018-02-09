@@ -82,7 +82,7 @@ public class Scenario {
 							newList.add(new PauseInteraction(Integer.parseInt(line.substring(8))));
 						}
 						// Check for Reset Button Interaction
-						else if (line.startsWith("/~reset-buttons:")) {
+						else if (line.startsWith("/~reset-buttons")) {
 							newList.add(new ResetButtonInteraction());
 						}
 						// Check for Cell Clear Interaction
@@ -101,10 +101,24 @@ public class Scenario {
 						else if(line.startsWith("/~")){
 							newList.add(new KeywordInteraction(line.substring(2)));
 						}
-					} else {
-							ReadInteraction newRead = new ReadInteraction();
-							newRead.setData(line);
-							newList.add(newRead);								
+					} else { 
+						if (newList.getList().size() > 0 && line.length() > 1) {
+							if (newList.getList().getLast().getType().equals(Interaction.READ)) {
+								ReadInteraction concatRead = (ReadInteraction) newList.getList().getLast();
+								concatRead.setData(concatRead.getData() + line);
+							} else {
+								ReadInteraction newRead = new ReadInteraction();
+								newRead.setData(line);
+								newList.add(newRead);
+							}
+						} else {
+							if (line.length() > 1) {
+								ReadInteraction newRead = new ReadInteraction();
+								newRead.setData(line);
+								newList.add(newRead);	
+							}
+						}
+						
 					}
 				}
 				reader.close();

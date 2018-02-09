@@ -26,6 +26,12 @@ public class ReadInteraction extends Interaction {
 	public void setData(String d) {
 		this.data = d;
 	}
+	
+	@Override
+	public String getType() {
+		return Interaction.READ;
+	}
+	
 	@Override
 	public String generateScenarioText() {
 		return this.getData();

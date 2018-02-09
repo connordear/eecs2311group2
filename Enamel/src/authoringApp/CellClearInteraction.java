@@ -28,6 +28,11 @@ public class CellClearInteraction extends Interaction {
 	}
 	
 	@Override
+	public String getType() {
+		return Interaction.CLEAR_BRAILLE;
+	}
+	
+	@Override
 	public String generateScenarioText() {
 		String base = "/~disp-cell-clear:";
 		return base + this.getCellNumber();

@@ -21,6 +21,11 @@ public class PauseInteraction extends Interaction {
 	}
 	
 	@Override
+	public String getType() {
+		return Interaction.PAUSE;
+	}
+	
+	@Override
 	public String generateScenarioText() {
 		return "/~pause:" + this.length;
 	}

@@ -8,6 +8,11 @@ public class UserInputInteraction extends Interaction {
 	}
 	
 	@Override
+	public String getType() {
+		return Interaction.USER_INPUT;
+	}
+	
+	@Override
 	public String generateScenarioText() {
 		String base = "/~user-input";
 		return base;

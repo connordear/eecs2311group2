@@ -22,6 +22,11 @@ public class KeywordInteraction extends Interaction {
 	}
 	
 	@Override
+	public String getType() {
+		return Interaction.KEYWORD;
+	}
+	
+	@Override
 	public String generateScenarioText() {
 		String base = "/~";
 		return base + this.getKeyword();

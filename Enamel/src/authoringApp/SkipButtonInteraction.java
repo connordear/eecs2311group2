@@ -10,10 +10,7 @@ public class SkipButtonInteraction extends Interaction {
 		this.setButton(button);
 		this.setKeyword(keyword);
 	}
-	
-	private SkipButtonInteraction() {
-		// empty by design
-	}
+
 	
 	public void setButton(int button) {
 		// No way to verify which button they are pressing?
@@ -33,9 +30,15 @@ public class SkipButtonInteraction extends Interaction {
 	}
 	
 	@Override
+	public String getType() {
+		return Interaction.SKIP_BUTTON;
+	}
+	
+	@Override
 	public String generateScenarioText() {
 		String base = "/~skip-button:";
 		return base + this.getButton() + " " + this.getKeyword();
 	}
+	
 
 }

@@ -55,6 +55,11 @@ public class DisplayBrailleInteraction extends Interaction {
 		return this.cellNumber;
 	}
 	
+	@Override
+	public String getType() {
+		return Interaction.DISPLAY_BRAILLE;
+	}
+	
 	/*
 	 * Need to output text in this format:/~disp-cell-pins:0 00011000
 	 * @see authoringApp.Interaction#generateScenarioText()
