@@ -5,7 +5,6 @@ import java.util.LinkedList;
 public class InteractionList {
 	
 	private LinkedList<Interaction> interactionList;
-	
 	/*
 	 * Default Constructor
 	 */

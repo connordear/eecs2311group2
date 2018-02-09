@@ -132,12 +132,13 @@ public class Scenario {
 		this.title = title;
 	}
 	
+	
 	/*
 	 * Getter for number of cells
 	 */
 	
 	public int getCells() {
-		return this.cells;
+		return this.cells;	
 	}
 	
 	/*
@@ -179,6 +180,10 @@ public class Scenario {
 	public File getFile() throws URISyntaxException {
 		URL url = this.getClass().getResource("FactoryScenarios/" + this.getTitle() + ".txt");
 		return new File(url.toURI());
+	}
+	
+	public InteractionList getInteractionList() {
+		return this.interactionList;
 	}
 	
 	/*
