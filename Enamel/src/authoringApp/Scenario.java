@@ -75,47 +75,47 @@ public class Scenario {
 						// Then we have a command
 						// Check for Braille Interaction
 						if(line.startsWith("/~disp-cell-pins:")) {
-							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
+							newList.addElement(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
 						}
 						// Check for Pause Interaction
 						else if (line.startsWith("/~pause:")) {
-							newList.add(new PauseInteraction(Integer.parseInt(line.substring(8))));
+							newList.addElement(new PauseInteraction(Integer.parseInt(line.substring(8))));
 						}
 						// Check for Reset Button Interaction
 						else if (line.startsWith("/~reset-buttons")) {
-							newList.add(new ResetButtonInteraction());
+							newList.addElement(new ResetButtonInteraction());
 						}
 						// Check for Cell Clear Interaction
 						else if (line.startsWith("/~disp-cell-clear:")) {
-							newList.add(new CellClearInteraction(Integer.parseInt(line.substring(18))));
+							newList.addElement(new CellClearInteraction(Integer.parseInt(line.substring(18))));
 						}
 						// Check for Skip Button Interaction
 						else if (line.startsWith("/~skip-button:")) {
-							newList.add(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16)));
+							newList.addElement(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16)));
 						}
 						// Check for User Input Interaction
 						else if (line.startsWith("/~user-input")) {
-							newList.add(new UserInputInteraction());
+							newList.addElement(new UserInputInteraction());
 						}
 						// Finally check for keyword
 						else if(line.startsWith("/~")){
-							newList.add(new KeywordInteraction(line.substring(2)));
+							newList.addElement(new KeywordInteraction(line.substring(2)));
 						}
 					} else { 
 						if (newList.getList().size() > 0 && line.length() > 1) {
-							if (newList.getList().getLast().getType().equals(Interaction.READ)) {
-								ReadInteraction concatRead = (ReadInteraction) newList.getList().getLast();
+							if (newList.getList().get(newList.getSize() - 1).getType().equals(Interaction.READ)) {
+								ReadInteraction concatRead = (ReadInteraction) newList.getList().get(newList.getSize() - 1);
 								concatRead.setData(concatRead.getData() + line);
 							} else {
 								ReadInteraction newRead = new ReadInteraction();
 								newRead.setData(line);
-								newList.add(newRead);
+								newList.addElement(newRead);
 							}
 						} else {
 							if (line.length() > 1) {
 								ReadInteraction newRead = new ReadInteraction();
 								newRead.setData(line);
-								newList.add(newRead);	
+								newList.addElement(newRead);	
 							}
 						}
 						
@@ -204,7 +204,7 @@ public class Scenario {
 	 * Add a new Interaction to the scenario
 	 */
 	public void addInteraction(Interaction e) {
-		this.interactionList.add(e);
+		this.interactionList.addElement(e);
 	}
 
 	public static boolean isValidScenarioFile(File f) {
