@@ -36,8 +36,13 @@ public class DisplayBrailleInteraction extends Interaction {
 	/*
 	 * Set the raised pins for this interaction
 	 */
-	public void setPins(String pins) {
+	public boolean setPins(String pins) {
+		if (pins.length() < 8) {
+			this.pins = "00000000";
+			return false;
+		}
 		this.pins = pins;
+		return true;
 	}
 	
 	/*

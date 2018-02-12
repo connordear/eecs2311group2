@@ -15,7 +15,7 @@ public class ReadInteraction extends Interaction {
 	}
 	
 	public ReadInteraction(ReadInteraction toCopy) {
-		super(toCopy.title);
+		super(toCopy.getTitle());
 		this.data = new String(toCopy.data);
 	}
 	

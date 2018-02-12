@@ -2,7 +2,7 @@ package authoringApp;
 
 public class CellClearInteraction extends Interaction {
 	
-	int cellNumber;
+	private int cellNumber;
 	
 	public CellClearInteraction(int cellNumber) {
 		super("Clear Cell " + cellNumber);

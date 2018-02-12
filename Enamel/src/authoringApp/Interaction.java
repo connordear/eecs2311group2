@@ -7,8 +7,8 @@ package authoringApp;
 public abstract class Interaction {
 	
 	private static int ID_COUNTER = 0;
-	protected int id;
-	protected String title;
+	private int id;
+	private String title;
 	public static final String READ = "READ";
 	public static final String VOICE = "VOICE";
 	public static final String DISPLAY_BRAILLE = "DISPLAY BRAILLE";

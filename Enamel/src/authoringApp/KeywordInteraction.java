@@ -2,7 +2,7 @@ package authoringApp;
 
 public class KeywordInteraction extends Interaction {
 
-	public String keyword;
+	private String keyword;
 	
 	public KeywordInteraction(String keyword) {
 		super("Keyword Interaction");
@@ -18,7 +18,7 @@ public class KeywordInteraction extends Interaction {
 	}
 	
 	public String getKeyword() {
-		return this.keyword;
+		return new String(this.keyword);
 	}
 	
 	@Override

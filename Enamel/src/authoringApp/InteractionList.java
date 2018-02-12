@@ -1,15 +1,23 @@
 package authoringApp;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
-public class InteractionList {
+public class InteractionList extends DefaultListModel<Interaction>{
 	
-	private LinkedList<Interaction> interactionList;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private ArrayList<Interaction> interactionList;
 	/*
 	 * Default Constructor
 	 */
 	public InteractionList() {
-		this.interactionList = new LinkedList<Interaction>();
+		this.interactionList = new ArrayList<Interaction>();
 	}
 	
 	
@@ -17,7 +25,7 @@ public class InteractionList {
 	 * Copy Constructor
 	 */
 	public InteractionList(InteractionList toCopy) {
-		this.interactionList = new LinkedList<Interaction>();
+		this.interactionList = new ArrayList<Interaction>();
 		for (Interaction i : toCopy.interactionList) {
 			this.interactionList.add(i);
 		}
@@ -26,17 +34,24 @@ public class InteractionList {
 	/*
 	 * Shallow copy of list for use in the scenario parent
 	 */
-	public LinkedList<Interaction> getList() {
-		return new LinkedList<Interaction>(this.interactionList);
+	public ArrayList<Interaction> getList() {
+		return new ArrayList<Interaction>(this.interactionList);
 	}
 	
 	/*
 	 * Add new Interaction to the list
 	 */
-	public void add(Interaction i) {
-		this.interactionList.add(i);
+	@Override
+	public void add(int i, Interaction e) {
+		this.interactionList.add(i, e);
 	}
 	
+	@Override
+	public void addElement(Interaction e) {
+		this.interactionList.add(e);
+	}
+	
+	@Override
 	public String toString() {
 		String res = "";
 		for(Interaction i : this.interactionList) {
@@ -44,4 +59,19 @@ public class InteractionList {
 		}
 		return res;
 	}
+
+
+	@Override
+	public int getSize() {
+		return this.interactionList.size();
+	}
+
+
+	@Override
+	public Interaction getElementAt(int index) {
+		return this.interactionList.get(index);
+	}
+	
+
+
 }
