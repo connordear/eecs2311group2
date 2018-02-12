@@ -36,6 +36,11 @@ public abstract class Interaction {
 		return this.title;
 	}
 	
+	@Override
+	public String toString() {
+		return this.getType();
+	}
+	
 	public int getId() {
 		return this.id;
 	}
