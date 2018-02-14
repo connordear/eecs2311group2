@@ -6,7 +6,7 @@ package authoringApp;
  */
 public abstract class Interaction {
 	
-	private static int ID_COUNTER = 0;
+	private static int id_counter = 0;
 	private int id;
 	private String title;
 	public static final String READ = "READ";
@@ -24,8 +24,8 @@ public abstract class Interaction {
 	
 	public Interaction(String title) {
 		this.title = title;
-		this.id = ID_COUNTER;
-		ID_COUNTER++;
+		this.id = id_counter;
+		id_counter++;
 	}
 	
 	public void setTitle(String newTitle) {
