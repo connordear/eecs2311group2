@@ -1,5 +1,6 @@
 package authoringApp;
 
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
@@ -83,12 +84,12 @@ public class ScenarioEditorView {
     private static void InitInteractionList() {
     	Scenario test = new Scenario(new File("./FactoryScenarios/Scenario_1.txt"));
 
-    	list = new JList(test.interactionList);
+    	list = new JList(test.getInteractionList());
     	list.setDragEnabled(true);
     	list.setDropMode(DropMode.INSERT);
     	list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	list.setSelectedIndex(0);
-    	list.setTransferHandler(new ListItemTransferHandler());
+//    	list.setTransferHandler(new ListItemTransferHandler());
 //    	list.setTransferHandler(new TransferHandler() {
 //            private int index;
 //            private boolean beforeIndex = false; //Start with `false` therefore if it is removed from or added to the list it still works
@@ -191,18 +192,6 @@ public class ScenarioEditorView {
     }
 
 
-	private static void InitInteractionPanel() {
-		InitInteractionList();
-		InitInteractionEditor();
-
-		// Split pane
-		designerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, interactionListPane, interactionEditorPanel);
-		designerPane.setOneTouchExpandable(true);
-		designerPane.setDividerLocation(150);
-
-		// Provide a preferred size for the split pane.
-		designerPane.setPreferredSize(new Dimension(400, 200));
-	}
 
 	private static void CreateInteractionCards() {
 		// Example of how to change the view from one to another.
@@ -227,14 +216,5 @@ public class ScenarioEditorView {
 		c.show(interactionEditorPanel, Integer.toString(r2.getId()));
 	}
 
-	public static void main(String[] args) {
-		// Schedule a job for the event-dispatching thread:
-		// creating and showing this application's GUI.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				createAndShowGUI();
-			}
-		});
-	}
 
 }
