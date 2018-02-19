@@ -44,17 +44,18 @@ import javax.swing.event.ListDataListener;
 /**
  * CustomListModel combines an ArrayList with a ListModel for ease of use.
  */
-public class CustomListModel extends ArrayList implements ListModel {
+public class CustomListModel<T> extends ArrayList<T> implements ListModel<T> {
 
+	private static final long serialVersionUID = 1L;
 	protected Object source;
-	private ArrayList listeners = new ArrayList();
+	private ArrayList<javax.swing.event.ListDataListener> listeners = new ArrayList<javax.swing.event.ListDataListener>();
 
 	CustomListModel(Object src) {
 		source = src;
 	}
 
 	@Override
-	public Object getElementAt(int index) {
+	public T getElementAt(int index) {
 		return get(index);
 	}
 
@@ -74,7 +75,7 @@ public class CustomListModel extends ArrayList implements ListModel {
 	}
 
 	void notifyListeners() {
-		// no attempt at optimziation
+		// No attempt at optimization
 		ListDataEvent le = new ListDataEvent(source, ListDataEvent.CONTENTS_CHANGED, 0, getSize());
 		for (int i = 0; i < listeners.size(); i++) {
 			((ListDataListener) listeners.get(i)).contentsChanged(le);
@@ -83,20 +84,20 @@ public class CustomListModel extends ArrayList implements ListModel {
 
 	// REMAINDER ARE OVERRIDES JUST TO CALL NOTIFYLISTENERS
 
-	public boolean add(Object o) {
+	public boolean add(T o) {
 		boolean b = super.add(o);
 		if (b)
 			notifyListeners();
 		return b;
 	}
 
-	public void add(int index, Object element) {
+	public void add(int index, T element) {
 		super.add(index, element);
 		notifyListeners();
 	}
 
 	public boolean addAll(Collection o) {
-		boolean b = super.add(o);
+		boolean b = super.addAll(o);
 		if (b)
 			notifyListeners();
 		return b;
@@ -107,8 +108,8 @@ public class CustomListModel extends ArrayList implements ListModel {
 		notifyListeners();
 	}
 
-	public Object remove(int i) {
-		Object o = super.remove(i);
+	public T remove(int i) {
+		T o = super.remove(i);
 		notifyListeners();
 		return o;
 	}
@@ -120,8 +121,8 @@ public class CustomListModel extends ArrayList implements ListModel {
 		return b;
 	}
 
-	public Object set(int index, Object element) {
-		Object o = super.set(index, element);
+	public T set(int index, T element) {
+		T o = super.set(index, element);
 		notifyListeners();
 		return o;
 	}
