@@ -129,13 +129,21 @@ public class ScenarioEditorView {
     }
 
     private static void InitInteractionList() {
-    	Scenario test = new Scenario(new File("./FactoryScenarios/Scenario_1.txt"));
-
     	list = new JList(test.interactionList);
     	list.setDragEnabled(true);
     	list.setDropMode(DropMode.INSERT);
     	list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	list.setSelectedIndex(0);
+    	list.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int itemIndex = e.getFirstIndex();
+				Interaction currentInteraction = test.interactionList.get(itemIndex);
+				String interactionId = Integer.toString(currentInteraction.getId());
+				CardLayout cards = (CardLayout) interactionEditorPanel.getLayout();
+				cards.show(interactionEditorPanel, interactionId);
+			}
+		});
     	list.setLayoutOrientation(JList.VERTICAL);
     	list.setVisibleRowCount(0);
     	list.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -147,7 +155,7 @@ public class ScenarioEditorView {
 
     private static void InitInteractionEditor() {
     	// Right pane (controls for editing)
-    	interactionEditorPanel = new JPanel();
+    	interactionEditorPanel = new JPanel(new CardLayout());
     	// Provide minimum sizes for the two components in the split pane.
         Dimension minimumSize = new Dimension(100, 50);
         interactionEditorPanel.setMinimumSize(minimumSize);
@@ -240,7 +248,7 @@ public class ScenarioEditorView {
 		private static void CreateInteractionCards(CustomListModel<Interaction> list) {
 			for (Interaction i : list) {
 				switch (i.getType()) {
-				case Interaction.READ:
+				case "READ":
 					interactionEditorPanel.add(new ReadInteractionView((ReadInteraction) i).getInteractionView(),
 							Integer.toString(i.getId()));
 				default:
