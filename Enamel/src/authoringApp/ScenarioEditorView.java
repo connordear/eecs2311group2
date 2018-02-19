@@ -1,14 +1,17 @@
 package authoringApp;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
-import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,10 +19,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
-
-import authoringApp.dndList.ListItemTransferHandler;
+import javax.swing.TransferHandler;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class ScenarioEditorView {
 	// Frame
@@ -35,12 +38,8 @@ public class ScenarioEditorView {
 	private static JScrollPane interactionListPane;
 	private static JPanel interactionEditorPanel;
 	
-	private static JList list;
+	private static JList<String> list;
 	
-	/**
-     * Create the GUI and show it.  For thread safety, this method should be
-     * invoked from the event-dispatching thread.
-     */	
     private static void createAndShowGUI() {
     	InitMenu();
     	InitInteractionPanel();
@@ -51,10 +50,8 @@ public class ScenarioEditorView {
         frame.setJMenuBar(menuBar);
         frame.getContentPane().add(designerPane);
         
-        
         // Display the window
         frame.setSize(600, 600);
-        //frame.pack(); it will automatically change the size of the frames according to the size of components in it
         frame.setVisible(true);
     }
     
@@ -84,40 +81,66 @@ public class ScenarioEditorView {
     }
     
     private static void InitInteractionList() {
-    	// Left pane (list of interactions)
-    	String[] interactions = { "Read Out", "Wait", "Get Input"};
-    	list = new JList(interactions);
+    	Scenario test = new Scenario(new File("./FactoryScenarios/Scenario_1.txt"));
+
+    	list = new JList(test.interactionList);
+    	list.setDragEnabled(true);
+    	list.setDropMode(DropMode.INSERT);
     	list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	list.setSelectedIndex(0);
     	list.setTransferHandler(new ListItemTransferHandler());
-    	list.setDropMode(DropMode.INSERT);
-    	list.setDragEnabled(true);
+//    	list.setTransferHandler(new TransferHandler() {
+//            private int index;
+//            private boolean beforeIndex = false; //Start with `false` therefore if it is removed from or added to the list it still works
+//
+//            @Override
+//            public int getSourceActions(JComponent comp) {
+//                return MOVE;
+//            }
+//
+//            @Override
+//            public Transferable createTransferable(JComponent comp) {
+//                index = list.getSelectedIndex(); 
+//                return new StringSelection((String) list.getSelectedValue());
+//            }
+//
+//            @Override
+//            public void exportDone(JComponent comp, Transferable trans, int action) {
+//                if (action == MOVE) {
+//                    if (beforeIndex)
+//                    	test.interactionList.remove(index + 1);
+//                    else
+//                    	test.interactionList.remove(index);
+//                }
+//            }
+//
+//            @Override
+//            public boolean canImport(TransferHandler.TransferSupport support) {
+//                return support.isDataFlavorSupported(DataFlavor.stringFlavor);
+//            }
+//
+//            @Override
+//            public boolean importData(TransferHandler.TransferSupport support) {
+//                try {
+//                	Interaction t = (Interaction) support.getTransferable().getTransferData(DataFlavor.);
+//                    String s = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+//                    JList.DropLocation dl = (JList.DropLocation) support.getDropLocation();
+//                    test.interactionList.add(dl.getIndex(), );
+//                    beforeIndex = dl.getIndex() < index ? true : false;
+//                    return true;
+//                } catch (UnsupportedFlavorException | IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                return false;
+//            }
+//        });
+    	
     	list.setLayoutOrientation(JList.VERTICAL);
     	list.setVisibleRowCount(0);
     	list.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-//    	list.setCellRenderer(new ListCellRenderer<Thumbnail>() {
-//    		private final JPanel p = new JPanel(new BorderLayout());
-//    		private final JLabel icon = new JLabel((Icon)null, JLabel.CENTER);
-//    		private final JLabel label = new JLabel("", JLabel.CENTER);
-//
-//    		@Override
-//    		public Component getListCellRendererComponent(
-//    				JList<? extends Thumbnail> list, Thumbnail value, int index,
-//    				boolean isSelected, boolean cellHasFocus) {
-//    			icon.setIcon(value.icon);
-//    	        label.setText(value.name);
-//    	        label.setForeground(isSelected ? list.getSelectionForeground()
-//    	                            : list.getForeground());
-//    	        p.add(icon);
-//    	        p.add(label, BorderLayout.SOUTH);
-//    	        p.setBackground(isSelected ? list.getSelectionBackground()
-//    	                        : list.getBackground());
-//    	        return p;
-//    		}
-//    	    });
-    	
+
     	interactionListPane = new JScrollPane(list);
-    	// Provide minimum sizes for the two components in the split pane.
         Dimension minimumSize = new Dimension(100, 50);
         interactionListPane.setMinimumSize(minimumSize);
     }
@@ -148,9 +171,23 @@ public class ScenarioEditorView {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+            	try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException ex) {
+                } catch (InstantiationException ex) {
+                } catch (IllegalAccessException ex) {
+                } catch (UnsupportedLookAndFeelException ex) {
+                }
+            	
                 createAndShowGUI();
             }
         });
+    }
+    
+    protected class DesignerPane extends JPanel {
+    	public DesignerPane() {
+    		
+    	}
     }
 	
 }

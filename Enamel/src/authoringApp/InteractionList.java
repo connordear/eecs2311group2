@@ -52,6 +52,12 @@ public class InteractionList extends DefaultListModel<Interaction>{
 	}
 	
 	@Override
+	public Interaction remove(int index) {
+		return this.interactionList.remove(index);
+	}
+	
+	
+	@Override
 	public String toString() {
 		String res = "";
 		for(Interaction i : this.interactionList) {
