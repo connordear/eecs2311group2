@@ -9,12 +9,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Scenario {
 	
 	private static int counter = 0;
 	
-	public InteractionList interactionList;
+	//public InteractionList interactionList;
+	public CustomListModel interactionList;
 	protected String title;
 	protected int cells;
 	protected int buttons;
@@ -37,7 +39,8 @@ public class Scenario {
 		setTitle(title);
 		this.setButtons(buttons);
 		this.setCells(cells);
-		this.interactionList = new InteractionList();
+		this.interactionList = new CustomListModel(new ArrayList<Interaction>());
+		//this.interactionList = new InteractionListModel();
 		this.id = counter;
 		Scenario.counter++;
 	}
@@ -55,7 +58,8 @@ public class Scenario {
 	 */
 	public Scenario(File scenarioTextFile) throws IllegalArgumentException{
 		this();
-		InteractionList newList = new InteractionList();
+		//InteractionList newList = new InteractionList();
+		CustomListModel newList = new CustomListModel(new ArrayList<Interaction>());
 		BufferedReader reader;
 		if (Scenario.isValidScenarioFile(scenarioTextFile)) {
 			try {
@@ -75,47 +79,47 @@ public class Scenario {
 						// Then we have a command
 						// Check for Braille Interaction
 						if(line.startsWith("/~disp-cell-pins:")) {
-							newList.addElement(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
+							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
 						}
 						// Check for Pause Interaction
 						else if (line.startsWith("/~pause:")) {
-							newList.addElement(new PauseInteraction(Integer.parseInt(line.substring(8))));
+							newList.add(new PauseInteraction(Integer.parseInt(line.substring(8))));
 						}
 						// Check for Reset Button Interaction
 						else if (line.startsWith("/~reset-buttons")) {
-							newList.addElement(new ResetButtonInteraction());
+							newList.add(new ResetButtonInteraction());
 						}
 						// Check for Cell Clear Interaction
 						else if (line.startsWith("/~disp-cell-clear:")) {
-							newList.addElement(new CellClearInteraction(Integer.parseInt(line.substring(18))));
+							newList.add(new CellClearInteraction(Integer.parseInt(line.substring(18))));
 						}
 						// Check for Skip Button Interaction
 						else if (line.startsWith("/~skip-button:")) {
-							newList.addElement(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16)));
+							newList.add(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16)));
 						}
 						// Check for User Input Interaction
 						else if (line.startsWith("/~user-input")) {
-							newList.addElement(new UserInputInteraction());
+							newList.add(new UserInputInteraction());
 						}
 						// Finally check for keyword
 						else if(line.startsWith("/~")){
-							newList.addElement(new KeywordInteraction(line.substring(2)));
+							newList.add(new KeywordInteraction(line.substring(2)));
 						}
 					} else { 
-						if (newList.getList().size() > 0 && line.length() > 1) {
-							if (newList.getList().get(newList.getSize() - 1).getType().equals(Interaction.READ)) {
-								ReadInteraction concatRead = (ReadInteraction) newList.getList().get(newList.getSize() - 1);
+						if (newList.size() > 0 && line.length() > 1) {
+							if (((Interaction) newList.get(newList.getSize() - 1)).getType().equals(Interaction.READ)) {
+								ReadInteraction concatRead = (ReadInteraction) newList.get(newList.getSize() - 1);
 								concatRead.setData(concatRead.getData() + line);
 							} else {
 								ReadInteraction newRead = new ReadInteraction();
 								newRead.setData(line);
-								newList.addElement(newRead);
+								newList.add(newRead);
 							}
 						} else {
 							if (line.length() > 1) {
 								ReadInteraction newRead = new ReadInteraction();
 								newRead.setData(line);
-								newList.addElement(newRead);	
+								newList.add(newRead);	
 							}
 						}
 						
@@ -196,7 +200,7 @@ public class Scenario {
 		return new File(url.toURI());
 	}
 	
-	public InteractionList getInteractionList() {
+	public CustomListModel getInteractionList() {
 		return this.interactionList;
 	}
 	
@@ -204,7 +208,7 @@ public class Scenario {
 	 * Add a new Interaction to the scenario
 	 */
 	public void addInteraction(Interaction e) {
-		this.interactionList.addElement(e);
+		this.interactionList.add(e);
 	}
 
 	public static boolean isValidScenarioFile(File f) {
@@ -246,9 +250,11 @@ public class Scenario {
 		writer.write("Cell " + this.getCells() + "\n");
 		writer.write("Button " + this.getButtons() + "\n");
 		writer.write(this.getTitle() + "\n");
-		for(Interaction i : this.interactionList.getList()) {
-			String nextLine = i.generateScenarioText();
-		    writer.append(nextLine + "\n");
+		int i = 0;
+		for (i = 0; i < this.interactionList.size(); i++) {
+			Interaction inter = (Interaction) this.interactionList.get(i);
+			String nextLine = inter.generateScenarioText();
+			writer.append(nextLine + "\n");
 		}
 	    writer.close();
 	}

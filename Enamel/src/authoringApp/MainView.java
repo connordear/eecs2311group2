@@ -33,7 +33,7 @@ public class MainView {
     	
         frame = new JFrame("Braille Author");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        frame.setJMenuBar(menuBar);
         
 
         //Add the ubiquitous "Hello World" label.
