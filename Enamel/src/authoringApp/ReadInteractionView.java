@@ -18,6 +18,7 @@ public class ReadInteractionView extends InteractionView {
 	
 	public ReadInteractionView(ReadInteraction r) {
 		super(r.getInteraction());
+		GridBagConstraints c = super.c;
 		this.readModel = r;
 		
 		// Data Field
@@ -26,21 +27,19 @@ public class ReadInteractionView extends InteractionView {
 		this.dataField.setLineWrap(true);
 	    this.dataField.setWrapStyleWord(true);
 		JScrollPane sp = new JScrollPane(this.dataField);
-		super.c.insets = new Insets(10,10,10,10);
-		super.c.fill = GridBagConstraints.BOTH;
-		super.c.gridheight = 10;
-		super.c.weightx = 1;
-		super.c.weighty = 1;
-		super.c.gridx = 1;
-		super.c.gridy = 1;
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.gridx = 1;
+		c.gridy = 1;
 		super.addRow(sp, c);
 		
 		// Data Label
 		this.dataLabel.setLabelFor(this.dataField);
-		super.c.weightx = 0;
-		super.c.weighty = 0;
-		super.c.gridx = 0;
-		super.c.gridy = 1;
+		c.weightx = 0;
+		c.weighty = 0;
+		c.gridx = 0;
+		c.gridy = 1;
 		super.addRow(this.dataLabel, c);
 		
 		this.dataField.getDocument().addDocumentListener(new DocumentListener() {
