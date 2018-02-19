@@ -84,11 +84,12 @@ public class ScenarioEditorView {
     private static void InitInteractionList() {
     	Scenario test = new Scenario(new File("./FactoryScenarios/Scenario_1.txt"));
 
-    	list = new JList(test.getInteractionList());
+    	list = new JList(test.interactionList);
     	list.setDragEnabled(true);
     	list.setDropMode(DropMode.INSERT);
     	list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	list.setSelectedIndex(0);
+    	
 //    	list.setTransferHandler(new ListItemTransferHandler());
 //    	list.setTransferHandler(new TransferHandler() {
 //            private int index;
