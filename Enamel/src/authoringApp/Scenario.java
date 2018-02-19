@@ -109,7 +109,7 @@ public class Scenario {
 						if (newList.size() > 0 && line.length() > 1) {
 							if (((Interaction) newList.get(newList.getSize() - 1)).getType().equals(
 									Interaction.InteractionTypes.get(
-											Interaction.InteractionType.CLEAR_BRAILLE))) {
+											Interaction.InteractionType.READ))) {
 								ReadInteraction concatRead = (ReadInteraction) newList.get(newList.getSize() - 1);
 								concatRead.setData(concatRead.getData() + line);
 							} else {
