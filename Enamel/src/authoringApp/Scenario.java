@@ -16,7 +16,7 @@ public class Scenario {
 	private static int counter = 0;
 	
 	//public InteractionList interactionList;
-	public CustomListModel interactionList;
+	public CustomListModel<Interaction> interactionList;
 	protected String title;
 	protected int cells;
 	protected int buttons;
