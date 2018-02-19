@@ -1,4 +1,4 @@
-package authoringApp.dndList;
+package authoringApp;
 
 import java.awt.Component;
 import java.awt.datatransfer.DataFlavor;
@@ -11,6 +11,7 @@ import java.util.Objects;
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.TransferHandler;
 
 //https://docs.oracle.com/javase/tutorial/uiswing/dnd/dropmodedemo.html
@@ -106,6 +107,10 @@ public class ListItemTransferHandler extends TransferHandler {
 
 	  @Override
 	  protected void exportDone(JComponent c, Transferable data, int action) {
+		  JOptionPane.showMessageDialog(null, 
+                  "Dropped", 
+                  "TITLE", 
+                  JOptionPane.WARNING_MESSAGE);
 		  c.getRootPane().getGlassPane().setVisible(false);
 		  cleanup(c, action == MOVE);
 	  }
