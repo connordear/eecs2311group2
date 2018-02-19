@@ -1,6 +1,15 @@
 package authoringApp;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 
 public abstract class InteractionView {
 	
@@ -13,10 +22,74 @@ public abstract class InteractionView {
 	public static final String USER_INPUT = "USER INPUT";
 	public static final String RESET_BUTTONS = "RESET BUTTONS";
 	public static final String CLEAR_BRAILLE = "CLEAR BRAILLE";
+	protected Interaction interactionModel;
 	protected JPanel interactionView;
+	protected GridBagConstraints c;
+	private int currentRow;
 	
-	public InteractionView() {
+	
+	public InteractionView(Interaction i) {
+		this.currentRow = 0;
+		this.interactionModel = i;
 		this.interactionView = new JPanel();
+		this.interactionView.setLayout(new GridBagLayout());
+		this.c = new GridBagConstraints();
+		c.ipadx = 10;
+		c.ipady = 10;
+		// Title Field
+		JTextField titleField = new JTextField(this.interactionModel.getTitle());
+		titleField.getAccessibleContext().setAccessibleDescription("Type the title of this Interaction here.");
+		c.gridx = 1;
+		c.gridy = this.currentRow;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		this.interactionView.add(titleField, c);
+		
+		// Title Label
+		JLabel titleLabel = new JLabel("Title: ");
+		titleLabel.setLabelFor(titleField);
+		c.weightx = 0;
+		c.weighty = 0;
+		c.gridx = 0;
+		c.gridy = this.currentRow;
+		this.interactionView.add(titleLabel, c);
+		this.currentRow++;
+		
+		
+		titleField.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				try {
+					InteractionView.this.interactionModel.setTitle(e.getDocument().getText(0, e.getDocument().getLength()));
+				} catch (BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println(InteractionView.this.getTitle());
+			}
+			public void removeUpdate(DocumentEvent e) {
+				try {
+					InteractionView.this.interactionModel.setTitle(e.getDocument().getText(0, e.getDocument().getLength()));
+				} catch (BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println("Remove Update, new title is: " + InteractionView.this.getTitle());
+			  }
+			  public void insertUpdate(DocumentEvent e) {
+				  try {
+					  InteractionView.this.interactionModel.setTitle(e.getDocument().getText(0, e.getDocument().getLength()));
+					} catch (BadLocationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				  System.out.println("Insert Update, new title is: " + InteractionView.this.getTitle());
+			  }
+
+			  public void warn() {
+			     System.out.println("Problem");
+			  }
+		});
 	}
 	
 	
@@ -24,6 +97,18 @@ public abstract class InteractionView {
 		return this.interactionView;
 	};
 	
+	public void addRow(JComponent j, GridBagConstraints c) {
+//		Need to change Read View to adding in a JFrame instead of Components?
+//		c.gridy = currentRow;
+		this.interactionView.add(j, c);
+		this.currentRow++;
+	}
+	
+	abstract public String getTitle();
+	
+	abstract public boolean setTitle(String s);
+	
 	abstract public String getType();
-
+	
+	
 }

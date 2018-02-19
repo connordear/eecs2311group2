@@ -18,6 +18,7 @@ public abstract class Interaction {
 	public static final String USER_INPUT = "USER INPUT";
 	public static final String RESET_BUTTONS = "RESET BUTTONS";
 	public static final String CLEAR_BRAILLE = "CLEAR BRAILLE";	
+	
 	public Interaction() {
 		this("Untitled");
 	}
@@ -28,8 +29,9 @@ public abstract class Interaction {
 		id_counter++;
 	}
 	
-	public void setTitle(String newTitle) {
+	public boolean setTitle(String newTitle) {
 		this.title = newTitle;
+		return (newTitle != null);
 	}
 	
 	public String getTitle() {
@@ -43,6 +45,10 @@ public abstract class Interaction {
 	
 	public int getId() {
 		return this.id;
+	}
+	
+	public Interaction getInteraction() {
+		return this;
 	}
 	
 	abstract public String generateScenarioText();
