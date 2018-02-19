@@ -29,7 +29,7 @@ public class CellClearInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.CLEAR_BRAILLE;
+		return Interaction.InteractionTypes.get(Interaction.InteractionType.CLEAR_BRAILLE);
 	}
 	
 	@Override

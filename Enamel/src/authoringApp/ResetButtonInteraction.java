@@ -8,7 +8,7 @@ public class ResetButtonInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.RESET_BUTTONS;
+		return Interaction.InteractionTypes.get(Interaction.InteractionType.RESET_BUTTONS);
 	}
 	
 	@Override

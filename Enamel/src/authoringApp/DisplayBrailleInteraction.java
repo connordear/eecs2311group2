@@ -62,7 +62,7 @@ public class DisplayBrailleInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.DISPLAY_BRAILLE;
+		return Interaction.InteractionTypes.get(Interaction.InteractionType.DISPLAY_BRAILLE);
 	}
 	
 	/*

@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -27,6 +28,9 @@ import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.basic.BasicArrowButton;
+import javax.swing.text.html.HTMLDocument.Iterator;
+
+import authoringApp.Interaction.InteractionType;
 
 public class ScenarioEditorView {
 	// Frame
@@ -48,6 +52,11 @@ public class ScenarioEditorView {
 	private static JButton removeIntButton;
 	private static JButton moveUpIntButton;
 	private static JButton moveDownIntButton;
+	private static JButton saveScenarioButton;
+	private static JButton runScenarioButton;
+	
+	// Controls
+	private static JComboBox newIntOptions;
 	
 	// Layout managers
 	private static GridBagConstraints c;
@@ -55,6 +64,8 @@ public class ScenarioEditorView {
 	private static JList<String> list;
 	
     private static void createAndShowGUI() {
+    	c = new GridBagConstraints();
+    	
     	InitMenu();
     	InitInteractionPanel();
     	InitControlsPanel();
@@ -64,7 +75,7 @@ public class ScenarioEditorView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setJMenuBar(menuBar);
         frame.setLayout(new GridBagLayout());
-        c = new GridBagConstraints();
+        
         c.ipadx = 10;
         c.ipady = 10;
         c.gridx = 0;
@@ -72,7 +83,6 @@ public class ScenarioEditorView {
 		c.weightx = 1;
 		c.weighty = 1;
 		c.fill = GridBagConstraints.BOTH;
-		
         frame.getContentPane().add(designerPane, c);
         
         c.gridx = 0;
@@ -201,15 +211,48 @@ public class ScenarioEditorView {
     
     private static void InitControlsPanel() {
     	controlsPanel = new JPanel();
+    	controlsPanel.setLayout(new GridBagLayout());
+    	c.ipadx = 10;
+        c.ipady = 10;
+        c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = GridBagConstraints.RELATIVE;
+		c.gridy = GridBagConstraints.RELATIVE;
+		
+		
+		newIntOptions = new JComboBox();
+		for (String value : Interaction.InteractionTypes.values()) {
+		    newIntOptions.addItem(value);
+		}
+		
     	addIntButton = new JButton("+");
     	removeIntButton = new JButton("-");
     	moveUpIntButton = new BasicArrowButton(BasicArrowButton.NORTH);
     	moveDownIntButton = new BasicArrowButton(BasicArrowButton.SOUTH);
     	
-    	controlsPanel.add(addIntButton);
-    	controlsPanel.add(removeIntButton);
-    	controlsPanel.add(moveUpIntButton);
-    	controlsPanel.add(moveDownIntButton);
+    	addIntButton.setToolTipText("Add new interaction");
+    	removeIntButton.setToolTipText("Remove interaction");
+    	moveUpIntButton.setToolTipText("Move interaction up");
+    	moveDownIntButton.setToolTipText("Move interaction down");
+    	
+    	controlsPanel.add(newIntOptions, c);
+    	controlsPanel.add(addIntButton, c);
+    	controlsPanel.add(removeIntButton, c);
+    	controlsPanel.add(moveUpIntButton, c);
+    	controlsPanel.add(moveDownIntButton, c);
+    	
+		c.anchor = GridBagConstraints.EAST;
+    	saveScenarioButton = new JButton("Save");
+    	runScenarioButton = new JButton("Run");
+    	
+    	saveScenarioButton.setToolTipText("Save scenario");
+    	runScenarioButton.setToolTipText("Run simulation");
+    	
+    	controlsPanel.add(saveScenarioButton, c);
+    	controlsPanel.add(runScenarioButton, c);
     }
     
     public static void main(String[] args) {

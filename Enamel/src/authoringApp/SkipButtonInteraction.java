@@ -31,7 +31,7 @@ public class SkipButtonInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.SKIP_BUTTON;
+		return Interaction.InteractionTypes.get(Interaction.InteractionType.SKIP_BUTTON);
 	}
 	
 	@Override

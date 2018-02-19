@@ -23,7 +23,8 @@ public class KeywordInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.KEYWORD;
+		return Interaction.InteractionTypes.get(Interaction.InteractionType.KEYWORD);
+		
 	}
 	
 	@Override

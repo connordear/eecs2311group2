@@ -1,5 +1,7 @@
 package authoringApp;
 
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * Class is meant to be inherited and used to create the other Interaction classes
@@ -9,15 +11,27 @@ public abstract class Interaction {
 	private static int id_counter = 0;
 	private int id;
 	private String title;
-	public static final String READ = "READ";
-	public static final String VOICE = "VOICE";
-	public static final String DISPLAY_BRAILLE = "DISPLAY BRAILLE";
-	public static final String KEYWORD = "KEYWORD";
-	public static final String PAUSE = "PAUSE";
-	public static final String SKIP_BUTTON = "SKIP BUTTON";
-	public static final String USER_INPUT = "USER INPUT";
-	public static final String RESET_BUTTONS = "RESET BUTTONS";
-	public static final String CLEAR_BRAILLE = "CLEAR BRAILLE";	
+	protected enum InteractionType {
+		READ, VOICE, DISPLAY_BRAILLE,
+		KEYWORD, PAUSE, SKIP_BUTTON,
+		USER_INPUT, RESET_BUTTONS, CLEAR_BRAILLE
+	}
+	
+	protected static final Map<InteractionType, String> InteractionTypes = createMap();
+	private static Map<InteractionType, String> createMap() {
+		Map<InteractionType, String> map = new HashMap<InteractionType, String>();
+		map.put(InteractionType.READ, "READ");
+		map.put(InteractionType.VOICE, "VOICE");
+		map.put(InteractionType.DISPLAY_BRAILLE, "DISPLAY BRAILLE");
+		map.put(InteractionType.KEYWORD, "KEYWORD");
+		map.put(InteractionType.PAUSE, "PAUSE");
+		map.put(InteractionType.SKIP_BUTTON, "SKIP BUTTON");
+		map.put(InteractionType.USER_INPUT, "USER INPUT");
+		map.put(InteractionType.RESET_BUTTONS, "RESET BUTTONS");
+		map.put(InteractionType.CLEAR_BRAILLE, "CLEAR BRAILLE");
+		return map;
+	}
+	
 	
 	public Interaction() {
 		this("Untitled");
