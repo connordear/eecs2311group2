@@ -20,7 +20,6 @@ public class InteractionList extends DefaultListModel<Interaction>{
 		this.interactionList = new ArrayList<Interaction>();
 	}
 	
-	
 	/*
 	 * Copy Constructor
 	 */

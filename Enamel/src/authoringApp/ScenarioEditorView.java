@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -30,6 +31,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicArrowButton;
+import javax.swing.text.html.HTMLDocument.Iterator;
+
+import authoringApp.Interaction.InteractionType;
 
 public class ScenarioEditorView {
 	// Frame
@@ -51,220 +55,198 @@ public class ScenarioEditorView {
 	private static JButton removeIntButton;
 	private static JButton moveUpIntButton;
 	private static JButton moveDownIntButton;
+	private static JButton saveScenarioButton;
+	private static JButton runScenarioButton;
+
+	// Controls
+	private static JComboBox newIntOptions;
 
 	// Layout managers
 	private static GridBagConstraints c;
 
-	private static JList list;
+	private static JList<String> list;
 
 	public static Scenario test = new Scenario(new File("./FactoryScenarios/Scenario_1.txt"));
 
-	private static void createAndShowGUI() {
-		InitMenu();
-		InitInteractionPanel();
-		InitControlsPanel();
+    private static void createAndShowGUI() {
+    	c = new GridBagConstraints();
 
-		// Create frame
-		frame = new JFrame("Braille Author");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setJMenuBar(menuBar);
-		frame.setLayout(new GridBagLayout());
-		c = new GridBagConstraints();
-		c.ipadx = 10;
-		c.ipady = 10;
-		c.gridx = 0;
+    	InitMenu();
+    	InitInteractionPanel();
+    	InitControlsPanel();
+
+    	// Create frame
+        frame = new JFrame("Braille Author");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setJMenuBar(menuBar);
+        frame.setLayout(new GridBagLayout());
+
+        c.ipadx = 10;
+        c.ipady = 10;
+        c.gridx = 0;
 		c.gridy = 0;
 		c.weightx = 1;
 		c.weighty = 1;
 		c.fill = GridBagConstraints.BOTH;
+        frame.getContentPane().add(designerPane, c);
 
-		frame.getContentPane().add(designerPane, c);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.weightx = 1;
+        c.weighty = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        frame.getContentPane().add(controlsPanel, c);
 
-		c.gridx = 0;
-		c.gridy = 1;
+        // Display the window
+        frame.setSize(600, 600);
+        //frame.pack();
+        frame.setVisible(true);
+    }
+
+    private static void InitMenu() {
+    	// Create menu
+    	menuBar = new JMenuBar();
+    	fileMenu = new JMenu("File");
+    	fileMenu.getAccessibleContext().setAccessibleDescription(
+    			"File menu which contains options to create new scenario file or open an existing one.");
+
+    	// File menu items
+    	newFile = new JMenuItem("New");
+    	openFile = new JMenuItem("Open");
+    	saveFile = new JMenuItem("Save");
+    	saveAsFile = new JMenuItem("Save As");
+    	exit = new JMenuItem("Exit");
+
+    	fileMenu.add(newFile);
+    	fileMenu.add(openFile);
+    	fileMenu.addSeparator();
+    	fileMenu.add(saveFile);
+    	fileMenu.add(saveAsFile);
+    	fileMenu.addSeparator();
+    	fileMenu.add(exit);
+
+    	menuBar.add(fileMenu);
+    }
+
+    private static void InitInteractionList() {
+    	Scenario test = new Scenario(new File("./FactoryScenarios/Scenario_1.txt"));
+
+    	list = new JList(test.interactionList);
+    	list.setDragEnabled(true);
+    	list.setDropMode(DropMode.INSERT);
+    	list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    	list.setSelectedIndex(0);
+    	list.setLayoutOrientation(JList.VERTICAL);
+    	list.setVisibleRowCount(0);
+    	list.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+    	interactionListPane = new JScrollPane(list);
+        Dimension minimumSize = new Dimension(100, 50);
+        interactionListPane.setMinimumSize(minimumSize);
+    }
+
+    private static void InitInteractionEditor() {
+    	// Right pane (controls for editing)
+    	interactionEditorPanel = new JPanel();
+    	// Provide minimum sizes for the two components in the split pane.
+        Dimension minimumSize = new Dimension(100, 50);
+        interactionEditorPanel.setMinimumSize(minimumSize);
+				CreateInteractionCards(test.interactionList);
+    }
+
+    private static void InitInteractionPanel() {
+    	InitInteractionList();
+    	InitInteractionEditor();
+
+    	// Split pane
+    	designerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, interactionListPane, interactionEditorPanel);
+    	designerPane.setOneTouchExpandable(true);
+    	designerPane.setDividerLocation(150);
+
+        // Provide a preferred size for the split pane.
+        designerPane.setPreferredSize(new Dimension(400, 200));
+    }
+
+    private static void InitControlsPanel() {
+    	controlsPanel = new JPanel();
+    	controlsPanel.setLayout(new GridBagLayout());
+    	c.ipadx = 10;
+        c.ipady = 10;
+        c.gridx = 0;
+		c.gridy = 0;
 		c.weightx = 1;
-		c.weighty = 0;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		frame.getContentPane().add(controlsPanel, c);
+		c.weighty = 1;
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = GridBagConstraints.RELATIVE;
+		c.gridy = GridBagConstraints.RELATIVE;
 
-		// Display the window
-		frame.setSize(600, 600);
-		// frame.pack();
-		frame.setVisible(true);
-	}
 
-	private static void InitMenu() {
-		// Create menu
-		menuBar = new JMenuBar();
-		fileMenu = new JMenu("File");
-		fileMenu.getAccessibleContext().setAccessibleDescription(
-				"File menu which contains options to create new scenario file or open an existing one.");
+		newIntOptions = new JComboBox();
+		for (String value : Interaction.InteractionTypes.values()) {
+		    newIntOptions.addItem(value);
+		}
 
-		// File menu items
-		newFile = new JMenuItem("New");
-		openFile = new JMenuItem("Open");
-		saveFile = new JMenuItem("Save");
-		saveAsFile = new JMenuItem("Save As");
-		exit = new JMenuItem("Exit");
+    	addIntButton = new JButton("+");
+    	removeIntButton = new JButton("-");
+    	moveUpIntButton = new BasicArrowButton(BasicArrowButton.NORTH);
+    	moveDownIntButton = new BasicArrowButton(BasicArrowButton.SOUTH);
 
-		fileMenu.add(newFile);
-		fileMenu.add(openFile);
-		fileMenu.addSeparator();
-		fileMenu.add(saveFile);
-		fileMenu.add(saveAsFile);
-		fileMenu.addSeparator();
-		fileMenu.add(exit);
+    	addIntButton.setToolTipText("Add new interaction");
+    	removeIntButton.setToolTipText("Remove interaction");
+    	moveUpIntButton.setToolTipText("Move interaction up");
+    	moveDownIntButton.setToolTipText("Move interaction down");
 
-		menuBar.add(fileMenu);
-	}
+    	controlsPanel.add(newIntOptions, c);
+    	controlsPanel.add(addIntButton, c);
+    	controlsPanel.add(removeIntButton, c);
+    	controlsPanel.add(moveUpIntButton, c);
+    	controlsPanel.add(moveDownIntButton, c);
 
-	private static void InitInteractionList() {
+		c.anchor = GridBagConstraints.EAST;
+    	saveScenarioButton = new JButton("Save");
+    	runScenarioButton = new JButton("Run");
 
-		list = new JList(test.interactionList);
-		list.setDragEnabled(true);
-		list.setDropMode(DropMode.INSERT);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setSelectedIndex(0);
-		list.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				int itemIndex = e.getFirstIndex();
-				Interaction currentInteraction = test.interactionList.get(itemIndex);
-				String interactionId = Integer.toString(currentInteraction.getId());
-				CardLayout cards = (CardLayout) interactionEditorPanel.getLayout();
-				cards.show(interactionEditorPanel, interactionId);
-			}
-		});
+    	saveScenarioButton.setToolTipText("Save scenario");
+    	runScenarioButton.setToolTipText("Run simulation");
 
-		// list.setTransferHandler(new ListItemTransferHandler());
-		// list.setTransferHandler(new TransferHandler() {
-		// private int index;
-		// private boolean beforeIndex = false; //Start with `false` therefore if it is
-		// removed from or added to the list it still works
-		//
-		// @Override
-		// public int getSourceActions(JComponent comp) {
-		// return MOVE;
-		// }
-		//
-		// @Override
-		// public Transferable createTransferable(JComponent comp) {
-		// index = list.getSelectedIndex();
-		// return new StringSelection((String) list.getSelectedValue());
-		// }
-		//
-		// @Override
-		// public void exportDone(JComponent comp, Transferable trans, int action) {
-		// if (action == MOVE) {
-		// if (beforeIndex)
-		// test.interactionList.remove(index + 1);
-		// else
-		// test.interactionList.remove(index);
-		// }
-		// }
-		//
-		// @Override
-		// public boolean canImport(TransferHandler.TransferSupport support) {
-		// return support.isDataFlavorSupported(DataFlavor.stringFlavor);
-		// }
-		//
-		// @Override
-		// public boolean importData(TransferHandler.TransferSupport support) {
-		// try {
-		// Interaction t = (Interaction)
-		// support.getTransferable().getTransferData(DataFlavor.);
-		// String s = (String)
-		// support.getTransferable().getTransferData(DataFlavor.stringFlavor);
-		// JList.DropLocation dl = (JList.DropLocation) support.getDropLocation();
-		// test.interactionList.add(dl.getIndex(), );
-		// beforeIndex = dl.getIndex() < index ? true : false;
-		// return true;
-		// } catch (UnsupportedFlavorException | IOException e) {
-		// e.printStackTrace();
-		// }
-		//
-		// return false;
-		// }
-		// });
+    	controlsPanel.add(saveScenarioButton, c);
+    	controlsPanel.add(runScenarioButton, c);
+    }
 
-		list.setLayoutOrientation(JList.VERTICAL);
-		list.setVisibleRowCount(0);
-		list.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    public static void main(String[] args) {
+        //Schedule a job for the event-dispatching thread:
+        //creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException ex) {
+                } catch (InstantiationException ex) {
+                } catch (IllegalAccessException ex) {
+                } catch (UnsupportedLookAndFeelException ex) {
+                }
 
-		interactionListPane = new JScrollPane(list);
-		Dimension minimumSize = new Dimension(100, 50);
-		interactionListPane.setMinimumSize(minimumSize);
-	}
+                createAndShowGUI();
+            }
+        });
+    }
 
-	private static void InitInteractionEditor() {
-		// Right pane (controls for editing)
-		interactionEditorPanel = new JPanel(new CardLayout());
-		// Provide minimum sizes for the two components in the split pane.
-		Dimension minimumSize = new Dimension(100, 50);
-		interactionEditorPanel.setMinimumSize(minimumSize);
-		CreateInteractionCards(test.interactionList);
-	}
+    protected class DesignerPane extends JPanel {
+    	public DesignerPane() {
 
-	private static void InitInteractionPanel() {
-		InitInteractionList();
-		InitInteractionEditor();
+    	}
+    }
 
-		// Split pane
-		designerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, interactionListPane, interactionEditorPanel);
-		designerPane.setOneTouchExpandable(true);
-		designerPane.setDividerLocation(150);
-
-		// Provide a preferred size for the split pane.
-		designerPane.setPreferredSize(new Dimension(400, 200));
-	}
-
-	private static void InitControlsPanel() {
-		controlsPanel = new JPanel();
-		addIntButton = new JButton("+");
-		removeIntButton = new JButton("-");
-		moveUpIntButton = new BasicArrowButton(BasicArrowButton.NORTH);
-		moveDownIntButton = new BasicArrowButton(BasicArrowButton.SOUTH);
-
-		controlsPanel.add(addIntButton);
-		controlsPanel.add(removeIntButton);
-		controlsPanel.add(moveUpIntButton);
-		controlsPanel.add(moveDownIntButton);
-	}
-
-	public static void main(String[] args) {
-		// Schedule a job for the event-dispatching thread:
-		// creating and showing this application's GUI.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (ClassNotFoundException ex) {
-				} catch (InstantiationException ex) {
-				} catch (IllegalAccessException ex) {
-				} catch (UnsupportedLookAndFeelException ex) {
+		private static void CreateInteractionCards(CustomListModel<Interaction> list) {
+			for (Interaction i : list) {
+				switch (i.getType()) {
+				case Interaction.READ:
+					interactionEditorPanel.add(new ReadInteractionView((ReadInteraction) i).getInteractionView(),
+							Integer.toString(i.getId()));
+				default:
+					System.out.println("Not there yet...");
 				}
-
-				createAndShowGUI();
-			}
-		});
-	}
-
-	protected class DesignerPane extends JPanel {
-		public DesignerPane() {
-
-		}
-	}
-
-	private static void CreateInteractionCards(CustomListModel<Interaction> list) {
-		for (Interaction i : list) {
-			switch (i.getType()) {
-			case Interaction.READ:
-				interactionEditorPanel.add(new ReadInteractionView((ReadInteraction) i).getInteractionView(),
-						Integer.toString(i.getId()));
-			default:
-				System.out.println("Not there yet...");
 			}
 		}
-	}
 
 }
