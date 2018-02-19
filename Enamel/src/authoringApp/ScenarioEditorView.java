@@ -1,6 +1,8 @@
 package authoringApp;
 
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -10,6 +12,7 @@ import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -23,6 +26,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 public class ScenarioEditorView {
 	// Frame
@@ -37,21 +41,50 @@ public class ScenarioEditorView {
 	private static JSplitPane designerPane;
 	private static JScrollPane interactionListPane;
 	private static JPanel interactionEditorPanel;
+	private static JPanel controlsPanel;
+	
+	// Buttons
+	private static JButton addIntButton;
+	private static JButton removeIntButton;
+	private static JButton moveUpIntButton;
+	private static JButton moveDownIntButton;
+	
+	// Layout managers
+	private static GridBagConstraints c;
 	
 	private static JList<String> list;
 	
     private static void createAndShowGUI() {
     	InitMenu();
     	InitInteractionPanel();
+    	InitControlsPanel();
     	
     	// Create frame
         frame = new JFrame("Braille Author");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setJMenuBar(menuBar);
-        frame.getContentPane().add(designerPane);
+        frame.setLayout(new GridBagLayout());
+        c = new GridBagConstraints();
+        c.ipadx = 10;
+        c.ipady = 10;
+        c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.fill = GridBagConstraints.BOTH;
+		
+        frame.getContentPane().add(designerPane, c);
+        
+        c.gridx = 0;
+        c.gridy = 1;
+        c.weightx = 1;
+        c.weighty = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        frame.getContentPane().add(controlsPanel, c);
         
         // Display the window
         frame.setSize(600, 600);
+        //frame.pack();
         frame.setVisible(true);
     }
     
@@ -164,6 +197,19 @@ public class ScenarioEditorView {
  
         // Provide a preferred size for the split pane.
         designerPane.setPreferredSize(new Dimension(400, 200));
+    }
+    
+    private static void InitControlsPanel() {
+    	controlsPanel = new JPanel();
+    	addIntButton = new JButton("+");
+    	removeIntButton = new JButton("-");
+    	moveUpIntButton = new BasicArrowButton(BasicArrowButton.NORTH);
+    	moveDownIntButton = new BasicArrowButton(BasicArrowButton.SOUTH);
+    	
+    	controlsPanel.add(addIntButton);
+    	controlsPanel.add(removeIntButton);
+    	controlsPanel.add(moveUpIntButton);
+    	controlsPanel.add(moveDownIntButton);
     }
     
     public static void main(String[] args) {
