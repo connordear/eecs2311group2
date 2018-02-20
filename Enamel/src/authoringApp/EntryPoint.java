@@ -118,11 +118,40 @@ public class EntryPoint extends javax.swing.JFrame {
     }
     
     protected void newButtonPressed() {
-    	// To be implemented
+    	
+    	this.dispose();
+    	java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+            	new NewScenarioInfo().setVisible(true);
+            }
+        });
     }
     
     protected void editButtonPressed() {
-    	// To be implemented
+    	
+    	java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+        	    
+        	    //Create a file chooser and set dialog box name (screen reader seems to only read dialog box name)
+        	    final JFileChooser fc = new JFileChooser();
+        	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        	    	    "Text File", "txt");
+        	    fc.setFileFilter(filter);
+        	    fc.setDialogTitle("Edit Scenario File");
+        	    
+        	    // Set accessible descriptions for screen reader (screen reader is not reading these)
+        	    fc.getAccessibleContext().setAccessibleName("File chooser dialog box");
+        	    fc.getAccessibleContext().setAccessibleDescription("Please choose a scenario file from this file dialog box.");
+        	    
+        	    int returnVal = fc.showOpenDialog(null);
+
+        	    if (returnVal == JFileChooser.APPROVE_OPTION) {
+        	    	String fileName = fc.getSelectedFile().getPath();
+        	    	// We have the existing scenario file to edit
+        	    	// To be implemented
+        	    }
+            }
+        });
     }
     
     protected void runButtonPressed() {
@@ -160,7 +189,6 @@ public class EntryPoint extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
@@ -180,7 +208,6 @@ public class EntryPoint extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(EntryPoint.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
