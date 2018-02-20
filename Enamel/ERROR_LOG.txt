@@ -1,7 +1,7 @@
-Jan 22, 2018 12:06:28 PM enamel.ScenarioParser errorLog
-WARNING: Exception error: java.lang.NullPointerException
-Jan 22, 2018 12:06:28 PM enamel.ScenarioParser errorLog
-INFO: Expected format: Cell num1 
- Button num2 
- as the first two lines of the scenarion file, and where num1 and num2 are positive integers. 
-Did not receive such a format in the scenario file and program had to end due to the incorrectfile format.
+Feb 19, 2018 10:47:31 PM enamel.ScenarioParser errorLog
+WARNING: Exception error: java.lang.IndexOutOfBoundsException: Index: 1, Size: 0
+Feb 19, 2018 10:47:31 PM enamel.ScenarioParser errorLog
+INFO: Expected format: 
+ num1 string1 
+ where num1 is the button number to receive the action listener and str1 is the identifier for where to skip to in the scenario file. 
+ Received input: 1 TWOO
