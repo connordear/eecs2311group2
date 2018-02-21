@@ -190,6 +190,7 @@ public class ScenarioEditorView {
 
 
 		newIntOptions = new JComboBox();
+		newIntOptions.setToolTipText("Select type of interaction to add");
 		for (String value : Interaction.InteractionTypes.values()) {
 		    newIntOptions.addItem(value);
 		}
@@ -237,12 +238,6 @@ public class ScenarioEditorView {
                 createAndShowGUI();
             }
         });
-    }
-
-    protected class DesignerPane extends JPanel {
-    	public DesignerPane() {
-
-    	}
     }
 
 		private static void CreateInteractionCards(CustomListModel<Interaction> list) {
