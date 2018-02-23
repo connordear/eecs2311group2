@@ -24,6 +24,7 @@ public class CellClearInteraction extends Interaction {
 			return false;
 		}
 		this.cellNumber = cellNumber;
+		System.out.println("Changed to " + cellNumber);
 		return true;
 	}
 	

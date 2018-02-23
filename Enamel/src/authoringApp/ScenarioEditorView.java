@@ -262,6 +262,15 @@ public class ScenarioEditorView {
 			} else if (i.getType() == "RESET BUTTONS") {
 				interactionEditorPanel.add(new ResetButtonInteractionView((ResetButtonInteraction) i).getInteractionView(),
 						Integer.toString(i.getId()));
+			} else if (i.getType() == "PAUSE") {
+				interactionEditorPanel.add(new PauseInteractionView((PauseInteraction) i).getInteractionView(),
+						Integer.toString(i.getId()));
+			} else if (i.getType() == "USER INPUT") {
+				interactionEditorPanel.add(new UserInputInteractionView((UserInputInteraction) i).getInteractionView(),
+						Integer.toString(i.getId()));
+			} else if (i.getType() == "SKIP BUTTON") {
+				interactionEditorPanel.add(new SkipButtonInteractionView((SkipButtonInteraction) i).getInteractionView(),
+						Integer.toString(i.getId()));
 			} else {
 				System.out.println("Not there yet...");
 			}

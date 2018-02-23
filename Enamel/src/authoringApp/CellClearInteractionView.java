@@ -3,14 +3,17 @@ package authoringApp;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 public class CellClearInteractionView extends InteractionView {
 
 	private JComboBox<Integer> comboBoxNumbers;
 	private CellClearInteraction cellClearModel;
-	
+	JLabel cellNumberLabel = new JLabel("Cell Number: ");
 	
 	public CellClearInteractionView(CellClearInteraction cellClearInteraction) {
 		super(cellClearInteraction.getInteraction());
@@ -22,17 +25,23 @@ public class CellClearInteractionView extends InteractionView {
 		}
 		this.comboBoxNumbers.setSelectedIndex(this.cellClearModel.getCellNumber());
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 3;
 		c.weightx = 1;
 		c.weighty = 1;
 		c.gridx = 1;
 		c.gridy = 1;
 		super.addRow(this.comboBoxNumbers, c);
-//		this.comboBoxNumbers.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent evt) {
-//				
-//			}
-//		});
+		this.comboBoxNumbers.addItemListener(new ItemListener() {
+			@Override
+		    public void itemStateChanged(ItemEvent event) {
+		       if (event.getStateChange() == ItemEvent.SELECTED) {
+		          Object item = event.getItem();
+		          cellClearModel.setCellNumber((Integer) item);
+		       }
+		    }    
+		});
+		c.gridx = 0;
+		c.gridy = 1;
+		super.addRow(this.cellNumberLabel, c);
 	}
 
 	@Override
