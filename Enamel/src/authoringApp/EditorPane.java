@@ -100,7 +100,6 @@ public class EditorPane extends JPanel implements EditorView {
     			controller.listItemSelected(selectedItemIndex);
 			}
     	});
-		
 		createInteractionCards(model);
 	}
 	
@@ -206,13 +205,11 @@ public class EditorPane extends JPanel implements EditorView {
 		}
 
         int size = list.getModel().getSize();
-
         if (size == 0) {
             //List is empty: disable delete, up, and down buttons.
             delBtn.setEnabled(false);
             upBtn.setEnabled(false);
             downBtn.setEnabled(false);
-
         } else {
             // Adjust the selection.
             if (selectedIndex == list.getModel().getSize()) {
@@ -222,7 +219,7 @@ public class EditorPane extends JPanel implements EditorView {
             list.setSelectedIndex(selectedIndex);
         }
 	}
-	
+
 	public void moveInteractionUp(int selectedIndex) {
 		if (selectedIndex != 0) {
 			controller.moveUp(selectedIndex);
@@ -256,27 +253,31 @@ public class EditorPane extends JPanel implements EditorView {
 		} else if (interactionType.equals(Interaction.InteractionType.KEYWORD.getDescription())) {
 			intView = new KeywordInteractionView((KeywordInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.PAUSE.getDescription())) {
-			//JOptionPane.showMessageDialog(null, "Feature not implemented yet!", "Sorry", JOptionPane.WARNING_MESSAGE);
+			intView = new PauseInteractionView((PauseInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.RESET_BUTTONS.getDescription())) {
 			intView = new ResetButtonInteractionView((ResetButtonInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.SKIP_BUTTON.getDescription())) {
+			intView = new SkipButtonInteractionView((SkipButtonInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.USER_INPUT.getDescription())) {
+			intView = new UserInputInteractionView((UserInputInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.VOICE.getDescription())) {
 		} else {
 		}
 		if (intView != null) {
 			configPane.add(intView.getInteractionView(), Integer.toString(i.getId()));
-			//configPane.add(intView.getInteractionView(), i.getId());
 		}
 	}
 	
 	public void deleteInteractionCard(Interaction i) {
-		Component[] components = configPane.getComponents();
-		
 		for (Component c : configPane.getComponents()) {
-			if (c.getName().equals(i.getId())) {
-				cards.removeLayoutComponent(c);
+			if (c.getName() != null) {
+				System.out.println(c.getName());
+				if (c.getName().equals(Integer.toString(i.getId()))) {
+					System.out.println(c.getName());
+					cards.removeLayoutComponent(c);
+				}
 			}
+			
 		}
 	}
 	

@@ -25,10 +25,10 @@ class ScenarioTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		s.interactionList.toString();
+		s.getInteractionList().toString();
 //		SECOND BIT IS TO SHOW HOW TO CREATE A SCENARIO OBJECT FROM A TEXT FILE (AND MAKE A NEW FILE WITH A DIFFERENT TITLE)
 		Scenario s2 = new Scenario(new File("./FactoryScenarios/Scenario_1.txt"));
-		s2.interactionList.toString();
+		s2.getInteractionList().toString();
 		s2.setTitle("My Copy of Scenario_1");
 		s2.generateScenarioText();
 	}

@@ -17,7 +17,7 @@ public class Scenario {
 	private static int counter = 0;
 	
 	//public InteractionList interactionList;
-	public CustomListModel<Interaction> interactionList;
+	private CustomListModel<Interaction> interactionList;
 	protected String title;
 	protected int cells;
 	protected int buttons;
@@ -202,7 +202,7 @@ public class Scenario {
 		return new File(url.toURI());
 	}
 	
-	public CustomListModel getInteractionList() {
+	public CustomListModel<Interaction> getInteractionList() {
 		return this.interactionList;
 	}
 	

@@ -118,7 +118,7 @@ public class ScenarioEditorView {
 	}
 
 	private static void InitInteractionList() {
-		list = new JList(test.interactionList);
+		list = new JList(test.getInteractionList());
 		list.setDragEnabled(true);
 		list.setDropMode(DropMode.INSERT);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -127,7 +127,7 @@ public class ScenarioEditorView {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				int itemIndex = list.getSelectedIndex();
-				Interaction currentInteraction = test.interactionList.get(itemIndex);
+				Interaction currentInteraction = test.getInteractionList().get(itemIndex);
 				String interactionId = Integer.toString(currentInteraction.getId());
 				CardLayout cards = (CardLayout) interactionEditorPanel.getLayout();
 				cards.show(interactionEditorPanel, interactionId);
@@ -148,7 +148,7 @@ public class ScenarioEditorView {
 		// Provide minimum sizes for the two components in the split pane.
 		Dimension minimumSize = new Dimension(100, 50);
 		interactionEditorPanel.setMinimumSize(minimumSize);
-		CreateInteractionCards(test.interactionList);
+		CreateInteractionCards(test.getInteractionList());
 	}
 
 	private static void InitInteractionPanel() {
@@ -227,12 +227,6 @@ public class ScenarioEditorView {
             }
         });
     }
-
-	protected class DesignerPane extends JPanel {
-		public DesignerPane() {
-
-		}
-	}
 
 	private static void CreateInteractionCards(CustomListModel<Interaction> list) {
 		for (Interaction i : list) {

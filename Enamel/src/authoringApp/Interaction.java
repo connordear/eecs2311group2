@@ -47,7 +47,8 @@ public abstract class Interaction {
 	
 	@Override
 	public String toString() {
-		return this.getType();
+		//return this.getType();
+		return this.getTitle();
 	}
 	
 	public int getId() {

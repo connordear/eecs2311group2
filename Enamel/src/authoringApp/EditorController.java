@@ -24,7 +24,7 @@ public class EditorController implements EditorView {
 	}
 
 	public void listItemSelected(int selectedItemIndex) {
-		Interaction currentInteraction = model.interactionList.get(selectedItemIndex);
+		Interaction currentInteraction = model.getInteractionList().get(selectedItemIndex);
 		String interactionId = Integer.toString(currentInteraction.getId());
 		this.view.showCard(interactionId);
 	}
@@ -84,12 +84,28 @@ public class EditorController implements EditorView {
 		if (i != null) {
 			this.model.addInteraction(i, insertIdx);
 			this.view.addInteractionCard(i);
+			this.view.showCard(Integer.toString(i.getId()));
 		}
 	}
 
 	public void deleteInteraction(int selectedListItemIndex) {
-		this.model.removeInteraction(selectedListItemIndex);
-		//this.view.deleteInteractionCard((Interaction)this.model.getInteractionList().get(selectedListItemIndex));
+		int size = this.model.getInteractionList().getSize();
+		Interaction i = this.model.getInteractionList().get(selectedListItemIndex);
+		Interaction iToShow = null;
+		if (i != null) {
+			if (size > 1) {
+				if (selectedListItemIndex == 0) {
+					// If first item is selected, delete it and show / select the next item
+					iToShow = this.model.getInteractionList().get(selectedListItemIndex + 1);
+				} else {
+					// Otherwise, delete it and show / select the previous item
+					iToShow = this.model.getInteractionList().get(selectedListItemIndex - 1);
+				}
+				this.view.showCard(Integer.toString(iToShow.getId()));
+			}
+			this.view.deleteInteractionCard(i);
+			this.model.removeInteraction(selectedListItemIndex);
+		}
 	}
 
 	public void moveUp(int itemIndex) {
@@ -101,7 +117,7 @@ public class EditorController implements EditorView {
 	}
 	
 	public void createInteractionList() {
-		this.view.createInteractionList(this.model.interactionList);
+		this.view.createInteractionList(this.model.getInteractionList());
 	}
 
 	
