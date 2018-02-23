@@ -137,7 +137,7 @@ public class ScenarioEditorView {
 		list.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				int itemIndex = e.getFirstIndex();
+				int itemIndex = list.getSelectedIndex();
 				Interaction currentInteraction = test.interactionList.get(itemIndex);
 				String interactionId = Integer.toString(currentInteraction.getId());
 				CardLayout cards = (CardLayout) interactionEditorPanel.getLayout();
