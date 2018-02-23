@@ -4,10 +4,12 @@ import java.awt.GridBagConstraints;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 
 public class KeywordInteractionView extends InteractionView {
 
-	private String keyword;
 	private JTextField keywordTextField;
 	private KeywordInteraction keymodel;
 	
@@ -18,6 +20,35 @@ public class KeywordInteractionView extends InteractionView {
 		
 		this.keywordTextField = new JTextField(this.keymodel.getKeyword());
 		this.keywordTextField.getAccessibleContext().setAccessibleDescription("Enter the keyword you wish to specify here.");
+		this.keywordTextField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				try {
+					keymodel.setKeyword(e.getDocument().getText(0, e.getDocument().getLength()));
+				} catch (BadLocationException e1) {
+					e1.printStackTrace();
+				} 
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				try {
+					keymodel.setKeyword(e.getDocument().getText(0, e.getDocument().getLength()));
+				} catch (BadLocationException e1) {
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				try {
+					keymodel.setKeyword(e.getDocument().getText(0, e.getDocument().getLength()));
+				} catch (BadLocationException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
 		c.weightx = 1;
 		c.weighty = 1;
 		c.gridx = 1;
@@ -35,20 +66,17 @@ public class KeywordInteractionView extends InteractionView {
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.keymodel.getTitle();
 	}
 
 	@Override
 	public boolean setTitle(String s) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.keymodel.setTitle(s);
 	}
 
 	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.keymodel.getType();
 	}
 
 }

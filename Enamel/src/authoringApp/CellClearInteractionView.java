@@ -1,8 +1,6 @@
 package authoringApp;
 
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -19,7 +17,9 @@ public class CellClearInteractionView extends InteractionView {
 		super(cellClearInteraction.getInteraction());
 		GridBagConstraints c = super.c;
 		this.cellClearModel = cellClearInteraction;
+		
 		this.comboBoxNumbers = new JComboBox<Integer>();
+		this.comboBoxNumbers.getAccessibleContext().setAccessibleDescription("Specify which Cell number you wish to clear.");
 		for (int i = 0; i < 20; i++) {
 			this.comboBoxNumbers.addItem(i);
 		}
