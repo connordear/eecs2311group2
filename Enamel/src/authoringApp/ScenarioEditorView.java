@@ -256,6 +256,9 @@ public class ScenarioEditorView {
 			} else if (i.getType() == "DISPLAY BRAILLE") {
 				interactionEditorPanel.add(new DisplayBrailleInteractionView((DisplayBrailleInteraction) i).getInteractionView(),
 						Integer.toString(i.getId()));
+			} else if (i.getType() == "KEYWORD") {
+				interactionEditorPanel.add(new KeywordInteractionView((KeywordInteraction) i).getInteractionView(),
+						Integer.toString(i.getId()));
 			} else {
 				System.out.println("Not there yet...");
 			}
