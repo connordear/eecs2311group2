@@ -1,6 +1,6 @@
 package authoringApp;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /*
@@ -11,27 +11,20 @@ public abstract class Interaction {
 	private static int id_counter = 0;
 	private int id;
 	private String title;
-	protected enum InteractionType {
-		READ, VOICE, DISPLAY_BRAILLE,
-		KEYWORD, PAUSE, SKIP_BUTTON,
-		USER_INPUT, RESET_BUTTONS, CLEAR_BRAILLE
-	}
 	
-	protected static final Map<InteractionType, String> InteractionTypes = createMap();
-	private static Map<InteractionType, String> createMap() {
-		Map<InteractionType, String> map = new HashMap<InteractionType, String>();
-		map.put(InteractionType.READ, "READ");
-		map.put(InteractionType.VOICE, "VOICE");
-		map.put(InteractionType.DISPLAY_BRAILLE, "DISPLAY BRAILLE");
-		map.put(InteractionType.KEYWORD, "KEYWORD");
-		map.put(InteractionType.PAUSE, "PAUSE");
-		map.put(InteractionType.SKIP_BUTTON, "SKIP BUTTON");
-		map.put(InteractionType.USER_INPUT, "USER INPUT");
-		map.put(InteractionType.RESET_BUTTONS, "RESET BUTTONS");
-		map.put(InteractionType.CLEAR_BRAILLE, "CLEAR BRAILLE");
-		return map;
+	public enum InteractionType {
+		READ("Read"), VOICE("Voice"), DISPLAY_BRAILLE("Display braille"),
+		KEYWORD("Keyword"), PAUSE("Pause"), SKIP_BUTTON("Skip button"),
+		USER_INPUT("User input"), RESET_BUTTONS("Reset button"), CLEAR_BRAILLE("Clear braille");
+		
+		private String description;
+		InteractionType(String desc) {
+			this.description = desc;
+		}
+		public String getDescription() {
+			return this.description;
+		}
 	}
-	
 	
 	public Interaction() {
 		this("Untitled");

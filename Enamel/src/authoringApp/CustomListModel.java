@@ -120,6 +120,11 @@ public class CustomListModel<T> extends ArrayList<T> implements ListModel<T> {
 			notifyListeners();
 		return b;
 	}
+	
+	public void removeRange(int fromIndex, int toIndex) {
+		super.removeRange(fromIndex, toIndex);
+		notifyListeners();
+	}
 
 	public T set(int index, T element) {
 		T o = super.set(index, element);

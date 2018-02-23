@@ -12,6 +12,13 @@ public class SkipButtonInteraction extends Interaction {
 	}
 
 	
+	public SkipButtonInteraction() {
+		super("Skip Button");
+		this.setButton(1);
+		this.setKeyword("Skip");
+	}
+
+
 	public void setButton(int button) {
 		// No way to verify which button they are pressing?
 		this.button = button;
@@ -31,7 +38,7 @@ public class SkipButtonInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.InteractionTypes.get(Interaction.InteractionType.SKIP_BUTTON);
+		return Interaction.InteractionType.SKIP_BUTTON.getDescription();
 	}
 	
 	@Override

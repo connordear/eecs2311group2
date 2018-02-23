@@ -9,7 +9,7 @@ public class UserInputInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.InteractionTypes.get(Interaction.InteractionType.USER_INPUT);
+		return Interaction.InteractionType.USER_INPUT.getDescription();
 	}
 	
 	@Override

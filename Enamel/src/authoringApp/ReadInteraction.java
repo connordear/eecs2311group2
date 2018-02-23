@@ -29,7 +29,7 @@ public class ReadInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.InteractionTypes.get(Interaction.InteractionType.READ);
+		return Interaction.InteractionType.READ.getDescription();
 	}
 	
 	@Override

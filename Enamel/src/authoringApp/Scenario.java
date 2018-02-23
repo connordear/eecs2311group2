@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Scenario {
 	
@@ -108,8 +109,7 @@ public class Scenario {
 					} else { 
 						if (newList.size() > 0 && line.length() > 1) {
 							if (((Interaction) newList.get(newList.getSize() - 1)).getType().equals(
-									Interaction.InteractionTypes.get(
-											Interaction.InteractionType.READ))) {
+									Interaction.InteractionType.READ.getDescription())) {
 								ReadInteraction concatRead = (ReadInteraction) newList.get(newList.getSize() - 1);
 								concatRead.setData(concatRead.getData() + line);
 							} else {
@@ -211,6 +211,24 @@ public class Scenario {
 	 */
 	public void addInteraction(Interaction e) {
 		this.interactionList.add(e);
+	}
+	
+	public void addInteraction(Interaction e, int idx) {
+		this.interactionList.add(idx, e);
+	}
+	
+	public void removeInteraction(int index) {
+		this.interactionList.remove(index);
+	}
+	
+	public void removeInteractions(int fromIdx, int toIdx) {
+		this.interactionList.removeRange(fromIdx, toIdx);
+	}
+	
+	public void swapInteractionOrder(int i, int j) {
+		try {
+			Collections.swap(this.interactionList, i, j);
+		} catch (IndexOutOfBoundsException e) { }
 	}
 
 	public static boolean isValidScenarioFile(File f) {

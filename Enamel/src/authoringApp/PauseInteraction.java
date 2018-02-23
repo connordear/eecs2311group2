@@ -22,7 +22,7 @@ public class PauseInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.InteractionTypes.get(Interaction.InteractionType.PAUSE);
+		return Interaction.InteractionType.PAUSE.getDescription();
 	}
 	
 	@Override

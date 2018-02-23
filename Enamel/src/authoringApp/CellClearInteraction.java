@@ -3,7 +3,7 @@ package authoringApp;
 public class CellClearInteraction extends Interaction {
 	
 	private int cellNumber;
-	
+
 	public CellClearInteraction(int cellNumber) {
 		super("Clear Cell " + cellNumber);
 		this.cellNumber = cellNumber;
@@ -29,7 +29,7 @@ public class CellClearInteraction extends Interaction {
 	
 	@Override
 	public String getType() {
-		return Interaction.InteractionTypes.get(Interaction.InteractionType.CLEAR_BRAILLE);
+		return Interaction.InteractionType.CLEAR_BRAILLE.getDescription();
 	}
 	
 	@Override
