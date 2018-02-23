@@ -1,82 +1,60 @@
 package authoringApp;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JRadioButton;
 
 public class DisplayBrailleInteractionView extends InteractionView {
 
-	private JRadioButton leftOne;
-	private JRadioButton rightOne;
-	private JRadioButton leftTwo;
-	private JRadioButton rightTwo;
-	private JRadioButton leftThree;
-	private JRadioButton rightThree;
-	private JRadioButton leftFour;
-	private JRadioButton rightFour;
-	private DisplayBrailleInteraction dbiModel;
+	private JRadioButton[] buttonsArray;
+	protected DisplayBrailleInteraction dbiModel;
 	
 	
 	public DisplayBrailleInteractionView(DisplayBrailleInteraction d) {
 		super(d.getInteraction());
 		GridBagConstraints c = super.c;
-		this.dbiModel = d;
-		
-		this.leftOne = new JRadioButton();
-		this.rightOne = new JRadioButton();
-		this.leftTwo = new JRadioButton();
-		this.rightTwo = new JRadioButton();
-		this.leftThree = new JRadioButton();
-		this.rightThree = new JRadioButton();
-		this.leftFour = new JRadioButton();
-		this.rightFour = new JRadioButton();
-		
-		c.gridy = 1;
-		c.gridx = 1;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
-		this.leftOne.setAlignmentX(0);
-		super.addRow(this.leftOne, c);
-		c.gridx = 2;
-		super.addRow(this.rightOne, c);
-		
-		c.gridy = 2;
-		c.gridx = 1;
-		super.addRow(this.leftTwo, c);
-		c.gridx = 2;
-		super.addRow(this.rightTwo, c);
-		
-		c.gridy = 3;
-		c.gridx = 1;
-		super.addRow(this.leftThree, c);
-		c.gridx = 2;
-		super.addRow(this.rightThree, c);
-		
-		c.gridy = 4;
-		c.gridx = 1;
-		super.addRow(this.leftFour, c);
-		c.gridx = 2;
-		super.addRow(this.rightFour, c);
-		
+		this.dbiModel = d;
+		this.buttonsArray = new JRadioButton[8];
+		for (int i = 0; i < buttonsArray.length; i++) {
+			final int currentPin = i;
+			buttonsArray[i] = new JRadioButton();
+			buttonsArray[i].setSelected(dbiModel.getPin(i));
+			buttonsArray[i].addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if (e.getStateChange() == ItemEvent.SELECTED) {
+				       dbiModel.setPin(currentPin, true);
+				    }
+				    else if (e.getStateChange() == ItemEvent.DESELECTED) {
+				        dbiModel.setPin(currentPin, false);
+				    }
+				}
+			});
+			
+			c.gridy = (i / 2) + 1;
+			c.gridx = (i % 2) + 1;
+			super.addRow(buttonsArray[i], c);
+		}
 		
 	}
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.dbiModel.getTitle();
 	}
 
 	@Override
 	public boolean setTitle(String s) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.dbiModel.setTitle(s);
 	}
 
 	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.dbiModel.getType();
 	}
 
 }

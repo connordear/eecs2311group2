@@ -7,13 +7,23 @@ public class DisplayBrailleInteraction extends Interaction {
 	 * Cell number is a 0 based index for which cell to display the braille on.
 	 */
 	private String pins;
+	private boolean[] pinsArray;
+	
 	private int cellNumber;
 	
 	public DisplayBrailleInteraction(String title, int cellNumber, String pins) {
 		super(title);
 		this.setPins(pins);
 		this.setCellNumber(cellNumber);
-	}
+		this.pinsArray = new boolean[8];
+		for (int i = 0; i < pins.length(); i++) {
+			if(pins.substring(i, i+1).equals("1")) {
+				this.pinsArray[i] = true;
+			} else {
+				this.pinsArray[i] = false;
+			}
+		}
+ 	}
 	
 	public DisplayBrailleInteraction(int cellNumber, String pins) {
 		this("Display Braille on Cell: " + cellNumber, cellNumber, pins);
@@ -31,6 +41,28 @@ public class DisplayBrailleInteraction extends Interaction {
 	 */
 	public String getPins() {
 		return this.pins;
+	}
+	
+	public boolean[] getPinsArray() {
+		return this.pinsArray;
+	}
+	
+	
+	public boolean getPin(int index) {
+		return this.pinsArray[index];
+	}
+	
+	public void setPin(int index, boolean val) {
+		this.pinsArray[index] = val;
+		this.pins = "";
+		for (int i = 0; i < this.pinsArray.length; i++) {
+			if (this.pinsArray[i]) {
+				this.pins += "1";
+			} else {
+				this.pins += "0";
+			}
+		}
+		System.out.println(this.pins);
 	}
 	
 	/*
