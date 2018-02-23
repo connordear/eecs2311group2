@@ -259,6 +259,9 @@ public class ScenarioEditorView {
 			} else if (i.getType() == "KEYWORD") {
 				interactionEditorPanel.add(new KeywordInteractionView((KeywordInteraction) i).getInteractionView(),
 						Integer.toString(i.getId()));
+			} else if (i.getType() == "RESET BUTTONS") {
+				interactionEditorPanel.add(new ResetButtonInteractionView((ResetButtonInteraction) i).getInteractionView(),
+						Integer.toString(i.getId()));
 			} else {
 				System.out.println("Not there yet...");
 			}
