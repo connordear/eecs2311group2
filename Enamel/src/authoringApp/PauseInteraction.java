@@ -20,6 +20,10 @@ public class PauseInteraction extends Interaction {
 		return this.length;
 	}
 	
+	public void setLength(int s) {
+		this.length = s;
+	}
+	
 	@Override
 	public String getType() {
 		return Interaction.InteractionType.PAUSE.getDescription();
