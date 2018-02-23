@@ -3,7 +3,7 @@ package authoringApp;
 public class CellClearInteraction extends Interaction {
 	
 	private int cellNumber;
-	
+
 	public CellClearInteraction(int cellNumber) {
 		super("Clear Cell " + cellNumber);
 		this.cellNumber = cellNumber;
