@@ -64,6 +64,10 @@ public class MainViewController implements MainView {
 		}
 		
 		if (!Scenario.isValidScenarioFile(scenarioFile)) {
+			JOptionPane.showMessageDialog(null, 
+                              "Invalid file selected. Please select a valid scenario file.", 
+                              "Invalid File", 
+                              JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		openEditor(new Scenario(scenarioFile));
