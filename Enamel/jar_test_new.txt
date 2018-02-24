@@ -1,5 +1,0 @@
-Cell 1
-Button 4
-jar_test_new
-Read one
-/~disp-cell-pins:0 11100000
