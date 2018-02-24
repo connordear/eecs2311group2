@@ -6,8 +6,11 @@ Our midterm submission release (vM) comes with basic functionality
 necessary for creating and modifying scenario files to run on the Enamel
 Braille Cell Simulator.
 
-Please find our documentation on our GitHub at:
+Stay updated by checking our GitHub at:
 https://github.com/connordear/eecs2311group2
+
+Please find our documentation on our GitHub at:
+https://github.com/connordear/eecs2311group2/tree/master/Enamel/Documentation
 
 There you'll find a user manual to help guide you through the system, as
 well as our testing and requirements documents.
