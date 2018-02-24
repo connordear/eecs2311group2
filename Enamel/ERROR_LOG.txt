@@ -1,4 +1,6 @@
-Feb 23, 2018 7:07:15 PM enamel.ScenarioParser errorLog
-WARNING: Exception error : java.lang.NullPointerException
-Feb 23, 2018 7:07:15 PM enamel.ScenarioParser errorLog
-INFO: Strange error occurred if you are able to read this message. Possibilities could include possible file corruption, or that you have enter characters that could not be read/interpreted.
+Feb 23, 2018 8:08:53 PM enamel.ScenarioParser errorLog
+WARNING: Exception error: java.io.FileNotFoundException: ./jar_test_new.txt (No such file or directory)
+Feb 23, 2018 8:08:53 PM enamel.ScenarioParser errorLog
+INFO: Expected the directory path of the scenario file to a file exists in the project folder. 
+ Could not find directory to path: ./jar_test_new.txt 
+ Perhaps you forgot to add the file to the directory or  you are looking for a different directory?

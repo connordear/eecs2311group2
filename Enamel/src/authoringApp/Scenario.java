@@ -200,14 +200,14 @@ public class Scenario {
 		return this.id;
 	}
 	
-	public File getFile() throws URISyntaxException {
-		String filePath = new File("").getAbsolutePath();
-		return new File(filePath + "/FactoryScenarios/" + this.getTitle() + ".txt");
+	public File getFile() {
+		String pwd = "./";
+		return new File(pwd + this.getTitle() + ".txt");
 	}
 	
 	public String getPath() {
-		String filePath = new File("").getAbsolutePath();
-		return filePath + "/FactoryScenarios/" + this.getTitle() + ".txt";
+		String pwd = "./";
+		return pwd + this.getTitle() + ".txt";
 	}
 	
 	public CustomListModel<Interaction> getInteractionList() {
@@ -274,7 +274,8 @@ public class Scenario {
 	 * Generate the scenario text
 	 */
 	public void generateScenarioText() throws IOException{
-		BufferedWriter writer = new BufferedWriter(new FileWriter("FactoryScenarios/" + this.getTitle() + ".txt"));
+		String pwd = System.getProperty("user.dir") + "/";
+		BufferedWriter writer = new BufferedWriter(new FileWriter(pwd + this.getTitle() + ".txt"));
 		writer.write("Cell " + this.getCells() + "\n");
 		writer.write("Button " + this.getButtons() + "\n");
 		writer.write(this.getTitle() + "\n");

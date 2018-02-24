@@ -31,6 +31,8 @@ import authoringApp.Interaction.InteractionType;
 import enamel.ScenarioParser;
 
 public class EditorPane extends JPanel implements EditorView {
+	
+	private String scenarioPath;
 	private EditorController controller;
 	private JSplitPane containerPane;
 	private JScrollPane listPane;
@@ -52,7 +54,7 @@ public class EditorPane extends JPanel implements EditorView {
 		setEditorViewController(controller);
 		setLayout(new GridBagLayout());
 		this.controller.setView(this);
-		
+		this.scenarioPath = this.controller.getModel().getPath();
 		configPane = new JPanel(new CardLayout());
 		cards = (CardLayout) configPane.getLayout();
 		
@@ -183,7 +185,7 @@ public class EditorPane extends JPanel implements EditorView {
 				Thread starterCodeThread = new Thread("Starter Code Thread") {
 				    public void run(){    
 				        ScenarioParser s = new ScenarioParser(true);
-				        s.setScenarioFile(controller.getModel().getPath());
+				        s.setScenarioFile(scenarioPath);
 				    }
 				};
 				starterCodeThread.start();
