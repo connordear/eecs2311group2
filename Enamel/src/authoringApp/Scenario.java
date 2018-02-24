@@ -68,12 +68,15 @@ public class Scenario {
 				String line = reader.readLine();
 				// We know this first line contains the number of cells
 				this.setCells(Integer.parseInt(line.substring(5)));
-				reader.readLine();
+				line = reader.readLine();
+				System.out.println(this.getCells());
 				// 2nd line contains number of buttons
-				this.setButtons(Integer.parseInt(line.substring(5)));
-				reader.readLine();
+				this.setButtons(Integer.parseInt(line.substring(7)));
+				System.out.println(this.getButtons());
+				line = reader.readLine();
 				// Third line contains Title
 				this.setTitle(line);
+				System.out.println(this.getTitle());
 				// now go through the rest of the lines
 				while ((line = reader.readLine()) != null) {
 					if (line.startsWith("/~")) {
@@ -198,8 +201,13 @@ public class Scenario {
 	}
 	
 	public File getFile() throws URISyntaxException {
-		URL url = this.getClass().getResource("FactoryScenarios/" + this.getTitle() + ".txt");
-		return new File(url.toURI());
+		String filePath = new File("").getAbsolutePath();
+		return new File(filePath + "/FactoryScenarios/" + this.getTitle() + ".txt");
+	}
+	
+	public String getPath() {
+		String filePath = new File("").getAbsolutePath();
+		return filePath + "/FactoryScenarios/" + this.getTitle() + ".txt";
 	}
 	
 	public CustomListModel<Interaction> getInteractionList() {

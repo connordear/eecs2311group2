@@ -3,6 +3,8 @@ package authoringApp;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import enamel.*;
+
 public class App {
 	private static MainViewController mainViewController;
 	private static MainViewModel appModel;
@@ -24,6 +26,7 @@ public class App {
                 }
 
                 createAndShowGUI();
+
             }
         });
 	}

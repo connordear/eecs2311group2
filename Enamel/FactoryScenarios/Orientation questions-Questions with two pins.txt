@@ -1,7 +1,7 @@
 Cell 1
 Button 4
+Orientation questions-Questions with two pins
 
-Orientation questions. Questions with two pins
 /~disp-cell-clear:0
 /~disp-cell-pins:0 10100000
 Here's the first question:

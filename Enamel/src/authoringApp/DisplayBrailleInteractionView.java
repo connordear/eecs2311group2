@@ -35,8 +35,31 @@ public class DisplayBrailleInteractionView extends InteractionView {
 				}
 			});
 			
-			c.gridy = (i / 2) + 1;
-			c.gridx = (i % 2) + 1;
+			if (currentPin == 0) {
+				c.gridx = 0;
+				c.gridy = 1;
+			} else if (currentPin == 1) {
+				c.gridx = 0;
+				c.gridy = 2;
+			} else if (currentPin == 2) {
+				c.gridx = 0;
+				c.gridy = 3;
+			} else if (currentPin == 3) {
+				c.gridx = 1;
+				c.gridy = 1;
+			} else if (currentPin == 4) {
+				c.gridx = 1;
+				c.gridy = 2;
+			} else if (currentPin == 5) {
+				c.gridx = 1;
+				c.gridy = 3;
+			} else if (currentPin == 6) {
+				c.gridx = 0;
+				c.gridy = 4;
+			} else if (currentPin == 7) {
+				c.gridx = 1;
+				c.gridy = 4;
+			}
 			super.addRow(buttonsArray[i], c);
 		}
 		

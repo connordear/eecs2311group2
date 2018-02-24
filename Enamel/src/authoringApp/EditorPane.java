@@ -7,6 +7,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
@@ -24,10 +28,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 import authoringApp.Interaction.InteractionType;
+import enamel.ScenarioParser;
 
 public class EditorPane extends JPanel implements EditorView {
 	private EditorController controller;
-	
 	private JSplitPane containerPane;
 	private JScrollPane listPane;
 	private JPanel configPane, controlsPane;
@@ -42,7 +46,6 @@ public class EditorPane extends JPanel implements EditorView {
 	private JButton downBtn;
 	private JButton saveBtn;
 	private JButton runBtn;
-	
 	private GridBagConstraints gbc;
 	
 	public EditorPane(EditorController controller) {
@@ -162,6 +165,30 @@ public class EditorPane extends JPanel implements EditorView {
 		saveBtn = new JButton("Save");
 		runBtn = new JButton("Run");
 		
+		
+		saveBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controller.getModel().generateScenarioText();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		runBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Thread starterCodeThread = new Thread("Starter Code Thread") {
+				    public void run(){    
+				        ScenarioParser s = new ScenarioParser(true);
+				        s.setScenarioFile(controller.getModel().getPath());
+				    }
+				};
+				starterCodeThread.start();
+			}
+		});
 		c.add(saveBtn, gbc);
 		c.add(runBtn, gbc);
 		
