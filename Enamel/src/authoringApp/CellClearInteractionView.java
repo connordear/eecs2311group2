@@ -41,6 +41,7 @@ public class CellClearInteractionView extends InteractionView {
 		});
 		c.gridx = 0;
 		c.gridy = 1;
+		this.cellNumberLabel.setLabelFor(comboBoxNumbers);
 		super.addRow(this.cellNumberLabel, c);
 	}
 
