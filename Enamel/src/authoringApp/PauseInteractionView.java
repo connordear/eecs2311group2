@@ -17,8 +17,8 @@ public class PauseInteractionView extends InteractionView {
 		super(p.getInteraction());
 		GridBagConstraints c = super.c;
 		this.pauseModel = p;
-		
 		this.secondsComboBox = new JComboBox<Integer>();
+		this.secondsComboBox.getAccessibleContext().setAccessibleDescription("Specify how many seconds you wish the pause to last.");
 		for (int i = 0; i < 20; i++) {
 			this.secondsComboBox.addItem(i);
 		}
