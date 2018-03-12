@@ -4,19 +4,21 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 
 public class DisplayBrailleInteractionView extends InteractionView {
 
 	private JRadioButton[] buttonsArray;
+	private JComboBox<Integer> brailleCellComboBox;
 	protected DisplayBrailleInteraction dbiModel;
 	
 	
 	public DisplayBrailleInteractionView(DisplayBrailleInteraction d) {
 		super(d.getInteraction());
 		GridBagConstraints c = super.c;
-		c.weightx = 0.5;
-		c.weighty = 0.5;
+		c.weightx = 1;
+		c.weighty = 1;
 		this.dbiModel = d;
 		this.buttonsArray = new JRadioButton[8];
 		for (int i = 0; i < buttonsArray.length; i++) {
@@ -61,6 +63,24 @@ public class DisplayBrailleInteractionView extends InteractionView {
 				c.gridy = 4;
 			}
 			super.addRow(buttonsArray[i], c);
+			
+			this.brailleCellComboBox = new JComboBox<Integer>();
+			for (int cellNumber = 0; cellNumber < 10; cellNumber++) {
+				this.brailleCellComboBox.addItem(cellNumber);
+			}
+			this.brailleCellComboBox.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					dbiModel.setCellNumber(brailleCellComboBox.getSelectedIndex());
+				}
+				
+			});
+			
+			c.gridx = 0;
+			c.gridy = 5;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			super.addRow(this.brailleCellComboBox, c);
+			
 		}
 		
 	}

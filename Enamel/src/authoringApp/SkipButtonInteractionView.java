@@ -25,7 +25,7 @@ public class SkipButtonInteractionView extends InteractionView {
 		GridBagConstraints c = super.c;
 		
 		this.buttonComboBox = new JComboBox<Integer>();
-		for (int i = 0; i < 20; i++) {
+		for (int i = 1; i < 10; i++) {
 			this.buttonComboBox.addItem(i);
 		}
 		this.buttonComboBox.setSelectedIndex(this.skipModel.getButton());
@@ -34,7 +34,7 @@ public class SkipButtonInteractionView extends InteractionView {
 		    public void itemStateChanged(ItemEvent event) {
 		       if (event.getStateChange() == ItemEvent.SELECTED) {
 		          Object item = event.getItem();
-		          skipModel.setButton((Integer) item);
+		          skipModel.setButton((Integer) item - 1);
 		       }
 		    }    
 		});

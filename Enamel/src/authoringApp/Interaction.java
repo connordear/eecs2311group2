@@ -58,7 +58,6 @@ public abstract class Interaction {
 	public Interaction getInteraction() {
 		return this;
 	}
-	
 	abstract public String generateScenarioText();
 	
 	abstract public String getType();

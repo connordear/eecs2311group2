@@ -1,0 +1,10 @@
+Cell 1
+Button 4
+labTestScenario
+/~disp-cell-pins:0 11011000
+Welcome to the lab example. Press One to continue.
+/~skip-button:0 ONE
+/~user-input
+/~ONE
+We made it to one. Nice Job.
+/~reset-buttons
