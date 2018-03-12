@@ -41,7 +41,8 @@ public class EditorController implements EditorView {
 				break;
 			case VOICE:
 				// No VoiceInteraction yet?
-				//i = new VoiceInteraction();
+				i = new VoiceInteraction();
+				System.out.println("This should print when I try to add a voice.");
 				break;
 			case DISPLAY_BRAILLE:
 				i = new DisplayBrailleInteraction();

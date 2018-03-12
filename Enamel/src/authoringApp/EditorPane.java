@@ -290,6 +290,7 @@ public class EditorPane extends JPanel implements EditorView {
 		} else if (interactionType.equals(Interaction.InteractionType.USER_INPUT.getDescription())) {
 			intView = new UserInputInteractionView((UserInputInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.VOICE.getDescription())) {
+			intView = new VoiceInteractionView((VoiceInteraction) i);
 		} else {
 		}
 		if (intView != null) {
