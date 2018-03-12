@@ -25,7 +25,8 @@ public class SkipButtonInteractionView extends InteractionView {
 		GridBagConstraints c = super.c;
 		
 		this.buttonComboBox = new JComboBox<Integer>();
-		for (int i = 1; i < 10; i++) {
+		this.buttonComboBox.getAccessibleContext().setAccessibleDescription("Specify which button you wish to link here.");
+		for (int i = 0; i < 20; i++) {
 			this.buttonComboBox.addItem(i);
 		}
 		this.buttonComboBox.setSelectedIndex(this.skipModel.getButton());
@@ -46,6 +47,7 @@ public class SkipButtonInteractionView extends InteractionView {
 		super.addRow(this.buttonLabel, c);
 		
 		this.keywordField = new JTextField(this.skipModel.getKeyword());
+		this.keywordField.getAccessibleContext().setAccessibleDescription("Specify which keyword you wish to link with this button press here.");
 		this.keywordField.getDocument().addDocumentListener(new DocumentListener() {
 			  public void changedUpdate(DocumentEvent e) {
 				  try {
