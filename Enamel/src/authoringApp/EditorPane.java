@@ -30,7 +30,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import authoringApp.Interaction.InteractionType;
 import enamel.ScenarioParser;
 
-public class EditorPane extends JPanel implements EditorView {
+public class EditorPane extends JPanel {
 	
 	private String scenarioPath;
 	private EditorController controller;

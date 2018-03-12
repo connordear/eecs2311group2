@@ -4,6 +4,8 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -21,7 +23,7 @@ public class MainFrame extends JFrame implements MainView {
 	private JPanel containerPanel, startupPane, newScenarioPane, editorPane;
 	private JMenuBar menuBar;
 	private JMenu fileMenu, scenarioMenu;
-	private JMenuItem newFile, openFile, saveFile, saveAsFile, exit;
+	private JMenuItem newFile, openFile, saveFile, saveFileAs, exit;
 	private JMenuItem run;
 	private JFileChooser fc;
 	
@@ -66,21 +68,47 @@ public class MainFrame extends JFrame implements MainView {
     	newFile = new JMenuItem("New");
     	openFile = new JMenuItem("Open");
     	saveFile = new JMenuItem("Save");
-    	saveAsFile = new JMenuItem("Save As");
+    	saveFileAs = new JMenuItem("Save As");
     	exit = new JMenuItem("Exit");
     	run = new JMenuItem("Run");
-
+    	
+    	newFile.addActionListener(new ActionListener() {
+    		@Override
+			public void actionPerformed(ActionEvent e) { newScenario(); }
+    	});
+    	openFile.addActionListener(new ActionListener() {
+    		@Override
+			public void actionPerformed(ActionEvent e) { openScenario(); }
+    	});
+    	saveFile.addActionListener(new ActionListener() {
+    		@Override
+			public void actionPerformed(ActionEvent e) { saveScenario(); }
+    	});
+    	saveFileAs.addActionListener(new ActionListener() {
+    		@Override
+			public void actionPerformed(ActionEvent e) { saveScenarioAs(); }
+    	});
+    	exit.addActionListener(new ActionListener() {
+    		@Override
+			public void actionPerformed(ActionEvent e) { exit(); }
+    	});
+    	run.addActionListener(new ActionListener() {
+    		@Override
+			public void actionPerformed(ActionEvent e) { runScenario(); }
+    	});
+    	
     	fileMenu.add(newFile);
     	fileMenu.add(openFile);
     	fileMenu.addSeparator();
     	fileMenu.add(saveFile);
-    	fileMenu.add(saveAsFile);
+    	fileMenu.add(saveFileAs);
     	fileMenu.addSeparator();
     	fileMenu.add(exit);
     	
     	scenarioMenu.add(run);
 
     	menuBar.add(fileMenu);
+    	setEditingMode(false);
 	}
 	
 	public void setMainFrameController(MainViewController listener) {
@@ -94,14 +122,17 @@ public class MainFrame extends JFrame implements MainView {
 	
 	@Override
 	public void saveScenario() {
+		this.controller.saveScenario();
 	}
 
 	@Override
 	public void saveScenarioAs() {
+		this.controller.saveScenarioAs();
 	}
 
 	@Override
 	public void runScenario() {
+		
 	}
 
 	@Override
@@ -120,12 +151,18 @@ public class MainFrame extends JFrame implements MainView {
 	
 	@Override
 	public void openScenario() {
-		
+		this.controller.openScenario();
 	}
 	
 	public void openEditor(EditorController econtroller) {
 		editorPane = new EditorPane(econtroller);
 		addCard(editorPane, MainView.EDITOR_PANE);
 		showCard(MainView.EDITOR_PANE);
+	}
+	
+	public void setEditingMode(boolean isEditing) {
+		saveFile.setEnabled(isEditing);
+    	saveFileAs.setEnabled(isEditing);
+    	run.setEnabled(isEditing);
 	}
 }

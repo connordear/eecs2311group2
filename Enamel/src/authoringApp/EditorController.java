@@ -1,6 +1,6 @@
 package authoringApp;
 
-public class EditorController implements EditorView {
+public class EditorController {
 	private EditorPane view;
 	private Scenario model;
 	

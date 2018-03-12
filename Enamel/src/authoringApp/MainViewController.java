@@ -1,14 +1,19 @@
 package authoringApp;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import enamel.ScenarioParser;
 
 public class MainViewController implements MainView {
 	private MainFrame view;
 	private MainViewModel appModel;
+	private Scenario scenarioModel;
 	
 	public MainViewController() {
 	}
@@ -33,7 +38,7 @@ public class MainViewController implements MainView {
 	public void newScenario() {
 		int save = 0;
 		if (this.appModel.isInEditingMode()) {
-			save = JOptionPane.showInternalConfirmDialog(this.view, "Would you like to save changes to the current scenario?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			save = JOptionPane.showConfirmDialog(null, "Would you like to save changes to the current scenario?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (save == JOptionPane.YES_OPTION) {
 				saveScenario();
 			} else if (save == JOptionPane.CANCEL_OPTION) {
@@ -47,7 +52,7 @@ public class MainViewController implements MainView {
 	public void openScenario() {
 		int save = 0;
 		if (this.appModel.isInEditingMode()) {
-			save = JOptionPane.showInternalConfirmDialog(this.view, "Would you like to save changes to the current scenario?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			save = JOptionPane.showConfirmDialog(this.view, "Would you like to save changes to the current scenario?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (save == JOptionPane.YES_OPTION) {
 				saveScenario();
 			} else if (save == JOptionPane.CANCEL_OPTION) {
@@ -61,6 +66,8 @@ public class MainViewController implements MainView {
 		int returnVal = fc.showOpenDialog(this.view);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			scenarioFile = fc.getSelectedFile();
+		} else {
+			return;
 		}
 		
 		if (!Scenario.isValidScenarioFile(scenarioFile)) {
@@ -70,22 +77,36 @@ public class MainViewController implements MainView {
                               JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		
 		openEditor(new Scenario(scenarioFile));
 	}
 
 	@Override
 	public void saveScenario() {
 		if (!this.appModel.isInEditingMode()) return;
+		try {
+			scenarioModel.generateScenarioText();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	@Override
 	public void saveScenarioAs() {
 		if (!this.appModel.isInEditingMode()) return;
+		saveScenario();
 	}
 
 	@Override
 	public void runScenario() {
 		if (!this.appModel.isInEditingMode()) return;
+		Thread starterCodeThread = new Thread("Starter Code Thread") {
+		    public void run(){    
+		        ScenarioParser s = new ScenarioParser(true);
+		        s.setScenarioFile(appModel.getScenarioFile().getAbsolutePath());
+		    }
+		};
+		starterCodeThread.start();
 	}
 
 	@Override
@@ -103,10 +124,16 @@ public class MainViewController implements MainView {
 		econtroller.setModel(s);
 		this.view.openEditor(econtroller);
 		this.appModel.setEditingMode(true);
+		this.view.setEditingMode(true);
 	}
 
 	public void createScenario(String title, int cells, int buttons) {
-		openEditor(new Scenario(title, cells, buttons));
+		String pwd = System.getProperty("user.dir") + "/";
+		String fname = pwd + title + ".txt";
+		if (new File(fname) != null) {
+			scenarioModel = new Scenario(title, cells, buttons);
+			openEditor(scenarioModel);
+		}
 	}
 
 	public void goBack() {
