@@ -35,7 +35,7 @@ public class SkipButtonInteractionView extends InteractionView {
 		    public void itemStateChanged(ItemEvent event) {
 		       if (event.getStateChange() == ItemEvent.SELECTED) {
 		          Object item = event.getItem();
-		          skipModel.setButton((Integer) item);
+		          skipModel.setButton((Integer) item - 1);
 		       }
 		    }    
 		});
