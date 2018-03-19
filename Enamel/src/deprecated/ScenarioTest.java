@@ -1,7 +1,13 @@
-package authoringApp;
+package deprecated;
 
 import java.io.File;
 import java.io.IOException;
+
+import authoringApp.Scenario;
+import authoringApp.interactionModels.CellClearInteraction;
+import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.PauseInteraction;
+import authoringApp.interactionModels.ReadInteraction;
 
 class ScenarioTest {
 	

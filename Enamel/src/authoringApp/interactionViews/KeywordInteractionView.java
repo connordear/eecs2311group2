@@ -1,4 +1,4 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
 
@@ -7,6 +7,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+
+import authoringApp.interactionModels.KeywordInteraction;
 
 public class KeywordInteractionView extends InteractionView {
 

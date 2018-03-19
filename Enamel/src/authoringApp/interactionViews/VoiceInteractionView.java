@@ -1,8 +1,10 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
 
 import javax.swing.JLabel;
+
+import authoringApp.interactionModels.VoiceInteraction;
 
 public class VoiceInteractionView extends InteractionView {
 

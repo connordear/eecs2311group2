@@ -1,4 +1,7 @@
-package authoringApp;
+package authoringApp.interactionModels;
+
+import authoringApp.Interaction;
+import authoringApp.Interaction.InteractionType;
 
 public class PauseInteraction extends Interaction {
 

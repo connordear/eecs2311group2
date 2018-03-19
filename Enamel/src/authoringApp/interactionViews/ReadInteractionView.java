@@ -1,4 +1,4 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -9,6 +9,8 @@ import javax.swing.JTextArea;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+
+import authoringApp.interactionModels.ReadInteraction;
 
 public class ReadInteractionView extends InteractionView {
 

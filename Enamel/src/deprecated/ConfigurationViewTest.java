@@ -1,4 +1,4 @@
-package authoringApp;
+package deprecated;
 
 import javax.swing.JFrame;
 

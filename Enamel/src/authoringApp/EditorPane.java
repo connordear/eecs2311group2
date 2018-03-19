@@ -28,6 +28,25 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 import authoringApp.Interaction.InteractionType;
+import authoringApp.interactionModels.CellClearInteraction;
+import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.KeywordInteraction;
+import authoringApp.interactionModels.PauseInteraction;
+import authoringApp.interactionModels.ReadInteraction;
+import authoringApp.interactionModels.ResetButtonInteraction;
+import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.UserInputInteraction;
+import authoringApp.interactionModels.VoiceInteraction;
+import authoringApp.interactionViews.CellClearInteractionView;
+import authoringApp.interactionViews.DisplayBrailleInteractionView;
+import authoringApp.interactionViews.InteractionView;
+import authoringApp.interactionViews.KeywordInteractionView;
+import authoringApp.interactionViews.PauseInteractionView;
+import authoringApp.interactionViews.ReadInteractionView;
+import authoringApp.interactionViews.ResetButtonInteractionView;
+import authoringApp.interactionViews.SkipButtonInteractionView;
+import authoringApp.interactionViews.UserInputInteractionView;
+import authoringApp.interactionViews.VoiceInteractionView;
 import enamel.ScenarioParser;
 
 public class EditorPane extends JPanel implements EditorView {

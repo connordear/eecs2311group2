@@ -1,6 +1,8 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
+
+import authoringApp.interactionModels.UserInputInteraction;
 
 public class UserInputInteractionView extends InteractionView {
 

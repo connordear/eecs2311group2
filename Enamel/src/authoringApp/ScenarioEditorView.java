@@ -24,6 +24,23 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 
+import authoringApp.interactionModels.CellClearInteraction;
+import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.KeywordInteraction;
+import authoringApp.interactionModels.PauseInteraction;
+import authoringApp.interactionModels.ReadInteraction;
+import authoringApp.interactionModels.ResetButtonInteraction;
+import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.UserInputInteraction;
+import authoringApp.interactionViews.CellClearInteractionView;
+import authoringApp.interactionViews.DisplayBrailleInteractionView;
+import authoringApp.interactionViews.KeywordInteractionView;
+import authoringApp.interactionViews.PauseInteractionView;
+import authoringApp.interactionViews.ReadInteractionView;
+import authoringApp.interactionViews.ResetButtonInteractionView;
+import authoringApp.interactionViews.SkipButtonInteractionView;
+import authoringApp.interactionViews.UserInputInteractionView;
+
 public class ScenarioEditorView {
 	// Frame
 	private static JFrame frame;

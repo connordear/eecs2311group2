@@ -1,4 +1,6 @@
-package authoringApp;
+package authoringApp.interactionViews;
+
+import authoringApp.interactionModels.ResetButtonInteraction;
 
 public class ResetButtonInteractionView extends InteractionView {
 

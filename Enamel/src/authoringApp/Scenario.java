@@ -12,6 +12,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import authoringApp.interactionModels.CellClearInteraction;
+import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.KeywordInteraction;
+import authoringApp.interactionModels.PauseInteraction;
+import authoringApp.interactionModels.ReadInteraction;
+import authoringApp.interactionModels.ResetButtonInteraction;
+import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.UserInputInteraction;
+
 public class Scenario {
 	
 	private static int counter = 0;

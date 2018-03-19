@@ -1,4 +1,4 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
 import java.awt.event.ItemEvent;
@@ -6,6 +6,8 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+
+import authoringApp.interactionModels.DisplayBrailleInteraction;
 
 public class DisplayBrailleInteractionView extends InteractionView {
 

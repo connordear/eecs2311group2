@@ -1,6 +1,9 @@
-package authoringApp;
+package authoringApp.interactionModels;
 
 import java.io.File;
+
+import authoringApp.Interaction;
+import authoringApp.Interaction.InteractionType;
 
 public class VoiceInteraction extends Interaction {
 

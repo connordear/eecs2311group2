@@ -1,4 +1,4 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
 import java.awt.event.ItemEvent;
@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+
+import authoringApp.interactionModels.SkipButtonInteraction;
 
 public class SkipButtonInteractionView extends InteractionView {
 
