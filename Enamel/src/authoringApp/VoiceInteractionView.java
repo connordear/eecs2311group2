@@ -20,20 +20,4 @@ public class VoiceInteractionView extends InteractionView {
 		c.gridy = 1;
 		super.addRow(fileLabel, c);
 	}
-
-	@Override
-	public String getTitle() {
-		return this.voiceModel.getTitle();
-	}
-
-	@Override
-	public boolean setTitle(String s) {
-		return this.voiceModel.setTitle(s);
-	}
-
-	@Override
-	public String getType() {
-		return this.voiceModel.getType();
-	}
-
 }

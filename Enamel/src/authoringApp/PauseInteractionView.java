@@ -45,20 +45,4 @@ public class PauseInteractionView extends InteractionView {
 		c.gridy = 1;
 		super.addRow(this.pauseLabel, c);
 	}
-
-	@Override
-	public String getTitle() {
-		return this.pauseModel.getTitle();
-	}
-
-	@Override
-	public boolean setTitle(String s) {
-		return this.pauseModel.setTitle(s);
-	}
-
-	@Override
-	public String getType() {
-		return this.pauseModel.getType();
-	}
-
 }

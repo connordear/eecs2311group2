@@ -1,0 +1,14 @@
+Cell 1
+Button 4
+asdf
+/~skip-button:1 Skip
+/~skip-button:1 Skip
+/~skip-button:1 Skip
+/~skip-button:1 Skip
+/~skip-button:1 Skip
+
+
+
+/~disp-cell-pins:0 00000000
+/~disp-cell-pins:0 00000000
+/~disp-cell-pins:0 00000000

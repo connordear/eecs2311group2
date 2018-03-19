@@ -93,20 +93,4 @@ public class DisplayBrailleInteractionView extends InteractionView {
 		}
 		
 	}
-
-	@Override
-	public String getTitle() {
-		return this.dbiModel.getTitle();
-	}
-
-	@Override
-	public boolean setTitle(String s) {
-		return this.dbiModel.setTitle(s);
-	}
-
-	@Override
-	public String getType() {
-		return this.dbiModel.getType();
-	}
-
 }

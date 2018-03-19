@@ -64,19 +64,4 @@ public class KeywordInteractionView extends InteractionView {
 		super.addRow(keywordLabel, c);
 	}
 
-	@Override
-	public String getTitle() {
-		return this.keymodel.getTitle();
-	}
-
-	@Override
-	public boolean setTitle(String s) {
-		return this.keymodel.setTitle(s);
-	}
-
-	@Override
-	public String getType() {
-		return this.keymodel.getType();
-	}
-
 }

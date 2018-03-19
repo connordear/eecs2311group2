@@ -45,20 +45,4 @@ public class CellClearInteractionView extends InteractionView {
 		super.addRow(this.cellNumberLabel, c);
 	}
 
-	@Override
-	public String getTitle() {
-		return this.cellClearModel.getTitle();
-	}
-
-	@Override
-	public boolean setTitle(String s) {
-		return this.cellClearModel.setTitle(s);
-	
-	}
-
-	@Override
-	public String getType() {
-		return this.cellClearModel.getType();
-	}
-
 }

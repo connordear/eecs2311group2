@@ -82,20 +82,4 @@ public class SkipButtonInteractionView extends InteractionView {
 		super.addRow(this.keywordLabel, c);
 		
 	}
-
-	@Override
-	public String getTitle() {
-		return this.skipModel.getTitle();
-	}
-
-	@Override
-	public boolean setTitle(String s) {
-		return this.skipModel.setTitle(s);
-	}
-
-	@Override
-	public String getType() {
-		return this.skipModel.getType();
-	}
-
 }
