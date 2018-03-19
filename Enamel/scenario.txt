@@ -1,7 +1,0 @@
-Cell 1
-Button 4
-scenario
-oneoneoneoneoneone
-/~disp-cell-pins:0 01100010
-/~pause:4
-/~disp-cell-pins:0 00000011

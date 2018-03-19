@@ -1,9 +1,0 @@
-Cell 1
-Button 4
-test_one_connor
-/~disp-cell-pins:0 00000011
-Pins on the left one, two and three are displayed. Press one to continue.
-/~skip-button:1 ONEE
-/~user-input
-/~ONEE
-Nice job you got it
