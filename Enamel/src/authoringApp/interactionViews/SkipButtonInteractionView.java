@@ -1,4 +1,4 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
 import java.awt.event.ItemEvent;
@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+
+import authoringApp.interactionModels.SkipButtonInteraction;
 
 public class SkipButtonInteractionView extends InteractionView {
 
@@ -35,7 +37,7 @@ public class SkipButtonInteractionView extends InteractionView {
 		    public void itemStateChanged(ItemEvent event) {
 		       if (event.getStateChange() == ItemEvent.SELECTED) {
 		          Object item = event.getItem();
-		          skipModel.setButton((Integer) item);
+		          skipModel.setButton((Integer) item - 1);
 		       }
 		    }    
 		});
@@ -82,20 +84,4 @@ public class SkipButtonInteractionView extends InteractionView {
 		super.addRow(this.keywordLabel, c);
 		
 	}
-
-	@Override
-	public String getTitle() {
-		return this.skipModel.getTitle();
-	}
-
-	@Override
-	public boolean setTitle(String s) {
-		return this.skipModel.setTitle(s);
-	}
-
-	@Override
-	public String getType() {
-		return this.skipModel.getType();
-	}
-
 }

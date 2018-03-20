@@ -1,4 +1,4 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -9,6 +9,8 @@ import javax.swing.JTextArea;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+
+import authoringApp.interactionModels.ReadInteraction;
 
 public class ReadInteractionView extends InteractionView {
 
@@ -73,18 +75,6 @@ public class ReadInteractionView extends InteractionView {
 		});
 	}
 		
-
-
-	
-	public String getTitle() {
-		return this.readModel.getTitle();
-	}
-	
-	@Override
-	public boolean setTitle(String s) {
-		return this.readModel.setTitle(s);		
-	}
-	
 	public String getData() {
 		return this.readModel.getData();
 	}
@@ -93,12 +83,7 @@ public class ReadInteractionView extends InteractionView {
 		this.readModel.setData(d);
 		return true;
 	}
-	
-	
-	@Override
-	public String getType() {
-		return InteractionView.READ;
-	}
+
 	
 
 }

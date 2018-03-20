@@ -1,4 +1,4 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
 import java.awt.event.ItemEvent;
@@ -6,6 +6,8 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
+import authoringApp.interactionModels.PauseInteraction;
 
 public class PauseInteractionView extends InteractionView {
 
@@ -45,20 +47,4 @@ public class PauseInteractionView extends InteractionView {
 		c.gridy = 1;
 		super.addRow(this.pauseLabel, c);
 	}
-
-	@Override
-	public String getTitle() {
-		return this.pauseModel.getTitle();
-	}
-
-	@Override
-	public boolean setTitle(String s) {
-		return this.pauseModel.setTitle(s);
-	}
-
-	@Override
-	public String getType() {
-		return this.pauseModel.getType();
-	}
-
 }

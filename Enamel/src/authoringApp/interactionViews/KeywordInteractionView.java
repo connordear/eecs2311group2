@@ -1,4 +1,4 @@
-package authoringApp;
+package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
 
@@ -7,6 +7,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+
+import authoringApp.interactionModels.KeywordInteraction;
 
 public class KeywordInteractionView extends InteractionView {
 
@@ -62,21 +64,6 @@ public class KeywordInteractionView extends InteractionView {
 		c.gridx = 0;
 		c.gridy = 1;
 		super.addRow(keywordLabel, c);
-	}
-
-	@Override
-	public String getTitle() {
-		return this.keymodel.getTitle();
-	}
-
-	@Override
-	public boolean setTitle(String s) {
-		return this.keymodel.setTitle(s);
-	}
-
-	@Override
-	public String getType() {
-		return this.keymodel.getType();
 	}
 
 }

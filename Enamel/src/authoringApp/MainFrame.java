@@ -1,7 +1,6 @@
 package authoringApp;
 
 import java.awt.CardLayout;
-import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -13,7 +12,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainFrame extends JFrame implements MainView {
 	private static final String APPLICATION_TITLE = "Braille Author";
