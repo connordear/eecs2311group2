@@ -1,8 +1,5 @@
 package authoringApp;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 /*
  * Class is meant to be inherited and used to create the other Interaction classes
  */
@@ -58,7 +55,6 @@ public abstract class Interaction {
 	public Interaction getInteraction() {
 		return this;
 	}
-	
 	abstract public String generateScenarioText();
 	
 	abstract public String getType();

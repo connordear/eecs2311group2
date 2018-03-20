@@ -1,5 +1,15 @@
 package authoringApp;
 
+import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.KeywordInteraction;
+import authoringApp.interactionModels.PauseInteraction;
+import authoringApp.interactionModels.ReadInteraction;
+import authoringApp.interactionModels.ResetButtonInteraction;
+import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.UserInputInteraction;
+import authoringApp.interactionModels.VoiceInteraction;
+import authoringApp.interactionModels.CellClearInteraction;
+
 public class EditorController {
 	private EditorPane view;
 	private Scenario model;
@@ -41,7 +51,8 @@ public class EditorController {
 				break;
 			case VOICE:
 				// No VoiceInteraction yet?
-				//i = new VoiceInteraction();
+				i = new VoiceInteraction();
+				System.out.println("This should print when I try to add a voice.");
 				break;
 			case DISPLAY_BRAILLE:
 				i = new DisplayBrailleInteraction();

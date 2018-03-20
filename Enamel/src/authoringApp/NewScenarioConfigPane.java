@@ -1,6 +1,5 @@
 package authoringApp;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -16,8 +15,6 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 public class NewScenarioConfigPane extends JPanel {
-	private MainViewController controller;
-	
 	private final int MIN_CELLS = 1;
 	private final int MAX_CELLS = 8;
 	private final int DEFAULT_CELLS = 1;
