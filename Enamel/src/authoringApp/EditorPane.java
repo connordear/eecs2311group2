@@ -7,21 +7,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.IOException;
-import java.net.URISyntaxException;
-
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -50,7 +44,7 @@ import authoringApp.interactionViews.UserInputInteractionView;
 import authoringApp.interactionViews.VoiceInteractionView;
 import enamel.ScenarioParser;
 
-public class EditorPane extends JPanel implements EditorView {
+public class EditorPane extends JPanel {
 	
 	private String scenarioPath;
 	private EditorController controller;

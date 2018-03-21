@@ -1,6 +1,0 @@
-Cell 4
-Button 4
-
-/~disp-cell-pins:0 10000000
-/~disp-cell-pins:0 01000000
-/~disp-cell-pins:0 00100000

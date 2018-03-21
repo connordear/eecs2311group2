@@ -3,11 +3,10 @@ package authoringApp;
 import java.io.File;
 
 public class MainViewModel {
-	private boolean fileIsInvalid, isEditing;
+	private boolean isEditing;
 	private File scenarioFile;
 	
 	public MainViewModel() {
-		this.fileIsInvalid = false;
 		this.isEditing = false;
 		this.scenarioFile = null;
 	}

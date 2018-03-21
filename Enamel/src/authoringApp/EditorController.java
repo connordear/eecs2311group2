@@ -1,6 +1,5 @@
 package authoringApp;
 
-import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
 import authoringApp.interactionModels.Interaction;
 import authoringApp.interactionModels.KeywordInteraction;
@@ -10,8 +9,9 @@ import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 import authoringApp.interactionModels.VoiceInteraction;
+import authoringApp.interactionModels.CellClearInteraction;
 
-public class EditorController implements EditorView {
+public class EditorController {
 	private EditorPane view;
 	private Scenario model;
 	
