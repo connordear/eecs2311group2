@@ -1,23 +1,21 @@
 package authoringApp.interactionModels;
 
-import java.io.File;
 
-import authoringApp.Interaction;
-import authoringApp.Interaction.InteractionType;
 
 public class VoiceInteraction extends Interaction {
 
-	private File file;
+	private String fileName;
 	
 	public VoiceInteraction() {
-		super("Voice Interaction");
+		super("Voice Interaction", 0, 0);
+		this.fileName = this.getTitle();
 	}
 
 
 	@Override
 	public String generateScenarioText() {
 		String base = "/~sound:";
-		return base + this.file.getPath();
+		return base + this.fileName;
 	}
 
 

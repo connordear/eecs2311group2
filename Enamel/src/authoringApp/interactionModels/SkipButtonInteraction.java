@@ -1,26 +1,15 @@
 package authoringApp.interactionModels;
 
-import authoringApp.Interaction;
-import authoringApp.Interaction.InteractionType;
-
 public class SkipButtonInteraction extends Interaction {
 
 	public String keyword;
 	public int button;
 	
-	public SkipButtonInteraction(int button, String keyword) {
-		super("Skip Button");
+	public SkipButtonInteraction(int button, String keyword,int numCells, int numButtons) {
+		super("Skip Button", numCells, numButtons);
 		this.setButton(button);
 		this.setKeyword(keyword);
 	}
-
-	
-	public SkipButtonInteraction() {
-		super("Skip Button");
-		this.setButton(1);
-		this.setKeyword("Skip");
-	}
-
 
 	public void setButton(int button) {
 		// No way to verify which button they are pressing?

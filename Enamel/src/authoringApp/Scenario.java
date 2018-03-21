@@ -7,13 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.Interaction;
 import authoringApp.interactionModels.KeywordInteraction;
 import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
@@ -49,7 +48,7 @@ public class Scenario {
 		setTitle(title);
 		this.setButtons(buttons);
 		this.setCells(cells);
-		this.interactionList = new CustomListModel(new ArrayList<Interaction>());
+		this.interactionList = new CustomListModel<Interaction>(new ArrayList<Interaction>());
 		//this.interactionList = new InteractionListModel();
 		this.id = counter;
 		Scenario.counter++;
@@ -69,7 +68,7 @@ public class Scenario {
 	public Scenario(File scenarioTextFile) throws IllegalArgumentException{
 		this();
 		//InteractionList newList = new InteractionList();
-		CustomListModel newList = new CustomListModel(new ArrayList<Interaction>());
+		CustomListModel<Interaction> newList = new CustomListModel<Interaction>(new ArrayList<Interaction>());
 		BufferedReader reader;
 		if (Scenario.isValidScenarioFile(scenarioTextFile)) {
 			try {
@@ -92,7 +91,7 @@ public class Scenario {
 						// Then we have a command
 						// Check for Braille Interaction
 						if(line.startsWith("/~disp-cell-pins:")) {
-							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
+							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19), this.getCells(), this.getButtons()));
 						}
 						// Check for Pause Interaction
 						else if (line.startsWith("/~pause:")) {
@@ -104,11 +103,11 @@ public class Scenario {
 						}
 						// Check for Cell Clear Interaction
 						else if (line.startsWith("/~disp-cell-clear:")) {
-							newList.add(new CellClearInteraction(Integer.parseInt(line.substring(18))));
+							newList.add(new CellClearInteraction(Integer.parseInt(line.substring(18)), this.cells, this.buttons));
 						}
 						// Check for Skip Button Interaction
 						else if (line.startsWith("/~skip-button:")) {
-							newList.add(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16)));
+							newList.add(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16), this.cells, this.buttons));
 						}
 						// Check for User Input Interaction
 						else if (line.startsWith("/~user-input")) {

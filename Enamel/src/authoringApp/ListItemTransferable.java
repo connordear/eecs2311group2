@@ -5,6 +5,8 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
+import authoringApp.interactionModels.Interaction;
+
 public class ListItemTransferable implements Transferable {
 
     public static final DataFlavor LIST_ITEM_DATA_FLAVOR = new DataFlavor(Interaction.class, "java/Interaction");

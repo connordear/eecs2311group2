@@ -27,9 +27,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 
-import authoringApp.Interaction.InteractionType;
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.Interaction;
 import authoringApp.interactionModels.KeywordInteraction;
 import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
@@ -37,6 +37,7 @@ import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 import authoringApp.interactionModels.VoiceInteraction;
+import authoringApp.interactionModels.Interaction.InteractionType;
 import authoringApp.interactionViews.CellClearInteractionView;
 import authoringApp.interactionViews.DisplayBrailleInteractionView;
 import authoringApp.interactionViews.InteractionView;

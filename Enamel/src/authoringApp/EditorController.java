@@ -2,6 +2,7 @@ package authoringApp;
 
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.Interaction;
 import authoringApp.interactionModels.KeywordInteraction;
 import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
@@ -55,7 +56,7 @@ public class EditorController implements EditorView {
 				System.out.println("This should print when I try to add a voice.");
 				break;
 			case DISPLAY_BRAILLE:
-				i = new DisplayBrailleInteraction();
+				i = new DisplayBrailleInteraction(0, "00000000", this.model.getCells(), this.model.getButtons());
 				break;
 			case KEYWORD:
 				i = new KeywordInteraction();
@@ -64,7 +65,7 @@ public class EditorController implements EditorView {
 				i = new PauseInteraction();
 				break;
 			case SKIP_BUTTON:
-				i = new SkipButtonInteraction();
+				i = new SkipButtonInteraction(0, "SkipTo", this.model.getCells(), this.model.getButtons());
 				break;
 			case USER_INPUT:
 				i = new UserInputInteraction();
@@ -73,7 +74,7 @@ public class EditorController implements EditorView {
 				i = new ResetButtonInteraction();
 				break;
 			case CLEAR_BRAILLE:
-				i = new CellClearInteraction();
+				i = new CellClearInteraction(0, this.model.getCells(), this.model.getButtons());
 				break;
 			default:
 				break;

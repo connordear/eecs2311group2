@@ -1,12 +1,10 @@
 package authoringApp.interactionModels;
 
-import authoringApp.Interaction;
-import authoringApp.Interaction.InteractionType;
 
 public class ResetButtonInteraction extends Interaction {
 
 	public ResetButtonInteraction() {
-		super("Reset Buttons");
+		super("Reset Buttons", 0 , 0);
 	}
 	
 	@Override

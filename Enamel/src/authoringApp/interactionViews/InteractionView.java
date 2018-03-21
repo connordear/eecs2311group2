@@ -12,7 +12,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
-import authoringApp.Interaction;
+import authoringApp.interactionModels.Interaction;
 
 public class InteractionView {
 

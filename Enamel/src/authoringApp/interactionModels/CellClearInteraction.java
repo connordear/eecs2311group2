@@ -1,20 +1,12 @@
 package authoringApp.interactionModels;
 
-import authoringApp.Interaction;
-import authoringApp.Interaction.InteractionType;
-
 public class CellClearInteraction extends Interaction {
 	
 	private int cellNumber;
 
-	public CellClearInteraction(int cellNumber) {
-		super("Clear Cell " + cellNumber);
-		this.cellNumber = cellNumber;
-	}
-	
-	public CellClearInteraction() {
-		super("Clear Cell " + 0);
-		this.cellNumber = 0;
+	public CellClearInteraction(int cellNumber, int numCells, int numButtons) {
+		super("Clear Cell " + cellNumber, numCells, numButtons);
+		this.cellNumber = cellNumber | 0;
 	}
 	
 	

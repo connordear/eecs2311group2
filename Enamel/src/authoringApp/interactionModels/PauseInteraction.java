@@ -1,8 +1,5 @@
 package authoringApp.interactionModels;
 
-import authoringApp.Interaction;
-import authoringApp.Interaction.InteractionType;
-
 public class PauseInteraction extends Interaction {
 
 	private int length;
@@ -16,7 +13,7 @@ public class PauseInteraction extends Interaction {
 	}
 	
 	public PauseInteraction(String title, int length) {
-		super(title);
+		super(title, 0, 0);
 		this.length = length;
 	}
 	public int getLength() {
