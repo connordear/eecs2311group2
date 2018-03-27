@@ -1,6 +1,7 @@
 package authoringApp;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -15,7 +16,7 @@ public class StartupPane extends JPanel {
 	
 	private MainViewController controller;
 	private JLabel welcomeLbl, statusLbl;
-	private JButton newBtn, openBtn;
+	private JButton newBtn, openBtn, exitBtn;
 	private JFileChooser fc;
 	private GridBagConstraints gbc;
 	
@@ -24,9 +25,11 @@ public class StartupPane extends JPanel {
 		setLayout(new GridBagLayout());
 		
 		welcomeLbl = new JLabel("<html><h2>Welcome to the Braille Author application!</h2>To create a new series of user interactions for the user (called a scenario), click <strong>New</strong>.<br>To open and edit and existing scenario file, click <strong>Open</strong>.</html>");
+		welcomeLbl.setFont(new Font("Verdana", Font.PLAIN, 20));
 		statusLbl = new JLabel("");
 		newBtn = new JButton("New");
 		openBtn = new JButton("Open");
+		exitBtn = new JButton("Exit");
 		fc = new JFileChooser();
 		
 		newBtn.addActionListener(new ActionListener() {
@@ -41,28 +44,40 @@ public class StartupPane extends JPanel {
 				openScenarioSelected();
 			}
 		});
+		exitBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.exit();
+			}
+		});
 		
 		// Welcome label
 		gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.VERTICAL;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.weightx = 1;
 		gbc.gridwidth = 2;
+		gbc.gridheight = 3;
 		add(welcomeLbl, gbc);
 		
 		// New and Open buttons
-		//gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridy++;
+		
+		gbc.gridx += 2;
 		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		gbc.fill = GridBagConstraints.BOTH;
 		add(newBtn, gbc);
 		gbc.gridy++;
 		add(openBtn, gbc);
+		gbc.gridy++;
+		add(exitBtn, gbc);
 		
 		// Status label (for error messages in case scenario file failed to load)
-		gbc.gridx = 0;
-		gbc.gridy++;
-		gbc.gridwidth = 2;
-		add(statusLbl, gbc);
+		//gbc.gridx = 0;
+		//gbc.gridy++;
+		//gbc.gridwidth = 2;
 	}
 
 	public void createNewScenarioSelected() {

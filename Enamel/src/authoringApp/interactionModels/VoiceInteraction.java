@@ -1,16 +1,35 @@
 package authoringApp.interactionModels;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 public class VoiceInteraction extends Interaction {
 
 	private String fileName;
+
+	private File file;
+	private Map<String, String> soundFileProperties;
+
 	
 	public VoiceInteraction() {
 		super("Voice Interaction", 0, 0);
 		this.fileName = this.getTitle();
-	}
 
+		
+		soundFileProperties = new LinkedHashMap<String, String>();
+		soundFileProperties.put("Name", "");
+		soundFileProperties.put("Folder path", "");
+		soundFileProperties.put("Length", "");
+		soundFileProperties.put("Bit rate", "");
+		soundFileProperties.put("Size", "");
+		soundFileProperties.put("Item type", "");
+		
+	}
 
 	@Override
 	public String generateScenarioText() {
@@ -18,10 +37,37 @@ public class VoiceInteraction extends Interaction {
 		return base + this.fileName;
 	}
 
-
 	@Override
 	public String getType() {
 		return Interaction.InteractionType.VOICE.getDescription();
+	}
+	
+	private Object[][] createSoundProperties(HashMap map) {
+		Object[][] arr = new Object[map.size()][];
+		Set entries = map.entrySet();
+		Iterator entriesIterator = entries.iterator();
+		
+		int i = 0;
+		while (entriesIterator.hasNext()) {
+			Map.Entry mapping = (Map.Entry) entriesIterator.next();
+			
+			arr[i][0] = mapping.getKey();
+			arr[i][1] = mapping.getValue();
+			i++;
+		}
+		return arr;
+	}
+	
+	public Map<String, String> getSoundProperties() {
+		return this.soundFileProperties;
+	}
+	
+	public File getSoundFile() {
+		return this.file;
+	}
+	
+	public void setSoundFile(File f) {
+		this.file = f;
 	}
 
 }

@@ -224,13 +224,6 @@ public class EditorPane extends JPanel {
 	public void addInteraction(int selectedIndex) {
 		int size = list.getModel().getSize();
 		
-		if (list.getModel().getSize() != 0) {
-			//List is not empty: enable delete, up, and down buttons.
-            delBtn.setEnabled(true);
-            upBtn.setEnabled(true);
-            downBtn.setEnabled(true);
-		}
-		
 		// If no selection or if item in last position is selected,
         // add the new one to end of list, and select new one.
 		if (list.getModel().getSize() == 0 || selectedIndex == -1 || (selectedIndex + 1 == size)) {
@@ -241,6 +234,13 @@ public class EditorPane extends JPanel {
 	        // and select new one.
 			controller.addInteraction(newOptions.getSelectedIndex(), selectedIndex + 1);
             list.setSelectedIndex(selectedIndex + 1);
+		}
+		
+		if (list.getModel().getSize() != 0) {
+			//List is not empty: enable delete, up, and down buttons.
+            delBtn.setEnabled(true);
+            upBtn.setEnabled(true);
+            downBtn.setEnabled(true);
 		}
 	}
 

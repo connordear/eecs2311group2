@@ -54,7 +54,7 @@ public class MainViewController implements MainView {
 			save = JOptionPane.showConfirmDialog(this.view, "Would you like to save changes to the current scenario?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (save == JOptionPane.YES_OPTION) {
 				saveScenario();
-			} else if (save == JOptionPane.CANCEL_OPTION) {
+			} else {
 				return;
 			}
 		}
@@ -121,9 +121,10 @@ public class MainViewController implements MainView {
 	public void openEditor(Scenario s) {
 		EditorController econtroller = new EditorController();
 		econtroller.setModel(s);
-		this.view.openEditor(econtroller);
 		this.appModel.setEditingMode(true);
 		this.view.setEditingMode(true);
+		this.view.openEditor(econtroller);
+		
 	}
 
 	public void createScenario(String title, int cells, int buttons) {
