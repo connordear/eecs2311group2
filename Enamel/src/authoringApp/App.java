@@ -3,6 +3,8 @@ package authoringApp;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.alee.laf.WebLookAndFeel;
+
 import enamel.*;
 
 public class App {
@@ -20,8 +22,9 @@ public class App {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	try {
+            		//WebLookAndFeel.install();
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
