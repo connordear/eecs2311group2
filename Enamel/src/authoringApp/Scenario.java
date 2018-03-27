@@ -18,6 +18,7 @@ import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
 import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 
 public class Scenario {
@@ -90,7 +91,7 @@ public class Scenario {
 					if (line.startsWith("/~")) {
 						// Then we have a command
 						// Check for Braille Interaction
-						if(line.startsWith("/~disp-cell-pins:")) {
+						if (line.startsWith("/~disp-cell-pins:")) {
 							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19), this.getCells(), this.getButtons()));
 						} else if (line.startsWith("/~disp-string:")) {
 							newList.add(new DisplayBrailleInteraction(0, line.substring(14),this.getCells(), this.getButtons()));
@@ -110,6 +111,9 @@ public class Scenario {
 						// Check for Skip Button Interaction
 						else if (line.startsWith("/~skip-button:")) {
 							newList.add(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16), this.cells, this.buttons));
+						}
+						else if (line.startsWith("/~skip:")) {
+							newList.add(new SkipInteraction(line.substring(7), this.cells, this.buttons));
 						}
 						// Check for User Input Interaction
 						else if (line.startsWith("/~user-input")) {

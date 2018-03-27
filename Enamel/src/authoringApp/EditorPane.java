@@ -29,6 +29,7 @@ import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
 import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 import authoringApp.interactionModels.VoiceInteraction;
 import authoringApp.interactionModels.Interaction.InteractionType;
@@ -40,6 +41,7 @@ import authoringApp.interactionViews.PauseInteractionView;
 import authoringApp.interactionViews.ReadInteractionView;
 import authoringApp.interactionViews.ResetButtonInteractionView;
 import authoringApp.interactionViews.SkipButtonInteractionView;
+import authoringApp.interactionViews.SkipInteractionView;
 import authoringApp.interactionViews.UserInputInteractionView;
 import authoringApp.interactionViews.VoiceInteractionView;
 import enamel.ScenarioParser;
@@ -301,6 +303,8 @@ public class EditorPane extends JPanel {
 			intView = new ResetButtonInteractionView((ResetButtonInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.SKIP_BUTTON.getDescription())) {
 			intView = new SkipButtonInteractionView((SkipButtonInteraction) i);
+		} else if (interactionType.equals(Interaction.InteractionType.SKIP.getDescription())) {
+			intView = new SkipInteractionView((SkipInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.USER_INPUT.getDescription())) {
 			intView = new UserInputInteractionView((UserInputInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.VOICE.getDescription())) {

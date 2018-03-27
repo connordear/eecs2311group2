@@ -4,21 +4,28 @@ public class SkipInteraction extends Interaction {
 		
 	private String skipWord;
 	
-	public SkipInteraction(String title, String skipWord, int cells, int buttons) {
-		super(title, cells, buttons);
+	public SkipInteraction(String skipWord, int cells, int buttons) {
+		super("Skip", cells, buttons);
 		this.skipWord = skipWord;
 	}
 
+	public String getSkipWord() {
+		return new String(this.skipWord);
+	}
+	
+	public void setSkipWord(String s) {
+		this.skipWord = s;
+	}
+	
 	@Override
 	public String generateScenarioText() {
-		// TODO Auto-generated method stub
-		return null;
+		String base = "/~skip:";
+		return base + this.skipWord;
 	}
 
 	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return Interaction.InteractionType.SKIP.getDescription();
 	}
 
 }
