@@ -14,7 +14,7 @@ public abstract class Interaction {
 	public enum InteractionType {
 		READ("Read"), VOICE("Voice"), DISPLAY_BRAILLE("Display braille"),
 		KEYWORD("Keyword"), PAUSE("Pause"), SKIP_BUTTON("Skip button"),
-		USER_INPUT("User input"), RESET_BUTTONS("Reset button"), CLEAR_BRAILLE("Clear braille"), QUESTION("Question");
+		USER_INPUT("User input"), RESET_BUTTONS("Reset button"), CLEAR_BRAILLE("Clear braille"), QUESTION("Question"), RESPONSE("Response");
 		
 		private String description;
 		InteractionType(String desc) {

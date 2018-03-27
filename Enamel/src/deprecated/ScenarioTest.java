@@ -7,6 +7,7 @@ import authoringApp.Scenario;
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
 import authoringApp.interactionModels.PauseInteraction;
+import authoringApp.interactionModels.QuestionInteraction;
 import authoringApp.interactionModels.ReadInteraction;
 
 class ScenarioTest {
@@ -37,6 +38,8 @@ class ScenarioTest {
 //		s2.getInteractionList().toString();
 //		s2.setTitle("My Copy of Scenario_1");
 //		s2.generateScenarioText();
+		QuestionInteraction testQ = new QuestionInteraction("test", 1, 4);
+		System.out.println(testQ.generateScenarioText());
 	}
 
 }

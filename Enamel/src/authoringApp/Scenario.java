@@ -92,6 +92,8 @@ public class Scenario {
 						// Check for Braille Interaction
 						if(line.startsWith("/~disp-cell-pins:")) {
 							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19), this.getCells(), this.getButtons()));
+						} else if (line.startsWith("/~disp-string:")) {
+							newList.add(new DisplayBrailleInteraction(0, line.substring(14),this.getCells(), this.getButtons()));
 						}
 						// Check for Pause Interaction
 						else if (line.startsWith("/~pause:")) {
