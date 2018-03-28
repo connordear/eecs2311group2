@@ -4,8 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -26,6 +26,8 @@ public class VoiceInteractionView extends InteractionView {
 	private JButton openFileBtn;
 	private JScrollPane scrollPan;
 	private JTable soundInfoTbl;
+	
+	private ImageIcon iconRecord, iconStop, iconPause, iconResume;
 	
 	public VoiceInteractionView(VoiceInteraction v) {
 		super(v.getInteraction());
