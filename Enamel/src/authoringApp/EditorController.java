@@ -7,6 +7,7 @@ import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
 import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 import authoringApp.interactionModels.VoiceInteraction;
 import authoringApp.interactionModels.CellClearInteraction;
@@ -67,6 +68,9 @@ public class EditorController {
 			case SKIP_BUTTON:
 				i = new SkipButtonInteraction(0, "SkipTo", this.model.getCells(), this.model.getButtons());
 				break;
+			case SKIP:
+				i = new SkipInteraction("SkipTo", this.model.getCells(), this.model.getButtons());
+				break;
 			case USER_INPUT:
 				i = new UserInputInteraction();
 				break;
@@ -87,8 +91,8 @@ public class EditorController {
 		if (i != null) {
 			this.model.addInteraction(i);
 			this.view.addInteractionCard(i);
-			this.view.showCard(Integer.toString(i.getId()));
 		}
+		this.view.showCard(Integer.toString(i.getId()));
 	}
 	
 	public void addInteraction(int selectedItemIndex, int insertIdx) {
@@ -96,8 +100,9 @@ public class EditorController {
 		if (i != null) {
 			this.model.addInteraction(i, insertIdx);
 			this.view.addInteractionCard(i);
-			this.view.showCard(Integer.toString(i.getId()));
 		}
+		this.view.showCard(Integer.toString(i.getId()));
+		
 	}
 
 	public void deleteInteraction(int selectedListItemIndex) {

@@ -30,7 +30,7 @@ public class QuestionInteraction extends Interaction {
 
 		@Override
 		public String getType() {
-			return Interaction.InteractionType.RESPONSE.getDescription();
+			return "Response";
 		}
 		
 	}
