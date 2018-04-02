@@ -1,6 +1,7 @@
 package authoringApp;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -20,6 +21,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicArrowButton;
+
+import com.alee.extended.painter.Painter;
+import com.alee.managers.style.StyleManager;
+import com.alee.managers.style.data.PainterStyle;
 
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
@@ -142,6 +147,7 @@ public class EditorPane extends JPanel {
 		for (Interaction.InteractionType iType : Interaction.InteractionType.values()) {
 			newOptions.addItem(iType.getDescription());
 		}
+		
 		
 		addBtn = new JButton("Add");
 		delBtn = new JButton("Delete");
