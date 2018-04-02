@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.apache.commons.io.FilenameUtils;
+
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
 import authoringApp.interactionModels.Interaction;
@@ -28,6 +30,7 @@ public class Scenario {
 	//public InteractionList interactionList;
 	private CustomListModel<Interaction> interactionList;
 	protected String title;
+	protected String filePath;
 	protected int cells;
 	protected int buttons;
 	private final int id;
@@ -38,28 +41,22 @@ public class Scenario {
 	 * Need to find a way to fix the default naming
 	 */
 	public Scenario() {
-		this("Untitled_" + counter, 1, 4);
+		this(1, 4);
 	}
 	
 	/*
 	 * All Constructor
 	 * - sets interaction list to empty
 	 */
-	public Scenario(String title, int cells, int buttons) {
-		setTitle(title);
+	public Scenario(int cells, int buttons) {
+		setTitle("Untitled_" + counter);
 		this.setButtons(buttons);
 		this.setCells(cells);
 		this.interactionList = new CustomListModel<Interaction>(new ArrayList<Interaction>());
 		//this.interactionList = new InteractionListModel();
 		this.id = counter;
+		setPath(System.getProperty("user.dir") + "/" + this.getTitle() + ".txt");
 		Scenario.counter++;
-	}
-	
-	/*
-	 * Title Constructor
-	 */
-	public Scenario(String title) {
-		this(title, 1, 4);
 	}
 	
 	/*
@@ -215,13 +212,16 @@ public class Scenario {
 	}
 	
 	public File getFile() {
-		String pwd = "./";
-		return new File(pwd + this.getTitle() + ".txt");
+		return new File(this.filePath);
 	}
 	
 	public String getPath() {
-		String pwd = "./";
-		return pwd + this.getTitle() + ".txt";
+		return this.filePath;
+	}
+	
+	public void setPath(String filePath) {
+		this.setTitle(FilenameUtils.removeExtension(FilenameUtils.getName(filePath)));
+		this.filePath = filePath;
 	}
 	
 	public CustomListModel<Interaction> getInteractionList() {
@@ -287,9 +287,8 @@ public class Scenario {
 	/*
 	 * Generate the scenario text
 	 */
-	public void generateScenarioText() throws IOException{
-		String pwd = System.getProperty("user.dir") + "/";
-		BufferedWriter writer = new BufferedWriter(new FileWriter(pwd + this.getTitle() + ".txt"));
+	public void generateScenarioText() throws IOException {
+		BufferedWriter writer = new BufferedWriter(new FileWriter(this.getPath()));
 		writer.write("Cell " + this.getCells() + "\n");
 		writer.write("Button " + this.getButtons() + "\n");
 		writer.write(this.getTitle() + "\n");

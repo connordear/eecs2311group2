@@ -7,18 +7,22 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 import authoringApp.interactionModels.CellClearInteraction;
@@ -32,7 +36,6 @@ import authoringApp.interactionModels.SkipButtonInteraction;
 import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 import authoringApp.interactionModels.VoiceInteraction;
-import authoringApp.interactionModels.Interaction.InteractionType;
 import authoringApp.interactionViews.CellClearInteractionView;
 import authoringApp.interactionViews.DisplayBrailleInteractionView;
 import authoringApp.interactionViews.InteractionView;
@@ -187,12 +190,7 @@ public class EditorPane extends JPanel {
 		saveBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					controller.getModel().generateScenarioText();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				saveFile();
 			}
 		});
 		runBtn.addActionListener(new ActionListener() {
@@ -352,6 +350,65 @@ public class EditorPane extends JPanel {
             upBtn.setEnabled(true);
             downBtn.setEnabled(true);
         }
+	}
+	
+	public void saveFile() {
+		if (new File(controller.getModel().getPath()).isFile()) {
+			try {
+				controller.getModel().generateScenarioText();
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(null, "Error",
+						"Error saving scenario file!",
+						JOptionPane.ERROR_MESSAGE);
+				ex.printStackTrace();
+			}
+		} else {
+			JFileChooser fileChooser = new JFileChooser();
+			FileFilter txtFilter = new FileFilter() {
+				@Override
+				public String getDescription() {
+					return "Text File (*.TXT)";
+				}
+
+				@Override
+				public boolean accept(File file) {
+					if (file.isDirectory()) {
+						return true;
+					} else {
+						return file.getName().toLowerCase().endsWith(".txt");
+					}
+				}
+			};
+
+			fileChooser.setFileFilter(txtFilter);
+			fileChooser.setAcceptAllFileFilterUsed(false);
+			
+			int userChoice = fileChooser.showSaveDialog(null);
+			if (userChoice == JFileChooser.APPROVE_OPTION) {
+				String saveFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+				if (new File(saveFilePath).isFile()) {
+					int overwriteExistingFile = 0;
+					overwriteExistingFile = JOptionPane.showConfirmDialog(null, "The file already exists. Replace existing file?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (overwriteExistingFile == JOptionPane.YES_OPTION) {
+						if (!saveFilePath.toLowerCase().endsWith(".txt")) {
+							saveFilePath += ".txt";
+						}
+						controller.getModel().setPath(saveFilePath);
+						
+						try {
+							controller.getModel().generateScenarioText();
+						} catch (IOException ex) {
+							JOptionPane.showMessageDialog(null, "Error",
+									"Error saving scenario file!",
+									JOptionPane.ERROR_MESSAGE);
+							ex.printStackTrace();
+						}
+					} else {
+						return;
+					}
+				}
+			}
+		}
 	}
 	
 	

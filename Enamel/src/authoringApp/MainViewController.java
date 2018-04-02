@@ -5,11 +5,12 @@ import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import enamel.ScenarioParser;
 
-public class MainViewController implements MainView {
+public class MainViewController  {
 	private MainFrame view;
 	private MainViewModel appModel;
 	private Scenario scenarioModel;
@@ -33,7 +34,6 @@ public class MainViewController implements MainView {
 		return this.appModel;
 	}
 
-	@Override
 	public void newScenario() {
 		int save = 0;
 		if (this.appModel.isInEditingMode()) {
@@ -47,7 +47,6 @@ public class MainViewController implements MainView {
 		showCard(MainView.NEW_PANE);
 	}
 
-	@Override
 	public void openScenario() {
 		int save = 0;
 		if (this.appModel.isInEditingMode()) {
@@ -80,23 +79,11 @@ public class MainViewController implements MainView {
 		openEditor(new Scenario(scenarioFile));
 	}
 
-	@Override
 	public void saveScenario() {
 		if (!this.appModel.isInEditingMode()) return;
-		try {
-			scenarioModel.generateScenarioText();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		saveFile();
 	}
 
-	@Override
-	public void saveScenarioAs() {
-		if (!this.appModel.isInEditingMode()) return;
-		saveScenario();
-	}
-
-	@Override
 	public void runScenario() {
 		if (!this.appModel.isInEditingMode()) return;
 		Thread starterCodeThread = new Thread("Starter Code Thread") {
@@ -108,12 +95,10 @@ public class MainViewController implements MainView {
 		starterCodeThread.start();
 	}
 
-	@Override
 	public void exit() {
 		this.view.exit();
 	}
 
-	@Override
 	public void showCard(String cardName) {
 		this.view.showCard(cardName);
 	}
@@ -127,17 +112,72 @@ public class MainViewController implements MainView {
 		
 	}
 
-	public void createScenario(String title, int cells, int buttons) {
-		String pwd = System.getProperty("user.dir") + "/";
-		String fname = pwd + title + ".txt";
-		if (new File(fname) != null) {
-			scenarioModel = new Scenario(title, cells, buttons);
-			openEditor(scenarioModel);
-		}
+	public void createScenario(int cells, int buttons) {
+		scenarioModel = new Scenario(cells, buttons);
+		openEditor(scenarioModel);
 	}
 
 	public void goBack() {
 		showCard(MainView.MAIN_PANE);
 		this.appModel.setEditingMode(false);
+	}
+	
+	public void saveFile() {
+		if (new File(this.scenarioModel.getPath()).isFile()) {
+			try {
+				this.scenarioModel.generateScenarioText();
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(null, "Error",
+						"Error saving scenario file!",
+						JOptionPane.ERROR_MESSAGE);
+				ex.printStackTrace();
+			}
+		} else {
+			JFileChooser fileChooser = new JFileChooser();
+			FileFilter txtFilter = new FileFilter() {
+				@Override
+				public String getDescription() {
+					return "Text File (*.TXT)";
+				}
+
+				@Override
+				public boolean accept(File file) {
+					if (file.isDirectory()) {
+						return true;
+					} else {
+						return file.getName().toLowerCase().endsWith(".txt");
+					}
+				}
+			};
+
+			fileChooser.setFileFilter(txtFilter);
+			fileChooser.setAcceptAllFileFilterUsed(false);
+			
+			int userChoice = fileChooser.showSaveDialog(null);
+			if (userChoice == JFileChooser.APPROVE_OPTION) {
+				String saveFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+				if (new File(saveFilePath).isFile()) {
+					int overwriteExistingFile = 0;
+					overwriteExistingFile = JOptionPane.showConfirmDialog(null, "The file already exists. Replace existing file?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (overwriteExistingFile == JOptionPane.YES_OPTION) {
+						if (!saveFilePath.toLowerCase().endsWith(".txt")) {
+							saveFilePath += ".txt";
+						}
+						this.scenarioModel.setPath(saveFilePath);
+						
+						try {
+							this.scenarioModel.generateScenarioText();
+						} catch (IOException ex) {
+							JOptionPane.showMessageDialog(null, "Error",
+									"Error saving scenario file!",
+									JOptionPane.ERROR_MESSAGE);
+							ex.printStackTrace();
+						}
+					} else {
+						return;
+					}
+				}
+			}
+		}
 	}
 }

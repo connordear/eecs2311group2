@@ -337,10 +337,10 @@ public class VoiceInteractionView extends InteractionView {
 			filePath = voiceModel.getSoundFilePath();
 		} catch (java.lang.StringIndexOutOfBoundsException ex) { }
 		soundData.addRow(new Object[] { fileName, filePath });
-		try {
-			soundData.removeRow(0);
-		} catch (Exception ex) {
-			System.out.println(ex.toString());
-		}
+//		try {
+//			soundData.removeRow(0);
+//		} catch (Exception ex) {
+//			System.out.println(ex.toString());
+//		}
 	}
 }
