@@ -39,7 +39,7 @@ public class InteractionView {
 		c.gridx = 1;
 		c.gridy = 0;
 		c.weightx = 1;
-		c.weighty = 1;
+		c.weighty = 0;
 		this.interactionView.add(titleField, c);
 
 		// Title Label

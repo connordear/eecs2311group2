@@ -7,6 +7,7 @@ import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
 import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 import authoringApp.interactionModels.VoiceInteraction;
 import authoringApp.interactionModels.CellClearInteraction;
@@ -66,6 +67,9 @@ public class EditorController {
 				break;
 			case SKIP_BUTTON:
 				i = new SkipButtonInteraction(0, "SkipTo", this.model.getCells(), this.model.getButtons());
+				break;
+			case SKIP:
+				i = new SkipInteraction("SkipTo", this.model.getCells(), this.model.getButtons());
 				break;
 			case USER_INPUT:
 				i = new UserInputInteraction();

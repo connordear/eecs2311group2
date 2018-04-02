@@ -90,7 +90,7 @@ public class EditorPane extends JPanel {
 		
 		containerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, listPane, configPane);
 		containerPane.setOneTouchExpandable(true);
-		containerPane.setDividerLocation(150);
+		containerPane.setDividerLocation(350);
 		containerPane.setPreferredSize(new Dimension(400, 200));
 		
 		controlsPane = createControlsPane();
