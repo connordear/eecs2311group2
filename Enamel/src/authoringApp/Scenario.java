@@ -53,7 +53,6 @@ public class Scenario {
 		this.setButtons(buttons);
 		this.setCells(cells);
 		this.interactionList = new CustomListModel<Interaction>(new ArrayList<Interaction>());
-		//this.interactionList = new InteractionListModel();
 		this.id = counter;
 		setPath(System.getProperty("user.dir") + "/" + this.getTitle() + ".txt");
 		Scenario.counter++;
