@@ -73,6 +73,11 @@ public class EditorPane extends JPanel {
 		this.scenarioPath = this.controller.getModel().getPath();
 		configPane = new JPanel(new CardLayout());
 		cards = (CardLayout) configPane.getLayout();
+		// Create dummy config pane to solve issue of not displaying the thing
+		JPanel test = new JPanel();
+		test.setName("dummy");
+		configPane.add(test);
+		cards.show(configPane, "dummy");
 		
 		this.controller.createInteractionList();
 		listPane = new JScrollPane(list);
@@ -144,8 +149,14 @@ public class EditorPane extends JPanel {
 		}
 		
 		addBtn = new JButton("Add");
+		addBtn.getAccessibleContext().setAccessibleName("Add New Interaction");
+		addBtn.getAccessibleContext().setAccessibleDescription("Click here to open a dropdown menu listing all possible interactions to add to the scenario.");
 		delBtn = new JButton("Delete");
+		delBtn.getAccessibleContext().setAccessibleName("Delete Interaction");
+		delBtn.getAccessibleContext().setAccessibleDescription("Click here to delete the currently selected interaction.");
 		upBtn = new BasicArrowButton(BasicArrowButton.NORTH);
+		upBtn.getAccessibleContext().setAccessibleName("Move Interaction Up");
+		upBtn.getAccessibleContext().setAccessibleDescription("Click here to move the currently selected interaction up");
 		downBtn = new BasicArrowButton(BasicArrowButton.SOUTH);
 		
 		addBtn.addActionListener(new ActionListener() {
@@ -183,7 +194,7 @@ public class EditorPane extends JPanel {
 		saveBtn = new JButton("Save");
 		runBtn = new JButton("Run");
 		
-		
+		saveBtn.getAccessibleContext().setAccessibleDescription("Save Scenario");
 		saveBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -195,6 +206,7 @@ public class EditorPane extends JPanel {
 				}
 			}
 		});
+		runBtn.getAccessibleContext().setAccessibleDescription("Run Scenario in simulator");
 		runBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -228,7 +240,7 @@ public class EditorPane extends JPanel {
         // add the new one to end of list, and select new one.
 		if (list.getModel().getSize() == 0 || selectedIndex == -1 || (selectedIndex + 1 == size)) {
 			controller.addInteraction(newOptions.getSelectedIndex());
-            list.setSelectedIndex(size);
+			list.setSelectedIndex(size);
 		} else {
 			// Otherwise insert the new one after the current selection,
 	        // and select new one.
@@ -242,6 +254,7 @@ public class EditorPane extends JPanel {
             upBtn.setEnabled(true);
             downBtn.setEnabled(true);
 		}
+		
 	}
 
 	public void deleteInteraction(int selectedIndex) {
@@ -283,6 +296,7 @@ public class EditorPane extends JPanel {
 
 	public void showCard(String cardName) {
 		cards.show(configPane, cardName);
+		System.out.println("CardName: " + cardName);
 	}
 	
 	public void addInteractionCard(Interaction i) {
@@ -313,6 +327,7 @@ public class EditorPane extends JPanel {
 		}
 		if (intView != null) {
 			configPane.add(intView.getInteractionView(), Integer.toString(i.getId()));
+			showCard(Integer.toString(i.getId()));
 		}
 	}
 	

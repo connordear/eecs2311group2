@@ -98,6 +98,7 @@ public class StartupPane extends JPanel {
 
 	public void loadScenarioFailed() {
 		statusLbl.setText("<html><h4>File selected is not valid scenario file.</h4></html>");
+		statusLbl.getAccessibleContext().setAccessibleDescription("File selected is not valid");
 		statusLbl.setForeground(Color.RED);
 	}
 
