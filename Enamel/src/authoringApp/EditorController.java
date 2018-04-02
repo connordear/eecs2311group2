@@ -87,8 +87,8 @@ public class EditorController {
 		if (i != null) {
 			this.model.addInteraction(i);
 			this.view.addInteractionCard(i);
-			this.view.showCard(Integer.toString(i.getId()));
 		}
+		this.view.showCard(Integer.toString(i.getId()));
 	}
 	
 	public void addInteraction(int selectedItemIndex, int insertIdx) {
@@ -96,8 +96,9 @@ public class EditorController {
 		if (i != null) {
 			this.model.addInteraction(i, insertIdx);
 			this.view.addInteractionCard(i);
-			this.view.showCard(Integer.toString(i.getId()));
 		}
+		this.view.showCard(Integer.toString(i.getId()));
+		
 	}
 
 	public void deleteInteraction(int selectedListItemIndex) {
