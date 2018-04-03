@@ -1,4 +1,4 @@
-package authoringApp.interactionModels;
+package authoringApp.interactionModels;import java.io.File;
 
 public class VoiceInteraction extends Interaction {
 
@@ -7,6 +7,18 @@ public class VoiceInteraction extends Interaction {
 	public VoiceInteraction() {
 		super("Voice Interaction", 0, 0);
 		this.fileName = this.getTitle();
+	}
+	
+	public VoiceInteraction(String fileName) {
+		super("Voice Interaction", 0, 0);
+		if (fileName.equals("correct.wav") || fileName.equals("wrong.wav")) {
+			this.fileName =  "./FactoryScenarios/AudioFiles/" + fileName;
+		}
+		else {
+			this.fileName = fileName;
+		}
+	
+		
 	}
 
 	@Override

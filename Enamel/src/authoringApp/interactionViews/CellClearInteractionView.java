@@ -22,7 +22,7 @@ public class CellClearInteractionView extends InteractionView {
 		
 		this.comboBoxNumbers = new JComboBox<Integer>();
 		this.comboBoxNumbers.getAccessibleContext().setAccessibleDescription("Specify which Cell number you wish to clear.");
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < cellClearModel.getNumCells(); i++) {
 			this.comboBoxNumbers.addItem(i);
 		}
 		this.comboBoxNumbers.setSelectedIndex(this.cellClearModel.getCellNumber());

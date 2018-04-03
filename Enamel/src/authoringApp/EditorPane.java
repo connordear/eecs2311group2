@@ -217,7 +217,7 @@ public class EditorPane extends JPanel {
 				Thread starterCodeThread = new Thread("Starter Code Thread") {
 				    public void run(){    
 				        ScenarioParser s = new ScenarioParser(true);
-				        s.setScenarioFile(scenarioPath);
+				        s.setScenarioFile(controller.getModel().getPath());
 				    }
 				};
 				starterCodeThread.start();
@@ -405,17 +405,20 @@ public class EditorPane extends JPanel {
 			fileChooser.setAcceptAllFileFilterUsed(false);
 			
 			int userChoice = fileChooser.showSaveDialog(null);
+//			System.out.println("Trying if");
 			if (userChoice == JFileChooser.APPROVE_OPTION) {
 				String saveFilePath = fileChooser.getSelectedFile().getAbsolutePath();
-				if (new File(saveFilePath).isFile()) {
+//				System.out.println("Trying second if");
+//				if (new File(saveFilePath).isFile()) {
 					int overwriteExistingFile = 0;
 					overwriteExistingFile = JOptionPane.showConfirmDialog(null, "The file already exists. Replace existing file?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					System.out.println("Trying third if");
 					if (overwriteExistingFile == JOptionPane.YES_OPTION) {
 						if (!saveFilePath.toLowerCase().endsWith(".txt")) {
 							saveFilePath += ".txt";
 						}
 						controller.getModel().setPath(saveFilePath);
-						
+						System.out.println(this.controller.getModel().getPath());
 						try {
 							controller.getModel().generateScenarioText();
 						} catch (IOException ex) {
@@ -427,7 +430,7 @@ public class EditorPane extends JPanel {
 					} else {
 						return;
 					}
-				}
+//				}
 			}
 		}
 	}

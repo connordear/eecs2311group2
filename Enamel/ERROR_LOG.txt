@@ -1,6 +1,6 @@
-Feb 26, 2018 12:05:30 PM enamel.ScenarioParser errorLog
-WARNING: Exception error: java.lang.NullPointerException
-Feb 26, 2018 12:05:30 PM enamel.ScenarioParser errorLog
-INFO: Expected format: 
- num1 string1 
- where num1 is the cell affected, and string1 is the representation of the raised and lowered pins. Also that num1 is a valid interger and string1 is a valid 8 character sequence of 1's and 0's. Received format was: 0 10000000
+Apr 03, 2018 11:43:34 AM enamel.ScenarioParser errorLog
+WARNING: Exception error: java.io.FileNotFoundException: /Users/connordear/Projects/programming/java/eecs2311group2/Enamel/Untitled_0.txt (No such file or directory)
+Apr 03, 2018 11:43:34 AM enamel.ScenarioParser errorLog
+INFO: Expected the directory path of the scenario file to a file exists in the project folder. 
+ Could not find directory to path: /Users/connordear/Projects/programming/java/eecs2311group2/Enamel/Untitled_0.txt 
+ Perhaps you forgot to add the file to the directory or  you are looking for a different directory?

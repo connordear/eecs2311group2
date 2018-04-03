@@ -89,13 +89,16 @@ public class DisplayBrailleInteractionView extends InteractionView {
 			buttonsArray[i].getAccessibleContext().setAccessibleDescription("Toggle this button to display/hide the " + brailleString + "most pin.");
 			super.addRow(buttonsArray[i], c);
 			this.brailleCellComboBox = new JComboBox<Integer>();
-			for (int cellNumber = 0; cellNumber < dbiModel.getNumCells(); cellNumber++) {
+			for (int cellNumber = 1; cellNumber <= dbiModel.getNumCells(); cellNumber++) {
 				this.brailleCellComboBox.addItem(cellNumber);
 			}
 			this.brailleCellComboBox.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					dbiModel.setCellNumber(brailleCellComboBox.getSelectedIndex());
+					if (e.getStateChange() == ItemEvent.SELECTED) {
+						dbiModel.setCellNumber((Integer) e.getItem() - 1);
+					}
+					
 				}
 				
 			});

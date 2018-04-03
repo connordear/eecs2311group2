@@ -1,10 +1,5 @@
 Cell 1
 Button 4
 
-/~UNDEFINED
-
-/~disp-cell-pins:0 00000000
-/~skip-button:0 SkipTo
-/~user-input
-/~disp-cell-clear:0
-/~sound:Voice Interaction
+This is a read interaction.
+/~sound:/Users/connordear/Projects/programming/java/eecs2311group2/Enamel/FactoryScenarios/AudioFiles/Voice Files/Do it.wav

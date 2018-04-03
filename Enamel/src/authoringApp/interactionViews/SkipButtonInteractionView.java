@@ -28,8 +28,8 @@ public class SkipButtonInteractionView extends InteractionView {
 		
 		this.buttonComboBox = new JComboBox<Integer>();
 		this.buttonComboBox.getAccessibleContext().setAccessibleDescription("Specify which button you wish to link here.");
-		for (int i = 0; i < 20; i++) {
-			this.buttonComboBox.addItem(i);
+		for (int i = 0; i < this.skipModel.getNumButtons(); i++) {
+			this.buttonComboBox.addItem(i + 1);
 		}
 		this.buttonComboBox.setSelectedIndex(this.skipModel.getButton());
 		this.buttonComboBox.addItemListener(new ItemListener() {

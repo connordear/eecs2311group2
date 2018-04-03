@@ -22,6 +22,7 @@ import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
 import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
+import authoringApp.interactionModels.VoiceInteraction;
 
 public class Scenario {
 	
@@ -114,6 +115,10 @@ public class Scenario {
 						// Check for User Input Interaction
 						else if (line.startsWith("/~user-input")) {
 							newList.add(new UserInputInteraction());
+						} // Check for Voice Interaction
+						else if (line.startsWith("/~sound")) {
+							System.out.println(line.substring(8));
+							newList.add(new VoiceInteraction(line.substring(8)));
 						}
 						// Finally check for keyword
 						else if(line.startsWith("/~")){
@@ -219,6 +224,7 @@ public class Scenario {
 	}
 	
 	public void setPath(String filePath) {
+		System.out.println(FilenameUtils.getName(filePath));
 		this.setTitle(FilenameUtils.removeExtension(FilenameUtils.getName(filePath)));
 		this.filePath = filePath;
 	}
