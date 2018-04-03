@@ -118,11 +118,13 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void saveScenario() {
-		this.controller.saveScenario();
+		if (!this.controller.getModel().isInEditingMode()) return;
+		this.controller.saveFile();
 	}
 
 	public void saveScenarioAs() {
-		this.controller.saveScenario();
+		if (!this.controller.getModel().isInEditingMode()) return;
+		this.controller.saveFileAs();
 	}
 
 	public void exit() {

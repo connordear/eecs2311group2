@@ -374,7 +374,8 @@ public class EditorPane extends JPanel {
 	}
 	
 	public void saveFile() {
-		if (new File(controller.getModel().getPath()).isFile()) {
+		File sf = new File(controller.getModel().getPath());
+		if (sf.isFile() && !sf.isDirectory()) {
 			try {
 				controller.getModel().generateScenarioText();
 			} catch (IOException ex) {
@@ -408,29 +409,31 @@ public class EditorPane extends JPanel {
 //			System.out.println("Trying if");
 			if (userChoice == JFileChooser.APPROVE_OPTION) {
 				String saveFilePath = fileChooser.getSelectedFile().getAbsolutePath();
-//				System.out.println("Trying second if");
-//				if (new File(saveFilePath).isFile()) {
+				File f = new File(saveFilePath);
+				if (f.isFile() && !f.isDirectory()) {
 					int overwriteExistingFile = 0;
 					overwriteExistingFile = JOptionPane.showConfirmDialog(null, "The file already exists. Replace existing file?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-					System.out.println("Trying third if");
-					if (overwriteExistingFile == JOptionPane.YES_OPTION) {
-						if (!saveFilePath.toLowerCase().endsWith(".txt")) {
-							saveFilePath += ".txt";
-						}
-						controller.getModel().setPath(saveFilePath);
-						System.out.println(this.controller.getModel().getPath());
-						try {
-							controller.getModel().generateScenarioText();
-						} catch (IOException ex) {
-							JOptionPane.showMessageDialog(null, "Error",
-									"Error saving scenario file!",
-									JOptionPane.ERROR_MESSAGE);
-							ex.printStackTrace();
-						}
-					} else {
+					if (overwriteExistingFile != JOptionPane.YES_OPTION) {
 						return;
 					}
-//				}
+				}
+				
+				if (!saveFilePath.toLowerCase().endsWith(".txt")) {
+					saveFilePath += ".txt";
+				}
+				controller.getModel().setPath(saveFilePath);
+				
+				try {
+					controller.getModel().generateScenarioText();
+					JOptionPane.showMessageDialog(null, "Save",
+							"Scenario file saved.",
+							JOptionPane.INFORMATION_MESSAGE);
+				} catch (IOException ex) {
+					JOptionPane.showMessageDialog(null, "Error",
+							"Error saving scenario file!",
+							JOptionPane.ERROR_MESSAGE);
+					ex.printStackTrace();
+				}
 			}
 		}
 	}

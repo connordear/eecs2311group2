@@ -39,7 +39,7 @@ public class MainViewController  {
 		if (this.appModel.isInEditingMode()) {
 			save = JOptionPane.showConfirmDialog(null, "Would you like to save changes to the current scenario?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (save == JOptionPane.YES_OPTION) {
-				saveScenario();
+				saveFile();
 			} else if (save == JOptionPane.CANCEL_OPTION) {
 				return;
 			}
@@ -52,36 +52,49 @@ public class MainViewController  {
 		if (this.appModel.isInEditingMode()) {
 			save = JOptionPane.showConfirmDialog(this.view, "Would you like to save changes to the current scenario?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (save == JOptionPane.YES_OPTION) {
-				saveScenario();
+				saveFile();
 			} else {
 				return;
 			}
 		}
 		
-		File scenarioFile= null;
-		JFileChooser fc = new JFileChooser();
-		fc.setFileFilter(new FileNameExtensionFilter("Text File", "txt"));
-		int returnVal = fc.showOpenDialog(this.view);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			scenarioFile = fc.getSelectedFile();
-		} else {
-			return;
-		}
-		
-		if (!Scenario.isValidScenarioFile(scenarioFile)) {
-			JOptionPane.showMessageDialog(null, 
-                              "Invalid file selected. Please select a valid scenario file.", 
-                              "Invalid File", 
-                              JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		
-		openEditor(new Scenario(scenarioFile));
-	}
+		File scenarioFile = null;
+		JFileChooser fileChooser = new JFileChooser();
+		FileFilter txtFilter = new FileFilter() {
+			@Override
+			public String getDescription() {
+				return "Text File (*.TXT)";
+			}
 
-	public void saveScenario() {
-		if (!this.appModel.isInEditingMode()) return;
-		saveFile();
+			@Override
+			public boolean accept(File file) {
+				if (file.isDirectory()) {
+					return true;
+				} else {
+					return file.getName().toLowerCase().endsWith(".txt");
+				}
+			}
+		};
+		fileChooser.setFileFilter(txtFilter);
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		
+		int userChoice = fileChooser.showOpenDialog(this.view);
+		if (userChoice == JFileChooser.APPROVE_OPTION) {
+			String scenarioFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+			scenarioFile = fileChooser.getSelectedFile();
+			
+			if (!Scenario.isValidScenarioFile(scenarioFile)) {
+				JOptionPane.showMessageDialog(null, 
+	                              "Invalid file selected. Please select a valid scenario file.", 
+	                              "Invalid File", 
+	                              JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			Scenario s = new Scenario(scenarioFile);
+			s.setPath(scenarioFilePath);
+			openEditor(s);
+		}
 	}
 
 	public void runScenario() {
@@ -122,10 +135,66 @@ public class MainViewController  {
 		this.appModel.setEditingMode(false);
 	}
 	
-	public void saveFile() {
-		if (new File(this.scenarioModel.getPath()).isFile()) {
+	public void saveFileAs() {
+		JFileChooser fileChooser = new JFileChooser();
+		FileFilter txtFilter = new FileFilter() {
+			@Override
+			public String getDescription() {
+				return "Text File (*.TXT)";
+			}
+
+			@Override
+			public boolean accept(File file) {
+				if (file.isDirectory()) {
+					return true;
+				} else {
+					return file.getName().toLowerCase().endsWith(".txt");
+				}
+			}
+		};
+
+		fileChooser.setFileFilter(txtFilter);
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		
+		int userChoice = fileChooser.showSaveDialog(null);
+		if (userChoice == JFileChooser.APPROVE_OPTION) {
+			String saveFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+			File f = new File(saveFilePath);
+			if (f.isFile() && !f.isDirectory()) {
+				int overwriteExistingFile = 0;
+				overwriteExistingFile = JOptionPane.showConfirmDialog(null, "The file already exists. Replace existing file?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if (overwriteExistingFile != JOptionPane.YES_OPTION) {
+					return;
+				}
+			}
+			
+			if (!saveFilePath.toLowerCase().endsWith(".txt")) {
+				saveFilePath += ".txt";
+			}
+			this.scenarioModel.setPath(saveFilePath);
+			
 			try {
 				this.scenarioModel.generateScenarioText();
+				JOptionPane.showMessageDialog(null, "Save",
+						"Scenario file saved.",
+						JOptionPane.INFORMATION_MESSAGE);
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(null, "Error",
+						"Error saving scenario file!",
+						JOptionPane.ERROR_MESSAGE);
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	public void saveFile() {
+		File sf = new File(this.scenarioModel.getPath());
+		if (sf.isFile() && !sf.isDirectory()) {
+			try {
+				this.scenarioModel.generateScenarioText();
+				JOptionPane.showMessageDialog(null, "Save",
+						"Scenario file saved.",
+						JOptionPane.INFORMATION_MESSAGE);
 			} catch (IOException ex) {
 				JOptionPane.showMessageDialog(null, "Error",
 						"Error saving scenario file!",
@@ -133,51 +202,7 @@ public class MainViewController  {
 				ex.printStackTrace();
 			}
 		} else {
-			JFileChooser fileChooser = new JFileChooser();
-			FileFilter txtFilter = new FileFilter() {
-				@Override
-				public String getDescription() {
-					return "Text File (*.TXT)";
-				}
-
-				@Override
-				public boolean accept(File file) {
-					if (file.isDirectory()) {
-						return true;
-					} else {
-						return file.getName().toLowerCase().endsWith(".txt");
-					}
-				}
-			};
-
-			fileChooser.setFileFilter(txtFilter);
-			fileChooser.setAcceptAllFileFilterUsed(false);
-			
-			int userChoice = fileChooser.showSaveDialog(null);
-			if (userChoice == JFileChooser.APPROVE_OPTION) {
-				String saveFilePath = fileChooser.getSelectedFile().getAbsolutePath();
-				if (new File(saveFilePath).isFile()) {
-					int overwriteExistingFile = 0;
-					overwriteExistingFile = JOptionPane.showConfirmDialog(null, "The file already exists. Replace existing file?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-					if (overwriteExistingFile == JOptionPane.YES_OPTION) {
-						if (!saveFilePath.toLowerCase().endsWith(".txt")) {
-							saveFilePath += ".txt";
-						}
-						this.scenarioModel.setPath(saveFilePath);
-						
-						try {
-							this.scenarioModel.generateScenarioText();
-						} catch (IOException ex) {
-							JOptionPane.showMessageDialog(null, "Error",
-									"Error saving scenario file!",
-									JOptionPane.ERROR_MESSAGE);
-							ex.printStackTrace();
-						}
-					} else {
-						return;
-					}
-				}
-			}
+			saveFileAs();
 		}
 	}
 }

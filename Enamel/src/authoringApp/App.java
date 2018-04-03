@@ -1,14 +1,6 @@
 package authoringApp;
 
-import java.awt.Color;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import com.alee.laf.WebLookAndFeel;
-import com.alee.managers.style.StyleManager;
-
-import enamel.*;
 
 public class App {
 	private static MainViewController mainViewController;
