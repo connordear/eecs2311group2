@@ -1,7 +1,6 @@
 package authoringApp;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -25,10 +24,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.basic.BasicArrowButton;
-
-import com.alee.extended.painter.Painter;
-import com.alee.managers.style.StyleManager;
-import com.alee.managers.style.data.PainterStyle;
 
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
@@ -56,7 +51,6 @@ import enamel.ScenarioParser;
 
 public class EditorPane extends JPanel {
 	
-	private String scenarioPath;
 	private EditorController controller;
 	private JSplitPane containerPane;
 	private JScrollPane listPane;
@@ -78,7 +72,6 @@ public class EditorPane extends JPanel {
 		setEditorViewController(controller);
 		setLayout(new GridBagLayout());
 		this.controller.setView(this);
-		this.scenarioPath = this.controller.getModel().getPath();
 		configPane = new JPanel(new CardLayout());
 		cards = (CardLayout) configPane.getLayout();
 		// Create dummy config pane to solve issue of not displaying the thing
@@ -156,7 +149,6 @@ public class EditorPane extends JPanel {
 			newOptions.addItem(iType.getDescription());
 		}
 		
-		
 		addBtn = new JButton("Add");
 		addBtn.getAccessibleContext().setAccessibleName("Add New Interaction");
 		addBtn.getAccessibleContext().setAccessibleDescription("Click here to open a dropdown menu listing all possible interactions to add to the scenario.");
@@ -215,9 +207,9 @@ public class EditorPane extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Thread starterCodeThread = new Thread("Starter Code Thread") {
-				    public void run(){    
+				    public void run() {
 				        ScenarioParser s = new ScenarioParser(true);
-				        s.setScenarioFile(scenarioPath);
+				        s.setScenarioFile(controller.getModel().getPath());
 				    }
 				};
 				starterCodeThread.start();
@@ -300,7 +292,6 @@ public class EditorPane extends JPanel {
 
 	public void showCard(String cardName) {
 		cards.show(configPane, cardName);
-		System.out.println("CardName: " + cardName);
 	}
 	
 	public void addInteractionCard(Interaction i) {
@@ -344,7 +335,6 @@ public class EditorPane extends JPanel {
 					cards.removeLayoutComponent(c);
 				}
 			}
-			
 		}
 	}
 	
