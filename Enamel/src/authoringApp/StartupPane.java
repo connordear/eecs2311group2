@@ -28,10 +28,13 @@ public class StartupPane extends JPanel {
 		welcomeLbl.setFont(new Font("Verdana", Font.PLAIN, 20));
 		statusLbl = new JLabel("");
 		newBtn = new JButton("New");
+		newBtn.getAccessibleContext().setAccessibleName("New scenario");
 		newBtn.getAccessibleContext().setAccessibleDescription("Create a new Scenario");
 		openBtn = new JButton("Open");
+		openBtn.getAccessibleContext().setAccessibleName("Open scenario");
 		openBtn.getAccessibleContext().setAccessibleDescription("Open an existing Scenario");
 		exitBtn = new JButton("Exit");
+		exitBtn.getAccessibleContext().setAccessibleName("Exit");
 		exitBtn.getAccessibleContext().setAccessibleDescription("Exit the application");
 		fc = new JFileChooser();
 		

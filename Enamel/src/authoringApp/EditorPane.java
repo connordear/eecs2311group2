@@ -127,6 +127,9 @@ public class EditorPane extends JPanel {
     			controller.listItemSelected(selectedItemIndex);
 			}
     	});
+		
+		list.getAccessibleContext().setAccessibleName("List of interactions");
+		list.getAccessibleContext().setAccessibleDescription("List of interactions that are in the currently open scenario");
 		createInteractionCards(model);
 	}
 	
@@ -195,14 +198,16 @@ public class EditorPane extends JPanel {
 		saveBtn = new JButton("Save");
 		runBtn = new JButton("Run");
 		
-		saveBtn.getAccessibleContext().setAccessibleDescription("Save Scenario");
+		saveBtn.getAccessibleContext().setAccessibleName("Save scenario");
+		saveBtn.getAccessibleContext().setAccessibleDescription("Save changes to the currently open scenario");
 		saveBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				saveFile();
 			}
 		});
-		runBtn.getAccessibleContext().setAccessibleDescription("Run Scenario in simulator");
+		runBtn.getAccessibleContext().setAccessibleName("Run scenario");
+		runBtn.getAccessibleContext().setAccessibleDescription("Run the currently open scenario in simulator");
 		runBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
