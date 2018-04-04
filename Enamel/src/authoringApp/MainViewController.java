@@ -53,8 +53,6 @@ public class MainViewController  {
 			save = JOptionPane.showConfirmDialog(this.view, "Would you like to save changes to the current scenario?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (save == JOptionPane.YES_OPTION) {
 				saveFile();
-			} else {
-				return;
 			}
 		}
 		

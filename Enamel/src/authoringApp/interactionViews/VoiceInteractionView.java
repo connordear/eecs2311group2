@@ -333,10 +333,15 @@ public class VoiceInteractionView extends InteractionView {
 		String fileName = "";
 		String filePath = "";
 		try {
-			fileName = voiceModel.getSoundFilePath().substring(voiceModel.getSoundFilePath().lastIndexOf('/'));
+			fileName = voiceModel.getSoundFilePath().substring(voiceModel.getSoundFilePath().lastIndexOf('\\') + 1);
 			filePath = voiceModel.getSoundFilePath();
-		} catch (java.lang.StringIndexOutOfBoundsException ex) { }
-		soundData.addRow(new Object[] { fileName, filePath });
+		} catch (java.lang.StringIndexOutOfBoundsException ex) {
+			System.out.println(ex.toString());
+		}
+		
+		soundData.setValueAt(fileName, 0, 0);
+		soundData.setValueAt(filePath, 0, 1);
+//		soundData.addRow(new Object[] { fileName, filePath });
 //		try {
 //			soundData.removeRow(0);
 //		} catch (Exception ex) {
