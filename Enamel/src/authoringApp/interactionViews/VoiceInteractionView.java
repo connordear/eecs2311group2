@@ -341,11 +341,5 @@ public class VoiceInteractionView extends InteractionView {
 		
 		soundData.setValueAt(fileName, 0, 0);
 		soundData.setValueAt(filePath, 0, 1);
-//		soundData.addRow(new Object[] { fileName, filePath });
-//		try {
-//			soundData.removeRow(0);
-//		} catch (Exception ex) {
-//			System.out.println(ex.toString());
-//		}
 	}
 }

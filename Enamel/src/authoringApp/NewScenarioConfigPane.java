@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
@@ -30,6 +29,7 @@ public class NewScenarioConfigPane extends JPanel {
 	private GridBagConstraints gbc;
 	
 	public NewScenarioConfigPane(MainViewController controller) {
+		controller.getView().setTitle(MainFrame.APPLICATION_TITLE + ": New Scenario");
 		setLayout(new GridBagLayout());
 		cellSpinnerModel = new SpinnerNumberModel(DEFAULT_CELLS, MIN_CELLS, MAX_CELLS, 1);
 		btnSpinnerModel = new SpinnerNumberModel(DEFAULT_BUTTONS, MIN_BUTTONS, MAX_BUTTONS, 1);
@@ -41,12 +41,21 @@ public class NewScenarioConfigPane extends JPanel {
 		createBtn = new JButton("Create");
 		backBtn = new JButton("Back");
 		
+		cellSpinner.getAccessibleContext().setAccessibleName("Number of braille cells");
+		cellSpinner.getAccessibleContext().setAccessibleDescription("Set the number of braille cells");
+		btnSpinner.getAccessibleContext().setAccessibleName("Number of buttons");
+		btnSpinner.getAccessibleContext().setAccessibleDescription("Set the number of buttons");
+		
+		createBtn.getAccessibleContext().setAccessibleName("Create scenario");
+		createBtn.getAccessibleContext().setAccessibleDescription("Create a new scenario with the set configurations");
 		createBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controller.createScenario((int)cellSpinner.getValue(), (int)btnSpinner.getValue());
 			}
 		});
+		backBtn.getAccessibleContext().setAccessibleName("Back");
+		backBtn.getAccessibleContext().setAccessibleDescription("Return to the main page");
 		backBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

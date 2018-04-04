@@ -14,7 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 public class MainFrame extends JFrame {
-	private static final String APPLICATION_TITLE = "Braille Author";
+	public static final String APPLICATION_TITLE = "Braille Author";
 	private MainViewController controller;
 	
 	private CardLayout cards;
@@ -23,8 +23,6 @@ public class MainFrame extends JFrame {
 	private JMenu fileMenu, scenarioMenu;
 	private JMenuItem newFile, openFile, saveFile, saveFileAs, exit;
 	private JMenuItem run;
-	private JFileChooser fc;
-	
 	private GridBagConstraints gbc;
 	
 	public MainFrame(MainViewController controller) {
@@ -61,7 +59,9 @@ public class MainFrame extends JFrame {
 	public void initializeMenu() {
 		menuBar = new JMenuBar();
     	fileMenu = new JMenu("File");
+    	fileMenu.getAccessibleContext().setAccessibleDescription("File menu to create, open, and save scenarios.");
     	scenarioMenu = new JMenu("Scenario");
+    	scenarioMenu.getAccessibleContext().setAccessibleDescription("Scenario menu with options pertaining to scenario.");
 
     	newFile = new JMenuItem("New");
     	openFile = new JMenuItem("Open");
@@ -69,6 +69,19 @@ public class MainFrame extends JFrame {
     	saveFileAs = new JMenuItem("Save As");
     	exit = new JMenuItem("Exit");
     	run = new JMenuItem("Run");
+    	
+    	newFile.getAccessibleContext().setAccessibleName("New scenario");
+    	newFile.getAccessibleContext().setAccessibleDescription("Create a new scenario");
+    	openFile.getAccessibleContext().setAccessibleName("Open scenario");
+    	openFile.getAccessibleContext().setAccessibleDescription("Open an existing scenario file");
+    	saveFile.getAccessibleContext().setAccessibleName("Save changes");
+    	saveFile.getAccessibleContext().setAccessibleDescription("Save changes to the currently open scenario file");
+    	saveFileAs.getAccessibleContext().setAccessibleName("Save as a new scenario file");
+    	saveFileAs.getAccessibleContext().setAccessibleDescription("Save changes into a new scenario file");
+    	exit.getAccessibleContext().setAccessibleName("Exit");
+    	exit.getAccessibleContext().setAccessibleDescription("Exit the braille author application");
+    	run.getAccessibleContext().setAccessibleName("Run scenario");
+    	run.getAccessibleContext().setAccessibleDescription("Run the currently open scenario");
     	
     	newFile.addActionListener(new ActionListener() {
     		@Override
@@ -106,6 +119,7 @@ public class MainFrame extends JFrame {
     	scenarioMenu.add(run);
 
     	menuBar.add(fileMenu);
+    	//menuBar.add(scenarioMenu);
     	setEditingMode(false);
 	}
 	
