@@ -1,25 +1,34 @@
 package authoringApp;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.basic.BasicArrowButton;
+
+import com.alee.extended.painter.Painter;
+import com.alee.managers.style.StyleManager;
+import com.alee.managers.style.data.PainterStyle;
 
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
@@ -29,6 +38,7 @@ import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
 import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 import authoringApp.interactionModels.VoiceInteraction;
 import authoringApp.interactionViews.CellClearInteractionView;
@@ -39,6 +49,7 @@ import authoringApp.interactionViews.PauseInteractionView;
 import authoringApp.interactionViews.ReadInteractionView;
 import authoringApp.interactionViews.ResetButtonInteractionView;
 import authoringApp.interactionViews.SkipButtonInteractionView;
+import authoringApp.interactionViews.SkipInteractionView;
 import authoringApp.interactionViews.UserInputInteractionView;
 import authoringApp.interactionViews.VoiceInteractionView;
 import enamel.ScenarioParser;
@@ -70,6 +81,11 @@ public class EditorPane extends JPanel {
 		this.scenarioPath = this.controller.getModel().getPath();
 		configPane = new JPanel(new CardLayout());
 		cards = (CardLayout) configPane.getLayout();
+		// Create dummy config pane to solve issue of not displaying the thing
+		JPanel test = new JPanel();
+		test.setName("dummy");
+		configPane.add(test);
+		cards.show(configPane, "dummy");
 		
 		this.controller.createInteractionList();
 		listPane = new JScrollPane(list);
@@ -77,7 +93,7 @@ public class EditorPane extends JPanel {
 		
 		containerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, listPane, configPane);
 		containerPane.setOneTouchExpandable(true);
-		containerPane.setDividerLocation(150);
+		containerPane.setDividerLocation(350);
 		containerPane.setPreferredSize(new Dimension(400, 200));
 		
 		controlsPane = createControlsPane();
@@ -140,9 +156,16 @@ public class EditorPane extends JPanel {
 			newOptions.addItem(iType.getDescription());
 		}
 		
+		
 		addBtn = new JButton("Add");
+		addBtn.getAccessibleContext().setAccessibleName("Add New Interaction");
+		addBtn.getAccessibleContext().setAccessibleDescription("Click here to open a dropdown menu listing all possible interactions to add to the scenario.");
 		delBtn = new JButton("Delete");
+		delBtn.getAccessibleContext().setAccessibleName("Delete Interaction");
+		delBtn.getAccessibleContext().setAccessibleDescription("Click here to delete the currently selected interaction.");
 		upBtn = new BasicArrowButton(BasicArrowButton.NORTH);
+		upBtn.getAccessibleContext().setAccessibleName("Move Interaction Up");
+		upBtn.getAccessibleContext().setAccessibleDescription("Click here to move the currently selected interaction up");
 		downBtn = new BasicArrowButton(BasicArrowButton.SOUTH);
 		
 		addBtn.addActionListener(new ActionListener() {
@@ -180,18 +203,14 @@ public class EditorPane extends JPanel {
 		saveBtn = new JButton("Save");
 		runBtn = new JButton("Run");
 		
-		
+		saveBtn.getAccessibleContext().setAccessibleDescription("Save Scenario");
 		saveBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					controller.getModel().generateScenarioText();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				saveFile();
 			}
 		});
+		runBtn.getAccessibleContext().setAccessibleDescription("Run Scenario in simulator");
 		runBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -225,7 +244,7 @@ public class EditorPane extends JPanel {
         // add the new one to end of list, and select new one.
 		if (list.getModel().getSize() == 0 || selectedIndex == -1 || (selectedIndex + 1 == size)) {
 			controller.addInteraction(newOptions.getSelectedIndex());
-            list.setSelectedIndex(size);
+			list.setSelectedIndex(size);
 		} else {
 			// Otherwise insert the new one after the current selection,
 	        // and select new one.
@@ -239,6 +258,7 @@ public class EditorPane extends JPanel {
             upBtn.setEnabled(true);
             downBtn.setEnabled(true);
 		}
+		
 	}
 
 	public void deleteInteraction(int selectedIndex) {
@@ -280,6 +300,7 @@ public class EditorPane extends JPanel {
 
 	public void showCard(String cardName) {
 		cards.show(configPane, cardName);
+		System.out.println("CardName: " + cardName);
 	}
 	
 	public void addInteractionCard(Interaction i) {
@@ -300,6 +321,8 @@ public class EditorPane extends JPanel {
 			intView = new ResetButtonInteractionView((ResetButtonInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.SKIP_BUTTON.getDescription())) {
 			intView = new SkipButtonInteractionView((SkipButtonInteraction) i);
+		} else if (interactionType.equals(Interaction.InteractionType.SKIP.getDescription())) {
+			intView = new SkipInteractionView((SkipInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.USER_INPUT.getDescription())) {
 			intView = new UserInputInteractionView((UserInputInteraction) i);
 		} else if (interactionType.equals(Interaction.InteractionType.VOICE.getDescription())) {
@@ -308,6 +331,7 @@ public class EditorPane extends JPanel {
 		}
 		if (intView != null) {
 			configPane.add(intView.getInteractionView(), Integer.toString(i.getId()));
+			showCard(Integer.toString(i.getId()));
 		}
 	}
 	
@@ -347,6 +371,70 @@ public class EditorPane extends JPanel {
             upBtn.setEnabled(true);
             downBtn.setEnabled(true);
         }
+	}
+	
+	public void saveFile() {
+		File sf = new File(controller.getModel().getPath());
+		if (sf.isFile() && !sf.isDirectory()) {
+			try {
+				controller.getModel().generateScenarioText();
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(null, "Error",
+						"Error saving scenario file!",
+						JOptionPane.ERROR_MESSAGE);
+				ex.printStackTrace();
+			}
+		} else {
+			JFileChooser fileChooser = new JFileChooser();
+			FileFilter txtFilter = new FileFilter() {
+				@Override
+				public String getDescription() {
+					return "Text File (*.TXT)";
+				}
+
+				@Override
+				public boolean accept(File file) {
+					if (file.isDirectory()) {
+						return true;
+					} else {
+						return file.getName().toLowerCase().endsWith(".txt");
+					}
+				}
+			};
+
+			fileChooser.setFileFilter(txtFilter);
+			fileChooser.setAcceptAllFileFilterUsed(false);
+			
+			int userChoice = fileChooser.showSaveDialog(null);
+			if (userChoice == JFileChooser.APPROVE_OPTION) {
+				String saveFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+				File f = new File(saveFilePath);
+				if (f.isFile() && !f.isDirectory()) {
+					int overwriteExistingFile = 0;
+					overwriteExistingFile = JOptionPane.showConfirmDialog(null, "The file already exists. Replace existing file?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (overwriteExistingFile != JOptionPane.YES_OPTION) {
+						return;
+					}
+				}
+				
+				if (!saveFilePath.toLowerCase().endsWith(".txt")) {
+					saveFilePath += ".txt";
+				}
+				controller.getModel().setPath(saveFilePath);
+				
+				try {
+					controller.getModel().generateScenarioText();
+					JOptionPane.showMessageDialog(null, "Save",
+							"Scenario file saved.",
+							JOptionPane.INFORMATION_MESSAGE);
+				} catch (IOException ex) {
+					JOptionPane.showMessageDialog(null, "Error",
+							"Error saving scenario file!",
+							JOptionPane.ERROR_MESSAGE);
+					ex.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	
