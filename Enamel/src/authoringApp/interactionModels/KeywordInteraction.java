@@ -1,14 +1,12 @@
 package authoringApp.interactionModels;
 
-import authoringApp.Interaction;
-import authoringApp.Interaction.InteractionType;
 
 public class KeywordInteraction extends Interaction {
 
 	private String keyword;
 	
 	public KeywordInteraction(String keyword) {
-		super("Keyword Interaction");
+		super("Keyword Interaction", 0, 0);
 		this.keyword = keyword;
 	}
 	

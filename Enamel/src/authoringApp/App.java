@@ -1,11 +1,6 @@
 package authoringApp;
 
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import com.alee.laf.WebLookAndFeel;
-
-import enamel.*;
 
 public class App {
 	private static MainViewController mainViewController;
@@ -22,8 +17,9 @@ public class App {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	try {
-            		//WebLookAndFeel.install();
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            			WebLookAndFeel.install();
+            			WebLookAndFeel.initializeManagers();
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

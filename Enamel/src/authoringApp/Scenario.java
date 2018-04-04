@@ -10,13 +10,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.apache.commons.io.FilenameUtils;
+
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.Interaction;
 import authoringApp.interactionModels.KeywordInteraction;
 import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
 import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 
 public class Scenario {
@@ -26,6 +30,7 @@ public class Scenario {
 	//public InteractionList interactionList;
 	private CustomListModel<Interaction> interactionList;
 	protected String title;
+	protected String filePath;
 	protected int cells;
 	protected int buttons;
 	private final int id;
@@ -36,28 +41,21 @@ public class Scenario {
 	 * Need to find a way to fix the default naming
 	 */
 	public Scenario() {
-		this("Untitled_" + counter, 1, 4);
+		this(1, 4);
 	}
 	
 	/*
 	 * All Constructor
 	 * - sets interaction list to empty
 	 */
-	public Scenario(String title, int cells, int buttons) {
-		setTitle(title);
+	public Scenario(int cells, int buttons) {
+		setTitle("Untitled_" + counter);
 		this.setButtons(buttons);
 		this.setCells(cells);
-		this.interactionList = new CustomListModel(new ArrayList<Interaction>());
-		//this.interactionList = new InteractionListModel();
+		this.interactionList = new CustomListModel<Interaction>(new ArrayList<Interaction>());
 		this.id = counter;
+		setPath(System.getProperty("user.dir") + "/" + this.getTitle() + ".txt");
 		Scenario.counter++;
-	}
-	
-	/*
-	 * Title Constructor
-	 */
-	public Scenario(String title) {
-		this(title, 1, 4);
 	}
 	
 	/*
@@ -67,7 +65,7 @@ public class Scenario {
 	public Scenario(File scenarioTextFile) throws IllegalArgumentException{
 		this();
 		//InteractionList newList = new InteractionList();
-		CustomListModel newList = new CustomListModel(new ArrayList<Interaction>());
+		CustomListModel<Interaction> newList = new CustomListModel<Interaction>(new ArrayList<Interaction>());
 		BufferedReader reader;
 		if (Scenario.isValidScenarioFile(scenarioTextFile)) {
 			try {
@@ -89,8 +87,10 @@ public class Scenario {
 					if (line.startsWith("/~")) {
 						// Then we have a command
 						// Check for Braille Interaction
-						if(line.startsWith("/~disp-cell-pins:")) {
-							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19)));
+						if (line.startsWith("/~disp-cell-pins:")) {
+							newList.add(new DisplayBrailleInteraction(Integer.parseInt(line.substring(17, 18)), line.substring(19), this.getCells(), this.getButtons()));
+						} else if (line.startsWith("/~disp-string:")) {
+							newList.add(new DisplayBrailleInteraction(0, line.substring(14),this.getCells(), this.getButtons()));
 						}
 						// Check for Pause Interaction
 						else if (line.startsWith("/~pause:")) {
@@ -102,11 +102,14 @@ public class Scenario {
 						}
 						// Check for Cell Clear Interaction
 						else if (line.startsWith("/~disp-cell-clear:")) {
-							newList.add(new CellClearInteraction(Integer.parseInt(line.substring(18))));
+							newList.add(new CellClearInteraction(Integer.parseInt(line.substring(18)), this.cells, this.buttons));
 						}
 						// Check for Skip Button Interaction
 						else if (line.startsWith("/~skip-button:")) {
-							newList.add(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16)));
+							newList.add(new SkipButtonInteraction(Integer.parseInt(line.substring(14, 15)), line.substring(16), this.cells, this.buttons));
+						}
+						else if (line.startsWith("/~skip:")) {
+							newList.add(new SkipInteraction(line.substring(7), this.cells, this.buttons));
 						}
 						// Check for User Input Interaction
 						else if (line.startsWith("/~user-input")) {
@@ -208,13 +211,16 @@ public class Scenario {
 	}
 	
 	public File getFile() {
-		String pwd = "./";
-		return new File(pwd + this.getTitle() + ".txt");
+		return new File(this.filePath);
 	}
 	
 	public String getPath() {
-		String pwd = "./";
-		return pwd + this.getTitle() + ".txt";
+		return this.filePath;
+	}
+	
+	public void setPath(String filePath) {
+		this.setTitle(FilenameUtils.removeExtension(FilenameUtils.getName(filePath)));
+		this.filePath = filePath;
 	}
 	
 	public CustomListModel<Interaction> getInteractionList() {
@@ -280,9 +286,8 @@ public class Scenario {
 	/*
 	 * Generate the scenario text
 	 */
-	public void generateScenarioText() throws IOException{
-		String pwd = System.getProperty("user.dir") + "/";
-		BufferedWriter writer = new BufferedWriter(new FileWriter(pwd + this.getTitle() + ".txt"));
+	public void generateScenarioText() throws IOException {
+		BufferedWriter writer = new BufferedWriter(new FileWriter(this.getPath()));
 		writer.write("Cell " + this.getCells() + "\n");
 		writer.write("Button " + this.getButtons() + "\n");
 		writer.write(this.getTitle() + "\n");

@@ -1,13 +1,11 @@
 package authoringApp.interactionModels;
 
-import authoringApp.Interaction;
-import authoringApp.Interaction.InteractionType;
 
 public class UserInputInteraction extends Interaction {
 	
 	
 	public UserInputInteraction() {
-		super("Wait for user input");
+		super("Wait for user input", 0, 0);
 	}
 	
 	@Override

@@ -1,24 +1,21 @@
 package authoringApp.interactionModels;
 
-import authoringApp.Interaction;
-import authoringApp.Interaction.InteractionType;
-
 public class ReadInteraction extends Interaction {
 
 	private String data;
 	
 	public ReadInteraction() {
-		super("Read");
+		super("Read", 0, 0);
 		this.data = "";
 	}
 	
 	public ReadInteraction(String title) {
-		super(title);
+		super(title, 0, 0);
 		this.data = "";
 	}
 	
 	public ReadInteraction(ReadInteraction toCopy) {
-		super(toCopy.getTitle());
+		super(toCopy.getTitle(), 0, 0);
 		this.data = new String(toCopy.data);
 	}
 	

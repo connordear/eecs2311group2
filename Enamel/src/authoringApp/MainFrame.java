@@ -13,7 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-public class MainFrame extends JFrame implements MainView {
+public class MainFrame extends JFrame {
 	private static final String APPLICATION_TITLE = "Braille Author";
 	private MainViewController controller;
 	
@@ -92,7 +92,7 @@ public class MainFrame extends JFrame implements MainView {
     	});
     	run.addActionListener(new ActionListener() {
     		@Override
-			public void actionPerformed(ActionEvent e) { runScenario(); }
+			public void actionPerformed(ActionEvent e) {  }
     	});
     	
     	fileMenu.add(newFile);
@@ -113,27 +113,20 @@ public class MainFrame extends JFrame implements MainView {
 		this.controller = listener;
 	}
 
-	@Override
 	public void newScenario() {
 		this.controller.newScenario();
 	}
 	
-	@Override
 	public void saveScenario() {
-		this.controller.saveScenario();
+		if (!this.controller.getModel().isInEditingMode()) return;
+		this.controller.saveFile();
 	}
 
-	@Override
 	public void saveScenarioAs() {
-		this.controller.saveScenarioAs();
+		if (!this.controller.getModel().isInEditingMode()) return;
+		this.controller.saveFileAs();
 	}
 
-	@Override
-	public void runScenario() {
-		
-	}
-
-	@Override
 	public void exit() {
 		this.dispose();
 	}
@@ -142,12 +135,10 @@ public class MainFrame extends JFrame implements MainView {
 		containerPanel.add(pane, cardName);
 	}
 
-	@Override
 	public void showCard(String cardName) {
 		cards.show(containerPanel, cardName);
 	}
 	
-	@Override
 	public void openScenario() {
 		this.controller.openScenario();
 	}

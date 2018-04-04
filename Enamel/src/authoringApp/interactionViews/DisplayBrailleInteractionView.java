@@ -1,6 +1,7 @@
 package authoringApp.interactionViews;
 
 import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -18,9 +19,13 @@ public class DisplayBrailleInteractionView extends InteractionView {
 	
 	public DisplayBrailleInteractionView(DisplayBrailleInteraction d) {
 		super(d.getInteraction());
-		GridBagConstraints c = super.c;
-		c.weightx = 1;
-		c.weighty = 1;
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(10, 10, 10, 10);
+		c.ipadx = 10;
+		c.ipady = 10;
+		c.gridwidth = 2;
+		c.weightx = 0;
+		c.weighty = 4;
 		this.dbiModel = d;
 		this.buttonsArray = new JRadioButton[8];
 		for (int i = 0; i < buttonsArray.length; i++) {
@@ -40,43 +45,51 @@ public class DisplayBrailleInteractionView extends InteractionView {
 			});
 			String brailleString = "";
 			if (currentPin == 0) {
+				c.weightx = 0;
 				c.gridx = 0;
 				c.gridy = 1;
 				brailleString = "top left";
 			} else if (currentPin == 1) {
+				c.weightx = 0;
 				c.gridx = 0;
 				c.gridy = 2;
 				brailleString = "second from the top, left";
 			} else if (currentPin == 2) {
+				c.weightx = 0;
 				c.gridx = 0;
 				c.gridy = 3;
 				brailleString = "third from the top, left";
 			} else if (currentPin == 3) {
+				c.weightx = 0;
 				c.gridx = 1;
 				c.gridy = 1;
 				brailleString = "first from the top, right";
 			} else if (currentPin == 4) {
+				c.weightx = 0;
 				c.gridx = 1;
 				c.gridy = 2;
 				brailleString = "second from the top, right";
 			} else if (currentPin == 5) {
+				c.weightx = 0;
 				c.gridx = 1;
 				c.gridy = 3;
 				brailleString = "third from the top, right";
 			} else if (currentPin == 6) {
+				c.weightx = 0;
 				c.gridx = 0;
 				c.gridy = 4;
 				brailleString = "fourth from the top, left";
 			} else if (currentPin == 7) {
+				c.weightx = 0;
 				c.gridx = 1;
 				c.gridy = 4;
 				brailleString = "fourth from the top, right";
 			}
+			c.fill = GridBagConstraints.CENTER;
 			buttonsArray[i].getAccessibleContext().setAccessibleDescription("Toggle this button to display/hide the " + brailleString + "most pin.");
 			super.addRow(buttonsArray[i], c);
-			
 			this.brailleCellComboBox = new JComboBox<Integer>();
-			for (int cellNumber = 0; cellNumber < 10; cellNumber++) {
+			for (int cellNumber = 0; cellNumber < dbiModel.getNumCells(); cellNumber++) {
 				this.brailleCellComboBox.addItem(cellNumber);
 			}
 			this.brailleCellComboBox.addItemListener(new ItemListener() {

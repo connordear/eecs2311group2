@@ -26,11 +26,13 @@ import javax.swing.plaf.basic.BasicArrowButton;
 
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.Interaction;
 import authoringApp.interactionModels.KeywordInteraction;
 import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
 import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 import authoringApp.interactionViews.CellClearInteractionView;
 import authoringApp.interactionViews.DisplayBrailleInteractionView;
@@ -39,6 +41,7 @@ import authoringApp.interactionViews.PauseInteractionView;
 import authoringApp.interactionViews.ReadInteractionView;
 import authoringApp.interactionViews.ResetButtonInteractionView;
 import authoringApp.interactionViews.SkipButtonInteractionView;
+import authoringApp.interactionViews.SkipInteractionView;
 import authoringApp.interactionViews.UserInputInteractionView;
 
 public class ScenarioEditorView {
@@ -271,6 +274,9 @@ public class ScenarioEditorView {
 						Integer.toString(i.getId()));
 			} else if (i.getType() == "SKIP BUTTON") {
 				interactionEditorPanel.add(new SkipButtonInteractionView((SkipButtonInteraction) i).getInteractionView(),
+						Integer.toString(i.getId()));
+			} else if (i.getType() == "SKIP") {
+				interactionEditorPanel.add(new SkipInteractionView((SkipInteraction) i).getInteractionView(),
 						Integer.toString(i.getId()));
 			} else {
 				System.out.println("Not there yet...");

@@ -3,6 +3,8 @@ package authoringApp;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
+import authoringApp.interactionModels.Interaction;
+
 public class InteractionList extends DefaultListModel<Interaction>{
 	
 	/**

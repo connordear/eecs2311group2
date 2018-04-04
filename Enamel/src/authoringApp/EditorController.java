@@ -1,11 +1,13 @@
 package authoringApp;
 
 import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.Interaction;
 import authoringApp.interactionModels.KeywordInteraction;
 import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
 import authoringApp.interactionModels.ResetButtonInteraction;
 import authoringApp.interactionModels.SkipButtonInteraction;
+import authoringApp.interactionModels.SkipInteraction;
 import authoringApp.interactionModels.UserInputInteraction;
 import authoringApp.interactionModels.VoiceInteraction;
 import authoringApp.interactionModels.CellClearInteraction;
@@ -55,7 +57,7 @@ public class EditorController {
 				System.out.println("This should print when I try to add a voice.");
 				break;
 			case DISPLAY_BRAILLE:
-				i = new DisplayBrailleInteraction();
+				i = new DisplayBrailleInteraction(0, "00000000", this.model.getCells(), this.model.getButtons());
 				break;
 			case KEYWORD:
 				i = new KeywordInteraction();
@@ -64,7 +66,10 @@ public class EditorController {
 				i = new PauseInteraction();
 				break;
 			case SKIP_BUTTON:
-				i = new SkipButtonInteraction();
+				i = new SkipButtonInteraction(0, "SkipTo", this.model.getCells(), this.model.getButtons());
+				break;
+			case SKIP:
+				i = new SkipInteraction("SkipTo", this.model.getCells(), this.model.getButtons());
 				break;
 			case USER_INPUT:
 				i = new UserInputInteraction();
@@ -73,7 +78,7 @@ public class EditorController {
 				i = new ResetButtonInteraction();
 				break;
 			case CLEAR_BRAILLE:
-				i = new CellClearInteraction();
+				i = new CellClearInteraction(0, this.model.getCells(), this.model.getButtons());
 				break;
 			default:
 				break;
@@ -86,8 +91,8 @@ public class EditorController {
 		if (i != null) {
 			this.model.addInteraction(i);
 			this.view.addInteractionCard(i);
-			this.view.showCard(Integer.toString(i.getId()));
 		}
+		this.view.showCard(Integer.toString(i.getId()));
 	}
 	
 	public void addInteraction(int selectedItemIndex, int insertIdx) {
@@ -95,8 +100,9 @@ public class EditorController {
 		if (i != null) {
 			this.model.addInteraction(i, insertIdx);
 			this.view.addInteractionCard(i);
-			this.view.showCard(Integer.toString(i.getId()));
 		}
+		this.view.showCard(Integer.toString(i.getId()));
+		
 	}
 
 	public void deleteInteraction(int selectedListItemIndex) {

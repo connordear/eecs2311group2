@@ -23,6 +23,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
+import authoringApp.interactionModels.Interaction;
 import authoringApp.interactionModels.KeywordInteraction;
 import authoringApp.interactionModels.PauseInteraction;
 import authoringApp.interactionModels.ReadInteraction;
