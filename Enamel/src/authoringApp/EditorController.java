@@ -52,9 +52,7 @@ public class EditorController {
 				i = new ReadInteraction();
 				break;
 			case VOICE:
-				// No VoiceInteraction yet?
 				i = new VoiceInteraction();
-				System.out.println("This should print when I try to add a voice.");
 				break;
 			case DISPLAY_BRAILLE:
 				i = new DisplayBrailleInteraction(0, "00000000", this.model.getCells(), this.model.getButtons());
@@ -102,7 +100,6 @@ public class EditorController {
 			this.view.addInteractionCard(i);
 		}
 		this.view.showCard(Integer.toString(i.getId()));
-		
 	}
 
 	public void deleteInteraction(int selectedListItemIndex) {

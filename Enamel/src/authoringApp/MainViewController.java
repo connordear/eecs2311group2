@@ -6,8 +6,6 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import enamel.ScenarioParser;
 
 public class MainViewController  {
@@ -45,6 +43,7 @@ public class MainViewController  {
 			}
 		}
 		showCard(MainView.NEW_PANE);
+		this.view.setTitle(MainFrame.APPLICATION_TITLE + ": New Scenario");
 	}
 
 	public void openScenario() {
@@ -53,8 +52,6 @@ public class MainViewController  {
 			save = JOptionPane.showConfirmDialog(this.view, "Would you like to save changes to the current scenario?", "Save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			if (save == JOptionPane.YES_OPTION) {
 				saveFile();
-			} else {
-				return;
 			}
 		}
 		
@@ -123,7 +120,7 @@ public class MainViewController  {
 		this.appModel.setEditingMode(true);
 		this.view.setEditingMode(true);
 		this.view.openEditor(econtroller);
-		
+		this.view.setTitle(MainFrame.APPLICATION_TITLE + ": " + s.getTitle());
 	}
 
 	public void createScenario(int cells, int buttons) {

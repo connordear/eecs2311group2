@@ -1,6 +1,0 @@
-Apr 03, 2018 12:01:19 PM enamel.ScenarioParser errorLog
-WARNING: Exception error: java.io.FileNotFoundException: correct.wav (No such file or directory)
-Apr 03, 2018 12:01:19 PM enamel.ScenarioParser errorLog
-INFO: Expected the name of the file (including extension) but instead got: correct.wav
- Perhaps you forgot to include the extension of the sound file with the name? Other possibilities include: 
- Incorrect name of the file, the file not being in the same location as the project folder, or an attempt to play an unsupported sound file. (only .wav filesare supported at this time)

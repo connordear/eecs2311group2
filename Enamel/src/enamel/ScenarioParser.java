@@ -462,7 +462,7 @@ public class ScenarioParser {
 		try {
 			Clip clip = AudioSystem.getClip();
 			clip.open(AudioSystem.getAudioInputStream(
-//					new File(scenarioFilePath + File.separator + "AudioFiles" + File.separator + sound)));
+					//new File(scenarioFilePath + File.separator + "AudioFiles" + File.separator + sound)));
 					new File(sound)));
 			clip.start();
 			// This while loop is to check if the audio file has played or not,

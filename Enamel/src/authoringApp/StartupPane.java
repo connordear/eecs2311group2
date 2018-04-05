@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -17,23 +18,33 @@ public class StartupPane extends JPanel {
 	private MainViewController controller;
 	private JLabel welcomeLbl, statusLbl;
 	private JButton newBtn, openBtn, exitBtn;
-	private JFileChooser fc;
 	private GridBagConstraints gbc;
+	
+	private ImageIcon iconNew, iconOpen, iconExit;
 	
 	public StartupPane(MainViewController controller) {
 		setStartupViewController(controller);
 		setLayout(new GridBagLayout());
 		
+		iconNew = new ImageIcon(getClass().getResource("/assets/icon-new.png"));
+		iconOpen = new ImageIcon(getClass().getResource("/assets/icon-browse.png"));
+		iconExit = new ImageIcon(getClass().getResource("/assets/icon-exit.png"));
+		
 		welcomeLbl = new JLabel("<html><h2>Welcome to the Braille Author application!</h2>To create a new series of user interactions for the user (called a scenario), click <strong>New</strong>.<br>To open and edit and existing scenario file, click <strong>Open</strong>.</html>");
 		welcomeLbl.setFont(new Font("Verdana", Font.PLAIN, 20));
 		statusLbl = new JLabel("");
 		newBtn = new JButton("New");
+		newBtn.setIcon(iconNew);
+		newBtn.getAccessibleContext().setAccessibleName("New scenario");
 		newBtn.getAccessibleContext().setAccessibleDescription("Create a new Scenario");
 		openBtn = new JButton("Open");
+		openBtn.setIcon(iconOpen);
+		openBtn.getAccessibleContext().setAccessibleName("Open scenario");
 		openBtn.getAccessibleContext().setAccessibleDescription("Open an existing Scenario");
 		exitBtn = new JButton("Exit");
+		exitBtn.setIcon(iconExit);
+		exitBtn.getAccessibleContext().setAccessibleName("Exit");
 		exitBtn.getAccessibleContext().setAccessibleDescription("Exit the application");
-		fc = new JFileChooser();
 		
 		newBtn.addActionListener(new ActionListener() {
 			@Override
@@ -57,7 +68,7 @@ public class StartupPane extends JPanel {
 		// Welcome label
 		gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.VERTICAL;
-		gbc.weightx = 1.0;
+		gbc.weightx = 0;
 		gbc.weighty = 1.0;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -66,7 +77,7 @@ public class StartupPane extends JPanel {
 		add(welcomeLbl, gbc);
 		
 		// New and Open buttons
-		
+		gbc.weightx = 1.0;
 		gbc.gridx += 2;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
@@ -76,11 +87,6 @@ public class StartupPane extends JPanel {
 		add(openBtn, gbc);
 		gbc.gridy++;
 		add(exitBtn, gbc);
-		
-		// Status label (for error messages in case scenario file failed to load)
-		//gbc.gridx = 0;
-		//gbc.gridy++;
-		//gbc.gridwidth = 2;
 	}
 
 	public void createNewScenarioSelected() {

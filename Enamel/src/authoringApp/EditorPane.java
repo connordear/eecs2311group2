@@ -1,7 +1,6 @@
 package authoringApp;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -12,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -25,10 +25,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.basic.BasicArrowButton;
-
-import com.alee.extended.painter.Painter;
-import com.alee.managers.style.StyleManager;
-import com.alee.managers.style.data.PainterStyle;
 
 import authoringApp.interactionModels.CellClearInteraction;
 import authoringApp.interactionModels.DisplayBrailleInteraction;
@@ -56,7 +52,6 @@ import enamel.ScenarioParser;
 
 public class EditorPane extends JPanel {
 	
-	private String scenarioPath;
 	private EditorController controller;
 	private JSplitPane containerPane;
 	private JScrollPane listPane;
@@ -66,19 +61,15 @@ public class EditorPane extends JPanel {
 	private CardLayout cards;
 	
 	private JComboBox newOptions;
-	private JButton addBtn;
-	private JButton delBtn;
-	private JButton upBtn;
-	private JButton downBtn;
-	private JButton saveBtn;
-	private JButton runBtn;
+	private JButton addBtn, delBtn, upBtn, downBtn, saveBtn, runBtn;
 	private GridBagConstraints gbc;
+	
+	private ImageIcon iconAdd, iconRemove, iconMoveUp, iconMoveDown, iconSave, iconRun;
 	
 	public EditorPane(EditorController controller) {
 		setEditorViewController(controller);
 		setLayout(new GridBagLayout());
 		this.controller.setView(this);
-		this.scenarioPath = this.controller.getModel().getPath();
 		configPane = new JPanel(new CardLayout());
 		cards = (CardLayout) configPane.getLayout();
 		// Create dummy config pane to solve issue of not displaying the thing
@@ -134,10 +125,20 @@ public class EditorPane extends JPanel {
     			controller.listItemSelected(selectedItemIndex);
 			}
     	});
+		
+		list.getAccessibleContext().setAccessibleName("List of interactions");
+		list.getAccessibleContext().setAccessibleDescription("List of interactions that are in the currently open scenario");
 		createInteractionCards(model);
 	}
 	
 	private JPanel createControlsPane() {
+		iconAdd = new ImageIcon(getClass().getResource("/assets/icon-add.png"));
+		iconRemove = new ImageIcon(getClass().getResource("/assets/icon-delete.png"));
+		iconMoveUp = new ImageIcon(getClass().getResource("/assets/icon-up.png"));
+		iconMoveDown = new ImageIcon(getClass().getResource("/assets/icon-down.png"));
+		iconSave = new ImageIcon(getClass().getResource("/assets/icon-save.png"));
+		iconRun = new ImageIcon(getClass().getResource("/assets/icon-run.png"));
+		
 		JPanel c = new JPanel();
 		c.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -156,17 +157,22 @@ public class EditorPane extends JPanel {
 			newOptions.addItem(iType.getDescription());
 		}
 		
-		
 		addBtn = new JButton("Add");
+		addBtn.setIcon(iconAdd);
 		addBtn.getAccessibleContext().setAccessibleName("Add New Interaction");
 		addBtn.getAccessibleContext().setAccessibleDescription("Click here to open a dropdown menu listing all possible interactions to add to the scenario.");
 		delBtn = new JButton("Delete");
+		delBtn.setIcon(iconRemove);
 		delBtn.getAccessibleContext().setAccessibleName("Delete Interaction");
 		delBtn.getAccessibleContext().setAccessibleDescription("Click here to delete the currently selected interaction.");
-		upBtn = new BasicArrowButton(BasicArrowButton.NORTH);
+		upBtn = new JButton("Move Up");
+		upBtn.setIcon(iconMoveUp);
 		upBtn.getAccessibleContext().setAccessibleName("Move Interaction Up");
 		upBtn.getAccessibleContext().setAccessibleDescription("Click here to move the currently selected interaction up");
-		downBtn = new BasicArrowButton(BasicArrowButton.SOUTH);
+		downBtn = new JButton("Move Down");
+		downBtn.setIcon(iconMoveDown);
+		upBtn.getAccessibleContext().setAccessibleName("Move Interaction Down");
+		upBtn.getAccessibleContext().setAccessibleDescription("Click here to move the currently selected interaction down");
 		
 		addBtn.addActionListener(new ActionListener() {
 			@Override
@@ -201,23 +207,43 @@ public class EditorPane extends JPanel {
 		
 		gbc.anchor = GridBagConstraints.EAST;
 		saveBtn = new JButton("Save");
+		saveBtn.setIcon(iconSave);
 		runBtn = new JButton("Run");
+		runBtn.setIcon(iconRun);
 		
-		saveBtn.getAccessibleContext().setAccessibleDescription("Save Scenario");
+		saveBtn.getAccessibleContext().setAccessibleName("Save scenario");
+		saveBtn.getAccessibleContext().setAccessibleDescription("Save changes to the currently open scenario");
 		saveBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				saveFile();
 			}
 		});
-		runBtn.getAccessibleContext().setAccessibleDescription("Run Scenario in simulator");
+		runBtn.getAccessibleContext().setAccessibleName("Run scenario");
+		runBtn.getAccessibleContext().setAccessibleDescription("Run the currently open scenario in simulator");
 		runBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Thread starterCodeThread = new Thread("Starter Code Thread") {
-				    public void run(){    
+				    public void run() {
 				        ScenarioParser s = new ScenarioParser(true);
-				        s.setScenarioFile(controller.getModel().getPath());
+				        // If scenario file is not saved, create a temporary file and run that instead
+				        File f = new File(controller.getModel().getPath());
+				        if (!f.exists() && !f.isDirectory()) {
+				        	try {
+								File tempFile = File.createTempFile("temp", "");
+								controller.getModel().setPath(tempFile.getAbsolutePath());
+								controller.getModel().generateScenarioText();
+								s.setScenarioFile(controller.getModel().getPath());
+								tempFile.delete();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+				        	
+				        // Otherwise, run the saved scenario file
+				        } else {
+				        	 s.setScenarioFile(controller.getModel().getPath());
+				        }
 				    }
 				};
 				starterCodeThread.start();
@@ -300,7 +326,6 @@ public class EditorPane extends JPanel {
 
 	public void showCard(String cardName) {
 		cards.show(configPane, cardName);
-		System.out.println("CardName: " + cardName);
 	}
 	
 	public void addInteractionCard(Interaction i) {
@@ -344,7 +369,6 @@ public class EditorPane extends JPanel {
 					cards.removeLayoutComponent(c);
 				}
 			}
-			
 		}
 	}
 	

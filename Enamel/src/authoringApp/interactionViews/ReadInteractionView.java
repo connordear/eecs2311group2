@@ -52,7 +52,7 @@ public class ReadInteractionView extends InteractionView {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				System.out.println(ReadInteractionView.this.getData());
+				//System.out.println(ReadInteractionView.this.getData());
 			}
 			public void removeUpdate(DocumentEvent e) {
 				try {
@@ -61,7 +61,7 @@ public class ReadInteractionView extends InteractionView {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				System.out.println("Remove Update" + ReadInteractionView.this.getData());
+				//System.out.println("Remove Update" + ReadInteractionView.this.getData());
 			}
 			public void insertUpdate(DocumentEvent e) {
 				try {
@@ -70,7 +70,7 @@ public class ReadInteractionView extends InteractionView {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				System.out.println("Insert Update: " + ReadInteractionView.this.getData());
+				//System.out.println("Insert Update: " + ReadInteractionView.this.getData());
 			}
 		});
 	}
