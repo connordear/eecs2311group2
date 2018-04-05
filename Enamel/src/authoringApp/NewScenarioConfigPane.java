@@ -6,6 +6,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,6 +29,8 @@ public class NewScenarioConfigPane extends JPanel {
 	private JButton createBtn, backBtn;
 	private GridBagConstraints gbc;
 	
+	private ImageIcon iconCreate, iconBack;
+	
 	public NewScenarioConfigPane(MainViewController controller) {
 		controller.getView().setTitle(MainFrame.APPLICATION_TITLE + ": New Scenario");
 		setLayout(new GridBagLayout());
@@ -38,8 +41,14 @@ public class NewScenarioConfigPane extends JPanel {
 		statusLbl = new JLabel("");
 		cellSpinner = new JSpinner(cellSpinnerModel);
 		btnSpinner = new JSpinner(btnSpinnerModel);
+		
+		iconCreate = new ImageIcon(getClass().getResource("/assets/icon-create.png"));
+		iconBack = new ImageIcon(getClass().getResource("/assets/icon-back.png"));
+		
 		createBtn = new JButton("Create");
+		createBtn.setIcon(iconCreate);
 		backBtn = new JButton("Back");
+		backBtn.setIcon(iconBack);
 		
 		cellSpinner.getAccessibleContext().setAccessibleName("Number of braille cells");
 		cellSpinner.getAccessibleContext().setAccessibleDescription("Set the number of braille cells");

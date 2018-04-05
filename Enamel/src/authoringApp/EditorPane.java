@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -60,13 +61,10 @@ public class EditorPane extends JPanel {
 	private CardLayout cards;
 	
 	private JComboBox newOptions;
-	private JButton addBtn;
-	private JButton delBtn;
-	private JButton upBtn;
-	private JButton downBtn;
-	private JButton saveBtn;
-	private JButton runBtn;
+	private JButton addBtn, delBtn, upBtn, downBtn, saveBtn, runBtn;
 	private GridBagConstraints gbc;
+	
+	private ImageIcon iconAdd, iconRemove, iconMoveUp, iconMoveDown, iconSave, iconRun;
 	
 	public EditorPane(EditorController controller) {
 		setEditorViewController(controller);
@@ -134,6 +132,13 @@ public class EditorPane extends JPanel {
 	}
 	
 	private JPanel createControlsPane() {
+		iconAdd = new ImageIcon(getClass().getResource("/assets/icon-add.png"));
+		iconRemove = new ImageIcon(getClass().getResource("/assets/icon-delete.png"));
+		iconMoveUp = new ImageIcon(getClass().getResource("/assets/icon-up.png"));
+		iconMoveDown = new ImageIcon(getClass().getResource("/assets/icon-down.png"));
+		iconSave = new ImageIcon(getClass().getResource("/assets/icon-save.png"));
+		iconRun = new ImageIcon(getClass().getResource("/assets/icon-run.png"));
+		
 		JPanel c = new JPanel();
 		c.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -153,15 +158,21 @@ public class EditorPane extends JPanel {
 		}
 		
 		addBtn = new JButton("Add");
+		addBtn.setIcon(iconAdd);
 		addBtn.getAccessibleContext().setAccessibleName("Add New Interaction");
 		addBtn.getAccessibleContext().setAccessibleDescription("Click here to open a dropdown menu listing all possible interactions to add to the scenario.");
 		delBtn = new JButton("Delete");
+		delBtn.setIcon(iconRemove);
 		delBtn.getAccessibleContext().setAccessibleName("Delete Interaction");
 		delBtn.getAccessibleContext().setAccessibleDescription("Click here to delete the currently selected interaction.");
-		upBtn = new BasicArrowButton(BasicArrowButton.NORTH);
+		upBtn = new JButton("Move Up");
+		upBtn.setIcon(iconMoveUp);
 		upBtn.getAccessibleContext().setAccessibleName("Move Interaction Up");
 		upBtn.getAccessibleContext().setAccessibleDescription("Click here to move the currently selected interaction up");
-		downBtn = new BasicArrowButton(BasicArrowButton.SOUTH);
+		downBtn = new JButton("Move Down");
+		downBtn.setIcon(iconMoveDown);
+		upBtn.getAccessibleContext().setAccessibleName("Move Interaction Down");
+		upBtn.getAccessibleContext().setAccessibleDescription("Click here to move the currently selected interaction down");
 		
 		addBtn.addActionListener(new ActionListener() {
 			@Override
@@ -196,7 +207,9 @@ public class EditorPane extends JPanel {
 		
 		gbc.anchor = GridBagConstraints.EAST;
 		saveBtn = new JButton("Save");
+		saveBtn.setIcon(iconSave);
 		runBtn = new JButton("Run");
+		runBtn.setIcon(iconRun);
 		
 		saveBtn.getAccessibleContext().setAccessibleName("Save scenario");
 		saveBtn.getAccessibleContext().setAccessibleDescription("Save changes to the currently open scenario");
