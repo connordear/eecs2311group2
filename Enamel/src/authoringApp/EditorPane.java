@@ -214,7 +214,24 @@ public class EditorPane extends JPanel {
 				Thread starterCodeThread = new Thread("Starter Code Thread") {
 				    public void run() {
 				        ScenarioParser s = new ScenarioParser(true);
-				        s.setScenarioFile(controller.getModel().getPath());
+				        
+				        // If scenario file is not saved, create a temporary file and run that instead
+				        File f = new File(controller.getModel().getPath());
+				        if (!f.exists() && !f.isDirectory()) {
+				        	try {
+								File tempFile = File.createTempFile("temp", "");
+								controller.getModel().setPath(tempFile.getAbsolutePath());
+								controller.getModel().generateScenarioText();
+								s.setScenarioFile(controller.getModel().getPath());
+								tempFile.delete();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+				        	
+				        // Otherwise, run the saved scenario file
+				        } else {
+				        	 s.setScenarioFile(controller.getModel().getPath());
+				        }
 				    }
 				};
 				starterCodeThread.start();

@@ -274,12 +274,10 @@ public class VoiceInteractionView extends InteractionView {
 
 			try {
 				recorder.save(wavFile);
-
 				JOptionPane.showMessageDialog(null,
 						"Saved recorded sound to:\n" + voiceModel.getSoundFilePath());
 
 				playBtn.setEnabled(true);
-
 			} catch (IOException ex) {
 				JOptionPane.showMessageDialog(null, "Error",
 						"Error saving to sound file!",

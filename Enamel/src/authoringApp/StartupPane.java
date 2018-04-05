@@ -17,7 +17,6 @@ public class StartupPane extends JPanel {
 	private MainViewController controller;
 	private JLabel welcomeLbl, statusLbl;
 	private JButton newBtn, openBtn, exitBtn;
-	private JFileChooser fc;
 	private GridBagConstraints gbc;
 	
 	public StartupPane(MainViewController controller) {
@@ -36,7 +35,6 @@ public class StartupPane extends JPanel {
 		exitBtn = new JButton("Exit");
 		exitBtn.getAccessibleContext().setAccessibleName("Exit");
 		exitBtn.getAccessibleContext().setAccessibleDescription("Exit the application");
-		fc = new JFileChooser();
 		
 		newBtn.addActionListener(new ActionListener() {
 			@Override

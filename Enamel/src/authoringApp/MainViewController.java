@@ -43,6 +43,7 @@ public class MainViewController  {
 			}
 		}
 		showCard(MainView.NEW_PANE);
+		this.view.setTitle(MainFrame.APPLICATION_TITLE + ": New Scenario");
 	}
 
 	public void openScenario() {
@@ -118,7 +119,7 @@ public class MainViewController  {
 		this.appModel.setEditingMode(true);
 		this.view.setEditingMode(true);
 		this.view.openEditor(econtroller);
-		this.view.setTitle(MainFrame.APPLICATION_TITLE + s.getTitle());
+		this.view.setTitle(MainFrame.APPLICATION_TITLE + ": " + s.getTitle());
 	}
 
 	public void createScenario(int cells, int buttons) {
