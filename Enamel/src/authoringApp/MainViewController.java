@@ -93,6 +93,7 @@ public class MainViewController  {
 			
 			Scenario s = new Scenario(scenarioFile);
 			s.setPath(scenarioFilePath);
+			System.out.println(s.getPath());
 			openEditor(s);
 		}
 	}
