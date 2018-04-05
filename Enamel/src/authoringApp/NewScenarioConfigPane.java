@@ -23,7 +23,7 @@ public class NewScenarioConfigPane extends JPanel {
 	private final int MAX_BUTTONS = 10;
 	private final int DEFAULT_BUTTONS = 4;
 	
-	private JLabel numCellsLbl, numBtnsLbl, statusLbl;
+	private JLabel numCellsLbl, numBtnsLbl;
 	private SpinnerModel cellSpinnerModel, btnSpinnerModel;
 	private JSpinner cellSpinner, btnSpinner;
 	private JButton createBtn, backBtn;
@@ -38,7 +38,6 @@ public class NewScenarioConfigPane extends JPanel {
 		btnSpinnerModel = new SpinnerNumberModel(DEFAULT_BUTTONS, MIN_BUTTONS, MAX_BUTTONS, 1);
 		numCellsLbl = new JLabel(String.format("Number of cells (%d - %d):", MIN_CELLS, MAX_CELLS));
 		numBtnsLbl = new JLabel(String.format("Number of buttons (%d - %d):", MIN_BUTTONS, MAX_BUTTONS));
-		statusLbl = new JLabel("");
 		cellSpinner = new JSpinner(cellSpinnerModel);
 		btnSpinner = new JSpinner(btnSpinnerModel);
 		
