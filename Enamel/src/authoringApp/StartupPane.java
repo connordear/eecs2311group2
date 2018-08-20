@@ -30,7 +30,7 @@ public class StartupPane extends JPanel {
 		iconOpen = new ImageIcon(getClass().getResource("/assets/icon-browse.png"));
 		iconExit = new ImageIcon(getClass().getResource("/assets/icon-exit.png"));
 		
-		welcomeLbl = new JLabel("<html><h2>Welcome to the Braille Author application!</h2>To create a new series of user interactions for the user (called a scenario), click <strong>New</strong>.<br>To open and edit and existing scenario file, click <strong>Open</strong>.</html>");
+		welcomeLbl = new JLabel("<html><h2>Welcome to the Braille Author application!</h2>To create a new series of user interactions for the user (called a scenario), click <strong>New</strong>.<br>To open and edit an existing scenario file, click <strong>Open</strong>.</html>");
 		welcomeLbl.setFont(new Font("Verdana", Font.PLAIN, 20));
 		statusLbl = new JLabel("");
 		newBtn = new JButton("New");
