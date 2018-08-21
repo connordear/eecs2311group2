@@ -1,8 +1,0 @@
-Cell 1
-Button 4
-fjkdsla
-text
-
-
-/~disp-cell-pins:0 11100000
-/~disp-cell-pins:0 00000000
